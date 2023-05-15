@@ -19,7 +19,6 @@ Email: jchen378@buffalo.edu.
 - *2015 Fall - 2017 Summer:*  Drexel University, Electrical Engineering, Master
 - *2018 Fall - Current:*  University at Buffalo, Computer Science, PhD
 
-
 ## Publications
 
 - **Jian, Chen** , “Timed hazard networks: Incorporating temporal difference for oncogenetic analysis”. PLOS ONE, 18(3):e0283004, 2023
