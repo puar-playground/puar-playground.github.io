@@ -3,8 +3,9 @@
 - type: github
   icon: "fab fa-github"
 
-- type: twitter
-  icon: "fab fa-twitter"
+- type: Youtube
+  icon: "fab fa-youtube"
+  url:  'https://www.youtube.com/@jianchen2550'
 
 - type: email
   icon: "fas fa-envelope"
@@ -32,6 +33,6 @@
 #   url:  ''                  # Fill with your stackoverflow homepage
 
 
-- type: Youtube
-  icon: "fab fa-youtube"
-  url:  'https://www.youtube.com/@jianchen2550'     
+# - type: Youtube
+#   icon: "fab fa-youtube"
+#   url:  'https://www.youtube.com/@jianchen2550'     
