@@ -1,5 +1,10 @@
 # Chirpy Personal Blog
 
+Run locally
+```
+bundle exec jekyll serve
+```
+
 For Mac M1 / M2, run this may help.
 
 ```shell
