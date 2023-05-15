@@ -13,9 +13,6 @@ Email: jchen378@buffalo.edu.
 <!-- > A printable CV of mine can be found [here]({{ site.url }}/download/CV_en.pdf). -->
 <!-- {: .prompt-tip } -->
 
-## Music 
-I play guitar and do arrangement for music that I like as a hobby. And, yes, I do have a [Youtube Channel](https://www.youtube.com/@jianchen2550).
-
 ## Education
 
 - *2011 Fall - 2015 Summer:*  Hunan University, Applied Mathematics, Bachelor
@@ -32,4 +29,6 @@ I play guitar and do arrangement for music that I like as a hobby. And, yes, I d
 - Stephen Woloszynek, Zhengqiao Zhao, **Jian, Chen**, and Gail L Rosen. 16S rRNA sequence embeddings: Meaningful numeric feature representations of nucleotide sequences that are convenient for downstream analyses. PLoS computational biology, 15(2):e1006721, 2019
 
 
+## Music 
+I play guitar and do arrangement for music that I like as a hobby. And, yes, I do have a [Youtube Channel](https://www.youtube.com/@jianchen2550).
 
