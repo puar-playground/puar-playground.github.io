@@ -18,7 +18,7 @@ You can contact me through the email: jchen378@buffalo.edu.
 
 - *2011 Fall - 2015 Summer:*  Hunan University, Applied Mathematics, Bachelor
 - *2015 Fall - 2017 Summer:*  Drexel University, Electrical Engineering, Master
-- *2018 Fall - Current:*  University at Buffalo, Computer Science, 
+- *2018 Fall - Current:*  University at Buffalo, Computer Science, PhD
 
 
 ## Publications
