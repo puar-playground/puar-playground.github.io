@@ -18,9 +18,9 @@ timezone: America/New_York
 # jekyll-seo-tag settings › https://github.com/jekyll/jekyll-seo-tag/blob/master/docs/usage.md
 # ↓ --------------------------
 
-title: Jian & puar's Blog # the main title
+title: Jian's Blog # the main title
 
-tagline: Some thought of mine. # it will display as the sub-title
+tagline: A notebook for my research and hobby. # it will display as the sub-title
 
 description: >- # used by seo meta and the atom feed
   This is my home lab.
