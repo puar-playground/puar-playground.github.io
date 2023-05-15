@@ -6,8 +6,7 @@ order: 5
 ---
 
 ## Puar (普洱)
-
-Puar is a female domestic shorthair cat. Her name creatively echoes the sound of 'purr' and is a tribute to the anime character [Puar](https://dragonball.fandom.com/wiki/Puar) from Dragon Ball. Interestingly, Puar's Chinese name, [普洱](https://en.wikipedia.org/wiki/Pu%27er_tea), also denotes a type of Chinese tea and mirrors the pattern of Puar's fur.<br /> 
+Puar is a female domestic shorthair cat. Her name creatively echoes the sound of 'purr' and is a tribute to the anime character [Puar](https://dragonball.fandom.com/wiki/Puar) from Dragon Ball. Interestingly, Puar's Chinese name, [普洱](https://en.wikipedia.org/wiki/Pu%27er_tea), also denotes a type of Chinese tea and mirrors the pattern of Puar's fur. And puar has her [instagram](https://www.instagram.com/puar_my_cat/?hl=en) account.<br /> 
 
 I adopted her from [Philly PAWS](https://phillypaws.org) on July 22, 2017, when she was just 3 months old. Originally found near 50th Street at a tender age of one month, Puar had a distinctive 90-degree kink in her tail, a healed reminder of an unknown injury. At the time of adoption, she was recovering from an ear infection. <br /> 
 
