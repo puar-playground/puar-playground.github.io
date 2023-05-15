@@ -14,7 +14,7 @@ Email: jchen378@buffalo.edu.
 <!-- {: .prompt-tip } -->
 
 ## Music 
-I play guitar and do arrangement for music that I like as a hobby. And, yes, I do have a Youtube Channel: [My guitar videos](https://www.youtube.com/@jianchen2550).
+I play guitar and do arrangement for music that I like as a hobby. And, yes, I do have a [Youtube Channel](https://www.youtube.com/@jianchen2550).
 
 ## Education
 
