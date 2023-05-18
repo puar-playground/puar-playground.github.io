@@ -16,6 +16,6 @@ However, the staff wisely advised me to select a pet based on their personality 
 
 Puar turned out to be a real angel. She quickly learned not to interfere with human food and has never knocked anything over. She's exceptionally friendly to human visitors but isn't fond of other animals. In March 2018, I brought Puar back with me to China, where she now lives happily with my parents.<br /> 
 
-![puar1](https://puar-playground.github.io/assets/img/puar/puar1.JPG)
-![puar3](https://puar-playground.github.io/assets/img/puar/puar3.JPG)
+![puar1]({{ site.url }}/assets/img/puar/puar1.JPG)
+![puar3]({{ site.url }}/assets/img/puar/puar3.JPG)
 
