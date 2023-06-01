@@ -21,6 +21,8 @@ Email: jchen378@buffalo.edu.
 
 ## Publications
 
+- **Jian, Chen**, Ruiyi Zhang, Tong Yu, Rohan Sharma, Zhiqiang Xu, Tong Sun, Changyou Chen, “Label-Retrieval-Augmented Diffusion Models for Learning from Noisy Labels”. arXiv, 2305.19518
+
 - **Jian, Chen** , “Timed hazard networks: Incorporating temporal difference for oncogenetic analysis”. PLOS ONE, 18(3):e0283004, 2023
 
 - **Jian, Chen**, Le Yang, Lu Li, Steve Goodison, and Yijun Sun. Alignment-free Comparison of Metagenomics Sequences via Approximate String Matching. Bioinformatics Advances, 2022
