@@ -1,5 +1,6 @@
 ---
-title: purediffusion repo
+title: >-
+    Repo: purediffusion
 date: 2024-01-17 15:56:00 +500
 categories: [code]
 tags: [NN]
