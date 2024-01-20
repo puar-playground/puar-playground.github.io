@@ -1,5 +1,5 @@
 ---
-title: Paper Accepted, LACE
+title: Paper Accepted： LACE
 date: 2024-01-16 16:19:00 +500
 categories: [paper]
 tags: [paper]

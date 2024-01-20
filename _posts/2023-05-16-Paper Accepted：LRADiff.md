@@ -1,5 +1,5 @@
 ---
-title: Paper Accepted, LRA-Diffusion
+title: Paper Accepted： LRA-Diffusion
 date: 2023-09-21 19:00:00 +500
 categories: [paper]
 tags: [paper]
