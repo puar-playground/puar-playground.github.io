@@ -20,7 +20,7 @@ Email: jchen378@buffalo.edu.
 - *2018 Fall - Current:*  University at Buffalo, Computer Science, PhD
 
 ## Experience
-- *2023 Fall - 2024 Spring:*  Mohamed bin Zayed University of Artificial Intelligence, Research Assistant
+- Research Assistant, Mohamed bin Zayed University of Artificial Intelligence, *10/26/2023 - 02/29/2024*
 
 
 ## Publications
