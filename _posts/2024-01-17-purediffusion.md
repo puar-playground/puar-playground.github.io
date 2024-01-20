@@ -5,5 +5,9 @@ categories: [code]
 tags: [NN]
 ---
 I created a repo, [purediffusion](https://github.com/puar-playground/purediffusion).  <br />
-It is the torch implementation I used for DDPM with DDIM sampling. This implementation is not restricted for Image data. It is a convinient start to build a diffusion model for arbitrary data type. You can just design the network structure and data format, without coping with the coefficients in the diffusion schedule and the generation process.
+And it can be installed through pip:
+```
+pip install purediffusion
+```
+It is a torch implementation I used for DDPM with DDIM sampling. This implementation is not restricted for Image data. It is a convinient start to build a diffusion model for arbitrary data type. One can just design the network structure and data format, without coping with the coefficients in the diffusion schedule and the generation process.
 
