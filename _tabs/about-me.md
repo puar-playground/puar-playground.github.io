@@ -7,7 +7,7 @@ order: 4
 
 ## Jian Chen
 
-I'm currently an Ph.D. student at University at Buffalo, Department of Computer Science and Engineering. My research interest focus on Deep learning and Bioinformatics.<br /> 
+I'm currently an Ph.D. student at University at Buffalo, Department of Computer Science and Engineering. My research mainly focuses on deep learning, especially in diffusion models and large language models.<br /> 
 Email: jchen378@buffalo.edu.
 
 <!-- > A printable CV of mine can be found [here]({{ site.url }}/download/CV_en.pdf). -->
@@ -19,9 +19,15 @@ Email: jchen378@buffalo.edu.
 - *2015 Fall - 2017 Summer:*  Drexel University, Electrical Engineering, Master
 - *2018 Fall - Current:*  University at Buffalo, Computer Science, PhD
 
+## Experience
+- *2023 Fall - 2024 Spring:*  Mohamed bin Zayed University of Artificial Intelligence, Research Assistant
+
+
 ## Publications
 
-- **Jian, Chen**, Ruiyi Zhang, Tong Yu, Rohan Sharma, Zhiqiang Xu, Tong Sun, Changyou Chen, “Label-Retrieval-Augmented Diffusion Models for Learning from Noisy Labels”. arXiv, 2305.19518
+- **Jian, Chen**, Ruiyi Zhang, Yufan Zhou, Changyou Chen, "Towards Aligned Layout Generation via Diffusion Model with Aesthetic Constraints". ICLR 2024
+
+- **Jian, Chen**, Ruiyi Zhang, Tong Yu, Rohan Sharma, Zhiqiang Xu, Tong Sun, Changyou Chen, “Label-Retrieval-Augmented Diffusion Models for Learning from Noisy Labels”. NeurIPS 2023
 
 - **Jian, Chen** , “Timed hazard networks: Incorporating temporal difference for oncogenetic analysis”. PLOS ONE, 18(3):e0283004, 2023
 
@@ -31,5 +37,5 @@ Email: jchen378@buffalo.edu.
 
 
 ## Music 
-I play guitar and do arrangement for music that I like as a hobby. And, yes, I do have a [Youtube Channel](https://www.youtube.com/@jianchen2550).
+I play guitar and do arrangement for music that I like as a hobby. And, I have a [Youtube](https://www.youtube.com/@jianchen2550) Channel.
 
