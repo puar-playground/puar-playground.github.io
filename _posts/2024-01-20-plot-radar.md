@@ -13,7 +13,7 @@ And it could be in dark mode:
 ![demo plot1]({{ site.url }}/assets/img/2023-05-18/dark_radar.png)
 
 
-check for all the available themes:
+check for all the available theme:
 ```
 import matplotlib.pyplot as plt
 print('plot art style:', plt.style.available)
