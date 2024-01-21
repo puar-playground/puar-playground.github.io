@@ -6,7 +6,7 @@ order: 2
 ---
 
 ## Puar (普洱)
-Puar is a female domestic shorthair cat. Her name creatively echoes the sound of 'purr' and is a tribute to the anime character [Puar](https://dragonball.fandom.com/wiki/Puar) from Dragon Ball. Puar's Chinese name, [普洱](https://en.wikipedia.org/wiki/Pu%27er_tea), also denotes a type of Chinese tea looks similar to her fur pattern. And puar has her [instagram](https://www.instagram.com/puar_my_cat/?hl=en) account.<br /> 
+Puar is a female domestic shorthair cat. Her name echoes the sound of 'purr' and is a tribute to the anime character [Puar](https://dragonball.fandom.com/wiki/Puar) from Dragon Ball. Puar's Chinese name, [普洱](https://en.wikipedia.org/wiki/Pu%27er_tea), also denotes a type of Chinese tea looks similar to her fur pattern. And puar has her [instagram](https://www.instagram.com/puar_my_cat/?hl=en) account.<br /> 
 
 ![puar1]({{ site.url }}/assets/img/puar/puar.png)
 
