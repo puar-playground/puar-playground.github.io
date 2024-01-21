@@ -18,7 +18,6 @@ Email: jchen378@buffalo.edu.
 - Drexel University, Electrical Engineering, Master, *2015 Fall - 2017 Summer*
 - Hunan University, Applied Mathematics, Bachelor, *2011 Fall - 2015 Summer*
 
-
 ## Experience
 - Mohamed bin Zayed University of Artificial Intelligence, Research Assistant, *10/2023 - 02/2024*
 
