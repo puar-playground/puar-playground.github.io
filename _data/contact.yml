@@ -34,5 +34,5 @@
 
 
 - type: google
-  icon: "fa-solid fa-face-smiling-hands"
+  icon: "fas fa-grin-alt"
   url:  'https://huggingface.co/puar-playground'
