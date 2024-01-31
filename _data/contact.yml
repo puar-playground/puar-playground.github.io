@@ -34,5 +34,5 @@
 
 
 - type: google
-  icon: "fab fa-duotone fa-face-smiling-hands"
+  icon: "fab fa-face-smiling-hands"
   url:  'https://huggingface.co/puar-playground'
