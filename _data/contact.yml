@@ -33,6 +33,6 @@
 #   url:  ''                  # Fill with your stackoverflow homepage
 
 
-- type: google
-  icon: "fas fa-grin-alt"
-  url:  'https://huggingface.co/puar-playground'
+# - type: google
+#   icon: "fas fa-grin-alt"
+#   url:  'https://huggingface.co/puar-playground'
