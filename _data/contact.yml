@@ -33,6 +33,6 @@
 #   url:  ''                  # Fill with your stackoverflow homepage
 
 
-- type: Huggingface
+- type: github
   icon: "fab fa-duotone fa-face-smiling-hands"
   url:  'https://huggingface.co/puar-playground'
