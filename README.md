@@ -21,4 +21,4 @@ The ruby version might requires updates. Simply change this file: `.github/workf
 Make the page searchable by google, [verify](https://search.google.com/search-console/welcome)
 
 
-### 4 [cheatshee](https://www.w3schools.com/icons/fontawesome5_icons_communication.asp) for icon
+### 4 [cheat sheet](https://www.w3schools.com/icons/fontawesome5_icons_brands.asp) for icon
