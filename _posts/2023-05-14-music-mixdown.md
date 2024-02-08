@@ -1,8 +1,8 @@
 ---
 title: A music piece from my friend Refar.
 date: 2023-05-14 12:20:00 +500
-categories: [guitar]
-tags: [fingerstyle]
+categories: [music]
+tags: [MIDI]
 ---
 
 This is a piece from my friend refar. I love it so much that I made a guitar tab for it.
