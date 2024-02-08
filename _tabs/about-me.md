@@ -1,7 +1,7 @@
 ---
 # the default layout is 'page'
 title: About Me
-icon: fas fa-info-circle
+icon: far fa-address-card
 order: 1
 ---
 
