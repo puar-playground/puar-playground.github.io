@@ -44,14 +44,14 @@ def _format_addr(s):
     return formataddr((Header(name, 'utf-8').encode(),
                        addr.encode('utf-8') if isinstance(addr, bytes) else addr))
 
-def send_email(sender, app_password, receivers, text_header, text_body='', img_dir=None):
+def send_email(sender, app_password, receiver, text_header, text_body='', img_dir=None):
 
     mail_host = 'smtp.gmail.com'
 
     message = MIMEMultipart()
     message.attach(MIMEText(text_body, 'plain', 'utf-8'))
     message['From'] = _format_addr('<%s>' % sender)
-    message['To'] = _format_addr('<%s>' % receivers)
+    message['To'] = _format_addr('<%s>' % receiver)
     message['Subject'] = Header(text_header, 'utf-8').encode()
 
     if img_dir is not None:
@@ -63,7 +63,7 @@ def send_email(sender, app_password, receivers, text_header, text_body='', img_d
         server = smtplib.SMTP_SSL(mail_host, 465)
         server.ehlo()
         server.login(sender, app_password)
-        server.sendmail(sender, receivers, message.as_string())
+        server.sendmail(sender, receiver, message.as_string())
         server.close()
         # print("email send successfully")
     except smtplib.SMTPException:
