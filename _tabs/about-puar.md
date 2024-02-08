@@ -1,7 +1,7 @@
 ---
 # the default layout is 'page'
 title: About Puar
-icon: fas fa-info-circle
+icon: fas fa-cat
 order: 2
 ---
 
