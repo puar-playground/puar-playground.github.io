@@ -19,6 +19,7 @@ Email: jchen378@buffalo.edu.
 - Hunan University, Applied Mathematics, Bachelor, *2011 Fall - 2015 Summer*
 
 ## Experience
+- Adobe, Intern Research Scientist/Engineering, *05/2024 - 08/2024*
 - Mohamed bin Zayed University of Artificial Intelligence, Research Assistant, *10/2023 - 02/2024*
 
 
