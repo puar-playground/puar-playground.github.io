@@ -24,6 +24,8 @@ Email: jchen378@buffalo.edu.
 
 ## Publications
 
+- Ruiyi Zhang, Yanzhe Zhang, **Jian, Chen**, Yufan Zhou, Jiuxiang Gu, Changyou Chen, Tong Sun, "TRINS: Towards Multimodal Language Models that Can Read". CVPR 2024
+
 - **Jian, Chen**, Ruiyi Zhang, Yufan Zhou, Changyou Chen, "Towards Aligned Layout Generation via Diffusion Model with Aesthetic Constraints". ICLR 2024
 
 - **Jian, Chen**, Ruiyi Zhang, Tong Yu, Rohan Sharma, Zhiqiang Xu, Tong Sun, Changyou Chen, “Label-Retrieval-Augmented Diffusion Models for Learning from Noisy Labels”. NeurIPS 2023
