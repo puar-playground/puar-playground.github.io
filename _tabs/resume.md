@@ -1,6 +1,6 @@
 ---
 # the default layout is 'page'
-title: About Me
+title: Résumé
 icon: fas fa-address-card
 order: 1
 ---
