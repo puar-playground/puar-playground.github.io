@@ -47,7 +47,7 @@ social:
     # - https://www.facebook.com/username
     - https://www.linkedin.com/in/jian-chen-1a0b9a11b/
 
-google_site_verification: # fill in to your verification string
+google_site_verification: google-site-verification=6EVwDyS5tBENO9x3nyP6XcHucDruHZuZ1BLxKc2yuJI
 
 # ↑ --------------------------
 # The end of `jekyll-seo-tag` settings
