@@ -1,6 +1,6 @@
 ---
 # the default layout is 'page'
-title: Résumé
+title: CV
 icon: fas fa-address-card
 order: 1
 ---
