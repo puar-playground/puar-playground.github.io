@@ -1,11 +1,9 @@
 ---
 # the default layout is 'page'
-title: CV
+title: Jian Chen
 icon: fas fa-address-card
 order: 1
 ---
-
-## Jian Chen
 
 I'm currently an Ph.D. student at University at Buffalo, Department of Computer Science and Engineering. My research mainly focuses on deep learning, especially in diffusion models and large language models.<br /> 
 Email: jchen378@buffalo.edu.
