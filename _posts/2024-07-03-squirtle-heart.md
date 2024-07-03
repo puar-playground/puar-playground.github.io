@@ -6,7 +6,7 @@ tags: [plot]
 ---
 Here is a customized color map for python plot, I name it "OceanHeart".<br />
 The color map is inspried by the animation of a Squirtle holding hearts.
-![Squirtle]({{ site.url }}/assets/img/2024-07-03/Squirtle.gif)
+<img src="{{ site.url }}/assets/img/2024-07-03/Squirtle.gif" alt="drawing" width="400"/>
 
 Let's define the color map
 ```
@@ -26,7 +26,10 @@ custom_cmap = LinearSegmentedColormap.from_list('OceanHeart', colors, N=n_bins)
 # Register the colormap so it can be accessed with plt.get_cmap()
 plt.register_cmap(name='OceanHeart', cmap=custom_cmap)
 ```
-And visualize it in a plot:
+And visualize it:
+![Squirtle]({{ site.url }}/assets/img/2024-07-03/OceanHeart_demo.png)
+
+The code creating the above plot: 
 ```
 import seaborn as sns
 
@@ -59,5 +62,3 @@ def create_beautiful_heatmap():
 # Call the function to display the heatmap
 create_beautiful_heatmap()
 ```
-The code will create a demo for the cmap:
-![Squirtle]({{ site.url }}/assets/img/2024-07-03/OceanHeart_demo.png)
