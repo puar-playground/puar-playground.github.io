@@ -9,7 +9,7 @@ The color map is inspried by the animation of a Squirtle holding hearts.
 <br /> 
 <img src="{{ site.url }}/assets/img/2024-07-03/Squirtle.gif" class="looping-gif" alt="Squirtle" width="250"/>
 
-Let's define the color map
+Define the color map
 ```
 import matplotlib.pyplot as plt
 from matplotlib.colors import LinearSegmentedColormap
