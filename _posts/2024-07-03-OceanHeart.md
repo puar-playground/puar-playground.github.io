@@ -7,7 +7,7 @@ tags: [plot]
 Here is a customized color map for python plot, I name it "OceanHeart".<br />
 The color map is inspried by the animation of a Squirtle holding hearts.
 <br /> 
-<img src="{{ site.url }}/assets/img/2024-07-03/Squirtle.gif" alt="drawing" width="300"/>
+<img src="{{ site.url }}/assets/img/2024-07-03/Squirtle.gif" class="looping-gif" alt="Squirtle" width="300"/>
 
 Let's define the color map
 ```
