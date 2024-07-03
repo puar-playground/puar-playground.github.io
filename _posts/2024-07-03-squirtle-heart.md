@@ -8,6 +8,8 @@ Here is a customized color map for python plot, I name it "OceanHeart".<br />
 The color map is inspried by the animation of a Squirtle holding hearts.
 <img src="{{ site.url }}/assets/img/2024-07-03/Squirtle.gif" alt="drawing" width="300"/>
 
+<video src="{{ site.url }}/assets/img/2024-07-03/Squirtle.gif" autoplay loop muted></video>
+
 Let's define the color map
 ```
 import matplotlib.pyplot as plt
