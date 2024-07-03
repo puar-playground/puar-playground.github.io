@@ -37,6 +37,14 @@ Email: jchen378@buffalo.edu.
 - Stephen Woloszynek, Zhengqiao Zhao, **Jian, Chen**, and Gail L Rosen. 16S rRNA sequence embeddings: Meaningful numeric feature representations of nucleotide sequences that are convenient for downstream analyses. PLoS computational biology, 15(2):e1006721, 2019
 
 
+## Other Manuscripts:
+
+- Two firest-author papers currently under review at EMNLP 2024.
+
+- Three middle-author papers currently under review at NeurIPS 2024.
+
+- **Jian, Chen**, Lu Li Le Yang, Yijun Sun, "Predicting alignment distances via continuous sequence matching". bioRxiv, 2020
+
 ## Music 
 I play guitar and do arrangement for music that I like as a hobby. And, I have a [Youtube](https://www.youtube.com/@jianchen2550) Channel.
 
