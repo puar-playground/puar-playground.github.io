@@ -23,7 +23,6 @@ Email: jchen378@buffalo.edu.
 
 
 ## Publications
-
 - Ruiyi Zhang, Yanzhe Zhang, **Jian, Chen**, Yufan Zhou, Jiuxiang Gu, Changyou Chen, Tong Sun, "TRINS: Towards Multimodal Language Models that Can Read". CVPR 2024
 
 - **Jian, Chen**, Ruiyi Zhang, Yufan Zhou, Changyou Chen, "Towards Aligned Layout Generation via Diffusion Model with Aesthetic Constraints". ICLR 2024
@@ -38,12 +37,24 @@ Email: jchen378@buffalo.edu.
 
 
 ## Other Manuscripts:
-
 - Two firest-author papers currently under review at EMNLP 2024.
 
 - Three middle-author papers currently under review at NeurIPS 2024.
 
-- **Jian, Chen**, Lu Li Le Yang, Yijun Sun, "Predicting alignment distances via continuous sequence matching". bioRxiv, 2020
+- **Jian, Chen**, Le Yang, Lu Li, Yijun Sun, "Predicting alignment distances via continuous sequence matching". bioRxiv, 2020
+
+## Awards:
+- Best Graduation Thesis: "Low-rank tensor optimization for video image recovery." Hunan University, *2015*
+
+## Professional Service:
+- Reviewer of International Conference on Machine Learning, *2024*
+- Reviewer of Transactions on Machine Learning Research, *2024*
+
+## Volunteer Experience:
+- ACM Conference on Bioinformatics, Computational Biology, and Health Informatics. Niagara Falls, NY, *09/2019*
+- WE16, Society of Women Engineers's Annual Conference. Philadelphia, PA, *10/2016*
+- Workshop on tensor optimization and Application. Changsha, Hunan, China, *05/2015*
+
 
 ## Music 
 I play guitar and do arrangement for music that I like as a hobby. And, I have a [Youtube](https://www.youtube.com/@jianchen2550) Channel.
