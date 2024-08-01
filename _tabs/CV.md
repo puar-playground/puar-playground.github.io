@@ -47,6 +47,7 @@ Email: jchen378@buffalo.edu.
 - Best Graduation Thesis: "Low-rank tensor optimization for video image recovery." Hunan University, *2015*
 
 ## Professional Service:
+- Reviewer of IEEE Transactions on Emerging Topics in Computational Intelligence, *2024*
 - Reviewer of International Conference on Machine Learning, *2024*
 - Reviewer of Transactions on Machine Learning Research, *2024*
 
