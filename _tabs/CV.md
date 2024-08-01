@@ -37,7 +37,7 @@ Email: jchen378@buffalo.edu.
 
 
 ## Other Manuscripts:
-- Two firest-author papers currently under review at EMNLP 2024.
+- Two first-author papers currently under review at EMNLP 2024.
 
 - Three middle-author papers currently under review at NeurIPS 2024.
 
