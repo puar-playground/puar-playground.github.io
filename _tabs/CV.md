@@ -22,7 +22,8 @@ Email: jchen378@buffalo.edu.
 - Mohamed bin Zayed University of Artificial Intelligence, Research Assistant, *10/2023 - 02/2024*
 
 
-## Publications [Google Schloar](https://scholar.google.com/citations?user=uBGjz-EAAAAJ&hl=en&oi=ao)
+## Publications 
+[Google Schloar](https://scholar.google.com/citations?user=uBGjz-EAAAAJ&hl=en&oi=ao)
 - Ruiyi Zhang, Yanzhe Zhang, **Jian, Chen**, Yufan Zhou, Jiuxiang Gu, Changyou Chen, Tong Sun, "TRINS: Towards Multimodal Language Models that Can Read", CVPR 2024
 
 - **Jian, Chen**, Ruiyi Zhang, Yufan Zhou, Changyou Chen, "Towards Aligned Layout Generation via Diffusion Model with Aesthetic Constraints", ICLR 2024
