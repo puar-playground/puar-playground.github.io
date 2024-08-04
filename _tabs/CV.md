@@ -1,12 +1,13 @@
 ---
 # the default layout is 'page'
-title: CV
+title: Curriculum Vitae
 icon: fas fa-address-card
 order: 1
 ---
 ## Jian Chen
 
-I'm currently an Ph.D. student at University at Buffalo, Department of Computer Science and Engineering. My research mainly focuses on deep learning, especially in diffusion models and large language models.<br /> 
+I'm currently an Ph.D. student at University at Buffalo, Department of Computer Science and Engineering.<br /> 
+My research interests include generative models, large language models, and their applications.<br /> 
 Email: jchen378@buffalo.edu.
 
 <!-- > A printable CV of mine can be found [here]({{ site.url }}/download/CV_en.pdf). -->
@@ -23,7 +24,8 @@ Email: jchen378@buffalo.edu.
 
 
 ## Publications 
-[Google Schloar](https://scholar.google.com/citations?user=uBGjz-EAAAAJ&hl=en&oi=ao)
+[Google Schloar](https://scholar.google.com/citations?user=uBGjz-EAAAAJ&hl=en&oi=ao)<br /> 
+
 - Ruiyi Zhang, Yanzhe Zhang, **Jian, Chen**, Yufan Zhou, Jiuxiang Gu, Changyou Chen, Tong Sun, "TRINS: Towards Multimodal Language Models that Can Read", CVPR 2024
 
 - **Jian, Chen**, Ruiyi Zhang, Yufan Zhou, Changyou Chen, "Towards Aligned Layout Generation via Diffusion Model with Aesthetic Constraints", ICLR 2024
