@@ -19,9 +19,8 @@ Email: jchen378@buffalo.edu.
 - Hunan University, Applied Mathematics, Bachelor, *2011 Fall - 2015 Summer*
 
 ## Experience
-- Adobe, Intern Research Scientist/Engineer, *05/2024 - 08/2024*
+- Adobe, Intern Research Scientist/Engineer, *05/2024 - 11/2024*
 - Mohamed bin Zayed University of Artificial Intelligence, Research Assistant, *10/2023 - 02/2024*
-
 
 ## Publications 
 [Google Schloar](https://scholar.google.com/citations?user=uBGjz-EAAAAJ&hl=en&oi=ao)<br /> 
@@ -41,11 +40,13 @@ Email: jchen378@buffalo.edu.
 
 ## Other Manuscripts:
 
+- One first-author papers committed to EMNLP 2024.
+
+- One middle-author papers currently under review at NeurIPS 2024.
+
+- **Jian, Chen**, Ruiyi Zhang, Yufan Zhou, Ryan Rossi, Jiuxiang Gu, Changyou Chen, "MMR: Evaluating Reading Ability of Large Multimodal Models", arXiv 2024
+
 - Ruiyi Zhang, Yufan Zhou, **Jian, Chen**, Jiuxiang Gu, Changyou Chen, Tong Sun, "LLaVA-Read: Enhancing Reading Ability of Multimodal Language Models", arXiv 2024
-
-- Two first-author papers currently under review at EMNLP 2024.
-
-- Three middle-author papers currently under review at NeurIPS 2024.
 
 - **Jian, Chen**, Le Yang, Lu Li, Yijun Sun, "Predicting alignment distances via continuous sequence matching", bioRxiv, 2020
 
@@ -53,8 +54,9 @@ Email: jchen378@buffalo.edu.
 - Best Graduation Thesis: "Low-rank tensor optimization for video image recovery." Hunan University, *2015*
 
 ## Professional Service:
+- Reviewer of International Conference on Learning Representations (ICLR), *2025*
 - Reviewer of IEEE Transactions on Emerging Topics in Computational Intelligence, *2024*
-- Reviewer of International Conference on Machine Learning, *2024*
+- Reviewer of International Conference on Machine Learning (ICML), *2024*
 - Reviewer of Transactions on Machine Learning Research, *2024*
 
 ## Volunteer Experience:
