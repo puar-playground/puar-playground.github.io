@@ -25,6 +25,10 @@ Email: jchen378@buffalo.edu.
 ## Publications 
 [Google Schloar](https://scholar.google.com/citations?user=uBGjz-EAAAAJ&hl=en&oi=ao)<br /> 
 
+- Jiayu Qin, **Jian, Chen**, Rohan Sharma, Jingchen Sun, Changyou Chen "A probability contrastive learning framework for 3D molecular representation learning", NeurIPS 2024
+
+- **Jian, Chen**, Ruiyi Zhang, Yufan Zhou, Jennifer Healey, Jiuxiang Gu, Changyou Chen, "Customizing Language Models for Text-to-Layout Planning", EMNLP 2024
+
 - Ruiyi Zhang, Yanzhe Zhang, **Jian, Chen**, Yufan Zhou, Jiuxiang Gu, Changyou Chen, Tong Sun, "TRINS: Towards Multimodal Language Models that Can Read", CVPR 2024
 
 - **Jian, Chen**, Ruiyi Zhang, Yufan Zhou, Changyou Chen, "Towards Aligned Layout Generation via Diffusion Model with Aesthetic Constraints", ICLR 2024
@@ -40,10 +44,6 @@ Email: jchen378@buffalo.edu.
 
 ## Other Manuscripts:
 
-- One first-author papers committed to EMNLP 2024.
-
-- One middle-author papers currently under review at NeurIPS 2024.
-
 - **Jian, Chen**, Ruiyi Zhang, Yufan Zhou, Ryan Rossi, Jiuxiang Gu, Changyou Chen, "MMR: Evaluating Reading Ability of Large Multimodal Models", arXiv 2024
 
 - Ruiyi Zhang, Yufan Zhou, **Jian, Chen**, Jiuxiang Gu, Changyou Chen, Tong Sun, "LLaVA-Read: Enhancing Reading Ability of Multimodal Language Models", arXiv 2024
@@ -57,7 +57,7 @@ Email: jchen378@buffalo.edu.
 - Reviewer of International Conference on Learning Representations (ICLR), *2025*
 - Reviewer of IEEE Transactions on Emerging Topics in Computational Intelligence, *2024*
 - Reviewer of International Conference on Machine Learning (ICML), *2024*
-- Reviewer of Transactions on Machine Learning Research, *2024*
+- Reviewer of Transactions on Machine Learning Research (TMLR), *2024*
 
 ## Volunteer Experience:
 - ACM Conference on Bioinformatics, Computational Biology, and Health Informatics. Niagara Falls, NY, *09/2019*
