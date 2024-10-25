@@ -10,7 +10,7 @@ I'm currently an Ph.D. student at University at Buffalo, Department of Computer 
 My research interests include generative models, large language models, and their applications.<br /> 
 Email: jchen378@buffalo.edu.
 
-> A PDF version of my CV is available [here]({{ site.url }}/download/CV_en.pdf).
+> A PDF version of my CV is available [here]({{ site.url }}/download/Jian_Chen_CV_en.pdf).
 <!-- {: .prompt-tip } -->
 
 ## Education
