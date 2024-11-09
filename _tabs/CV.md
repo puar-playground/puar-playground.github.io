@@ -44,6 +44,8 @@ Email: jchen378@buffalo.edu.
 
 ## Other Manuscripts:
 
+- **Jian, Chen**, Ruiyi Zhang, Yufan Zhou, Tong Yu, Franck Dernoncourt, Jiuxiang Gu, Ryan A. Rossi, Changyou Chen, Tong Sun, "LoRA-Contextualizing Adaptation of Large Multimodal Models for Long Document Understanding", , arXiv 2024
+
 - **Jian, Chen**, Ruiyi Zhang, Yufan Zhou, Ryan Rossi, Jiuxiang Gu, Changyou Chen, "MMR: Evaluating Reading Ability of Large Multimodal Models", arXiv 2024
 
 - Ruiyi Zhang, Yufan Zhou, **Jian, Chen**, Jiuxiang Gu, Changyou Chen, Tong Sun, "LLaVA-Read: Enhancing Reading Ability of Multimodal Language Models", arXiv 2024
