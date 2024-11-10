@@ -23,7 +23,7 @@ Email: jchen378@buffalo.edu.
 - Mohamed bin Zayed University of Artificial Intelligence, Research Assistant, *10/2023 - 02/2024*
 
 ## Publications 
-[Google Schloar](https://scholar.google.com/citations?user=uBGjz-EAAAAJ&hl=en&oi=ao)<br /> 
+[Google Schloar](https://scholar.google.com/citations?user=uBGjz-EAAAAJ&hl=en&oi=ao), [OpenReview](https://openreview.net/profile?id=~Jian_Chen9)<br /> 
 
 - Jiayu Qin, **Jian, Chen**, Rohan Sharma, Jingchen Sun, Changyou Chen "A probability contrastive learning framework for 3D molecular representation learning", NeurIPS 2024
 
