@@ -25,32 +25,32 @@ Email: jchen378@buffalo.edu.
 ## Publications 
 [Google Schloar](https://scholar.google.com/citations?user=uBGjz-EAAAAJ&hl=en&oi=ao), [OpenReview](https://openreview.net/profile?id=~Jian_Chen9)<br /> 
 
-- Jiayu Qin, **Jian, Chen**, Rohan Sharma, Jingchen Sun, Changyou Chen "A probability contrastive learning framework for 3D molecular representation learning", NeurIPS 2024
+- Jiayu Qin, **Jian Chen**, Rohan Sharma, Jingchen Sun, Changyou Chen "A probability contrastive learning framework for 3D molecular representation learning", NeurIPS 2024
 
-- **Jian, Chen**, Ruiyi Zhang, Yufan Zhou, Jennifer Healey, Jiuxiang Gu, Changyou Chen, "Customizing Language Models for Text-to-Layout Planning", EMNLP 2024
+- **Jian Chen**, Ruiyi Zhang, Yufan Zhou, Jennifer Healey, Jiuxiang Gu, Changyou Chen, "Customizing Language Models for Text-to-Layout Planning", EMNLP 2024
 
-- Ruiyi Zhang, Yanzhe Zhang, **Jian, Chen**, Yufan Zhou, Jiuxiang Gu, Changyou Chen, Tong Sun, "TRINS: Towards Multimodal Language Models that Can Read", CVPR 2024
+- Ruiyi Zhang, Yanzhe Zhang, **Jian Chen**, Yufan Zhou, Jiuxiang Gu, Changyou Chen, Tong Sun, "TRINS: Towards Multimodal Language Models that Can Read", CVPR 2024
 
-- **Jian, Chen**, Ruiyi Zhang, Yufan Zhou, Rajiv Jain, Ryan Rossi, Changyou Chen, "Towards Aligned Layout Generation via Diffusion Model with Aesthetic Constraints", ICLR 2024
+- **Jian Chen**, Ruiyi Zhang, Yufan Zhou, Rajiv Jain, Ryan Rossi, Changyou Chen, "Towards Aligned Layout Generation via Diffusion Model with Aesthetic Constraints", ICLR 2024
 
-- **Jian, Chen**, Ruiyi Zhang, Tong Yu, Rohan Sharma, Zhiqiang Xu, Tong Sun, Changyou Chen, “Label-Retrieval-Augmented Diffusion Models for Learning from Noisy Labels”, NeurIPS 2023
+- **Jian Chen**, Ruiyi Zhang, Tong Yu, Rohan Sharma, Zhiqiang Xu, Tong Sun, Changyou Chen, “Label-Retrieval-Augmented Diffusion Models for Learning from Noisy Labels”, NeurIPS 2023
 
-- **Jian, Chen** , “Timed hazard networks: Incorporating temporal difference for oncogenetic analysis”. PLOS ONE, 18(3):e0283004, 2023
+- **Jian Chen** , “Timed hazard networks: Incorporating temporal difference for oncogenetic analysis”. PLOS ONE, 18(3):e0283004, 2023
 
-- **Jian, Chen**, Le Yang, Lu Li, Steve Goodison, and Yijun Sun. Alignment-free Comparison of Metagenomics Sequences via Approximate String Matching. Bioinformatics Advances, 2022
+- **Jian Chen**, Le Yang, Lu Li, Steve Goodison, and Yijun Sun. Alignment-free Comparison of Metagenomics Sequences via Approximate String Matching. Bioinformatics Advances, 2022
 
-- Stephen Woloszynek, Zhengqiao Zhao, **Jian, Chen**, and Gail L Rosen. 16S rRNA sequence embeddings: Meaningful numeric feature representations of nucleotide sequences that are convenient for downstream analyses, PLoS computational biology, 15(2):e1006721, 2019
+- Stephen Woloszynek, Zhengqiao Zhao, **Jian Chen**, and Gail L Rosen. 16S rRNA sequence embeddings: Meaningful numeric feature representations of nucleotide sequences that are convenient for downstream analyses, PLoS computational biology, 15(2):e1006721, 2019
 
 
 ## Other Manuscripts:
 
-- **Jian, Chen**, Ruiyi Zhang, Yufan Zhou, Tong Yu, Franck Dernoncourt, Jiuxiang Gu, Ryan A. Rossi, Changyou Chen, Tong Sun, "LoRA-Contextualizing Adaptation of Large Multimodal Models for Long Document Understanding", , arXiv 2024
+- **Jian Chen**, Ruiyi Zhang, Yufan Zhou, Tong Yu, Franck Dernoncourt, Jiuxiang Gu, Ryan A. Rossi, Changyou Chen, Tong Sun, "LoRA-Contextualizing Adaptation of Large Multimodal Models for Long Document Understanding", , arXiv 2024
 
-- **Jian, Chen**, Ruiyi Zhang, Yufan Zhou, Ryan Rossi, Jiuxiang Gu, Changyou Chen, "MMR: Evaluating Reading Ability of Large Multimodal Models", arXiv 2024
+- **Jian Chen**, Ruiyi Zhang, Yufan Zhou, Ryan Rossi, Jiuxiang Gu, Changyou Chen, "MMR: Evaluating Reading Ability of Large Multimodal Models", arXiv 2024
 
-- Ruiyi Zhang, Yufan Zhou, **Jian, Chen**, Jiuxiang Gu, Changyou Chen, Tong Sun, "LLaVA-Read: Enhancing Reading Ability of Multimodal Language Models", arXiv 2024
+- Ruiyi Zhang, Yufan Zhou, **Jian Chen**, Jiuxiang Gu, Changyou Chen, Tong Sun, "LLaVA-Read: Enhancing Reading Ability of Multimodal Language Models", arXiv 2024
 
-- **Jian, Chen**, Le Yang, Lu Li, Yijun Sun, "Predicting alignment distances via continuous sequence matching", bioRxiv, 2020
+- **Jian Chen**, Le Yang, Lu Li, Yijun Sun, "Predicting alignment distances via continuous sequence matching", bioRxiv, 2020
 
 ## Awards:
 - Best Graduation Thesis: "Low-rank tensor optimization for video image recovery." Hunan University, *2015*
