@@ -39,9 +39,9 @@ Email: jchen378@buffalo.edu.
 
 - **Jian Chen** , “Timed hazard networks: Incorporating temporal difference for oncogenetic analysis”. PLOS ONE, 18(3):e0283004, 2023
 
-- **Jian Chen**, Le Yang, Lu Li, Steve Goodison, and Yijun Sun. Alignment-free Comparison of Metagenomics Sequences via Approximate String Matching. Bioinformatics Advances, 2022
+- **Jian Chen**, Le Yang, Lu Li, Steve Goodison, and Yijun Sun. "Alignment-free Comparison of Metagenomics Sequences via Approximate String Matching". Bioinformatics Advances, 2022
 
-- Stephen Woloszynek, Zhengqiao Zhao, **Jian Chen**, and Gail L Rosen. 16S rRNA sequence embeddings: Meaningful numeric feature representations of nucleotide sequences that are convenient for downstream analyses, PLoS computational biology, 15(2):e1006721, 2019
+- Stephen Woloszynek, Zhengqiao Zhao, **Jian Chen**, and Gail L Rosen. "16S rRNA sequence embeddings: Meaningful numeric feature representations of nucleotide sequences that are convenient for downstream analyses", PLoS computational biology, 15(2):e1006721, 2019
 
 
 ## Other Manuscripts:
