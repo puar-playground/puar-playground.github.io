@@ -14,7 +14,7 @@ Email: jchen378@buffalo.edu.
 <!-- {: .prompt-tip } -->
 
 ## Education
-- University at Buffalo, Computer Science, PhD, *2018 Fall - Current* 
+- University at Buffalo, Computer Science, PhD, *2018 Fall - 2025 Summer* 
 - Drexel University, Electrical Engineering, Master, *2015 Fall - 2017 Summer*
 - Hunan University, Applied Mathematics, Bachelor, *2011 Fall - 2015 Summer*
 
