@@ -25,6 +25,8 @@ Email: jchen378@buffalo.edu.
 ## Publications 
 [Google Schloar](https://scholar.google.com/citations?user=uBGjz-EAAAAJ&hl=en&oi=ao), [OpenReview](https://openreview.net/profile?id=~Jian_Chen9)<br /> 
 
+- **Jian Chen**, Ruiyi Zhang, Yufan Zhou, Tong Yu, Franck Dernoncourt, Jiuxiang Gu, Ryan A. Rossi, Changyou Chen, Tong Sun, "LoRA-Contextualizing Adaptation of Large Multimodal Models for Long Document Understanding", , ICLR 2025
+
 - Jiayu Qin, **Jian Chen**, Rohan Sharma, Jingchen Sun, Changyou Chen "A probability contrastive learning framework for 3D molecular representation learning", NeurIPS 2024
 
 - **Jian Chen**, Ruiyi Zhang, Yufan Zhou, Jennifer Healey, Jiuxiang Gu, Changyou Chen, "Customizing Language Models for Text-to-Layout Planning", EMNLP 2024
@@ -43,8 +45,6 @@ Email: jchen378@buffalo.edu.
 
 
 ## Other Manuscripts:
-
-- **Jian Chen**, Ruiyi Zhang, Yufan Zhou, Tong Yu, Franck Dernoncourt, Jiuxiang Gu, Ryan A. Rossi, Changyou Chen, Tong Sun, "LoRA-Contextualizing Adaptation of Large Multimodal Models for Long Document Understanding", , arXiv 2024
 
 - **Jian Chen**, Ruiyi Zhang, Yufan Zhou, Ryan Rossi, Jiuxiang Gu, Changyou Chen, "MMR: Evaluating Reading Ability of Large Multimodal Models", arXiv 2024
 
