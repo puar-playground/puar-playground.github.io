@@ -67,7 +67,6 @@ Email: jchen378@buffalo.edu.
 - WE16, Society of Women Engineers's Annual Conference. Philadelphia, PA, *10/2016*
 - Workshop on tensor optimization and Application. Changsha, Hunan, China, *05/2015*
 
-
 ## Music 
 I play guitar and do arrangement for music that I like as a hobby. And, I have a [Youtube](https://www.youtube.com/@jianchen2550) Channel.
 
