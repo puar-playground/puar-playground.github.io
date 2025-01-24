@@ -46,7 +46,7 @@ Email: jchen378@buffalo.edu.
 - **Jian Chen**, Le Yang, Lu Li, Steve Goodison, and Yijun Sun. "Alignment-free Comparison of Metagenomics Sequences via Approximate String Matching". Bioinformatics Advances, 2022
 
 
-## Other Manuscripts:
+## Selected Preprint:
 
 - **Jian Chen**, Ruiyi Zhang, Yufan Zhou, Ryan Rossi, Jiuxiang Gu, Changyou Chen, "MMR: Evaluating Reading Ability of Large Multimodal Models", arXiv 2024
 
