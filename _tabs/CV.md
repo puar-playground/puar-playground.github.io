@@ -10,8 +10,12 @@ I'm currently an Ph.D. student at University at Buffalo, Department of Computer 
 My research interests include generative models, large language models, and their applications.<br /> 
 Email: jchen378@buffalo.edu.
 
+
 > A PDF version of my CV is available [here]({{ site.url }}/download/Jian_Chen_CV_en.pdf).
 <!-- {: .prompt-tip } -->
+> A full list of my publication is available at: [Google Schloar](https://scholar.google.com/citations?user=uBGjz-EAAAAJ&hl=en&oi=ao) and [OpenReview](https://openreview.net/profile?id=~Jian_Chen9)
+<!-- {: .prompt-tip } -->
+
 
 ## Education
 - University at Buffalo, Computer Science, PhD, *2018 Fall - 2025 Summer* 
@@ -22,8 +26,7 @@ Email: jchen378@buffalo.edu.
 - Adobe, Intern Research Scientist/Engineer, *05/2024 - 11/2024*
 - Mohamed bin Zayed University of Artificial Intelligence, Research Assistant, *10/2023 - 02/2024*
 
-## Publications 
-[Google Schloar](https://scholar.google.com/citations?user=uBGjz-EAAAAJ&hl=en&oi=ao), [OpenReview](https://openreview.net/profile?id=~Jian_Chen9)<br /> 
+## Selected Publications 
 
 - **Jian Chen**, Ruiyi Zhang, Yufan Zhou, Tong Yu, Franck Dernoncourt, Jiuxiang Gu, Ryan A. Rossi, Changyou Chen, Tong Sun, "LoRA-Contextualizing Adaptation of Large Multimodal Models for Long Document Understanding", ICLR 2025
 
@@ -40,8 +43,6 @@ Email: jchen378@buffalo.edu.
 - **Jian Chen** , “Timed hazard networks: Incorporating temporal difference for oncogenetic analysis”. PLOS ONE, 18(3):e0283004, 2023
 
 - **Jian Chen**, Le Yang, Lu Li, Steve Goodison, and Yijun Sun. "Alignment-free Comparison of Metagenomics Sequences via Approximate String Matching". Bioinformatics Advances, 2022
-
-- Stephen Woloszynek, Zhengqiao Zhao, **Jian Chen**, and Gail L Rosen. "16S rRNA sequence embeddings: Meaningful numeric feature representations of nucleotide sequences that are convenient for downstream analyses", PLoS computational biology, 15(2):e1006721, 2019
 
 
 ## Other Manuscripts:
