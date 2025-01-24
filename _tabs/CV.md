@@ -11,7 +11,7 @@ My research interests include generative models, large language models, and thei
 Email: jchen378@buffalo.edu.
 
 
-> A PDF version of my CV is available [here]({{ site.url }}/download/Jian_Chen_CV_en.pdf).
+> A PDF version of my CV is available [here]({{ site.url }}/download/Jian_Chen_CV_en.pdf).<br /> 
 <!-- {: .prompt-tip } -->
 > A full list of my publication is available at: [Google Schloar](https://scholar.google.com/citations?user=uBGjz-EAAAAJ&hl=en&oi=ao) and [OpenReview](https://openreview.net/profile?id=~Jian_Chen9)
 <!-- {: .prompt-tip } -->
