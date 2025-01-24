@@ -51,7 +51,6 @@ Email: jchen378@buffalo.edu.
 
 - Ruiyi Zhang, Yufan Zhou, **Jian Chen**, Jiuxiang Gu, Changyou Chen, Tong Sun, "LLaVA-Read: Enhancing Reading Ability of Multimodal Language Models", arXiv 2024
 
-- **Jian Chen**, Le Yang, Lu Li, Yijun Sun, "Predicting alignment distances via continuous sequence matching", bioRxiv, 2020
 
 ## Awards:
 - Best Graduation Thesis: "Low-rank tensor optimization for video image recovery." Hunan University, *2015*
