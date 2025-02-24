@@ -1,21 +1,16 @@
 #  The contact options.
 
+- type: google-scholar
+  icon: "fas fa-user-graduate"
+  url: https://scholar.google.com/citations?user=uBGjz-EAAAAJ
+
+
 - type: github
   icon: "fab fa-github"
 
 - type: huggingface
   icon: " fas fa-laugh-beam"
   url: https://huggingface.co/puar-playground
-
-
-- type: email
-  icon: "fas fa-envelope"
-  noblank: true # open link in current tab
-
-
-- type: google-scholar
-  icon: "fas fa-user-graduate"
-  url: https://scholar.google.com/citations?user=uBGjz-EAAAAJ
 
  
 # - type: rss
@@ -43,3 +38,8 @@
 - type: Youtube
   icon: "fab fa-youtube"
   url:  'https://www.youtube.com/@jianchen2550'
+
+  - type: email
+  icon: "fas fa-envelope"
+  noblank: true # open link in current tab
+  
