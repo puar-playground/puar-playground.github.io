@@ -11,10 +11,15 @@
   icon: "fas fa-envelope"
   noblank: true # open link in current tab
 
-# - type: google
-#   icon: "fab fa-google"
-#   url: https://scholar.google.com/citations?user=k1eGsbUAAAAJ&hl
+- type: google
+  icon: "fab fa-google"
+  url: https://scholar.google.com/citations?user=uBGjz-EAAAAJ
 
+
+- type: huggingface
+  icon: " fas fa-laugh-beam"
+  url: https://huggingface.co/puar-playground
+ 
 # - type: rss
 #   icon: "fas fa-rss"
 #   noblank: true
