@@ -9,7 +9,7 @@
   url: https://scholar.google.com/citations?user=uBGjz-EAAAAJ
 
 - type: openreview
-  icon: "assets/icons/favicon-32x32.png"
+  icon: "fas fa-upload"
   url: "https://openreview.net/profile?id=~Jian_Chen9"
 
 - type: github
