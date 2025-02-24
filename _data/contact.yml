@@ -31,10 +31,6 @@
 #   url:  ''                  # Fill with your stackoverflow homepage
 
 
-# - type: google
-#   icon: "fas fa-grin-alt"
-#   url:  'https://huggingface.co/puar-playground'
-
 - type: Youtube
   icon: "fab fa-youtube"
   url:  'https://www.youtube.com/@jianchen2550'
