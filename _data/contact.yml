@@ -7,6 +7,7 @@
 
 - type: github
   icon: "fab fa-github"
+  url: https://github.com/puar-playground 
 
 - type: huggingface
   icon: " fas fa-laugh-beam"
