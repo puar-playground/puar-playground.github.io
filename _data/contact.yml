@@ -12,13 +12,9 @@
   icon: "fas fa-envelope"
   noblank: true # open link in current tab
 
-- type: google-scholar
-  icon: "https://puar-playground.github.io/assets/icons/google-scholar.svg"
-  url: https://scholar.google.com/citations?user=uBGjz-EAAAAJ
-
 
 - type: google-scholar
-  icon: "fas fa-graduation-cap"
+  icon: "fab fa-graduation-cap"
   url: https://scholar.google.com/citations?user=uBGjz-EAAAAJ
 
  
