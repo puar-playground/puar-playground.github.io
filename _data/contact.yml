@@ -12,8 +12,8 @@
   icon: "fas fa-envelope"
   noblank: true # open link in current tab
 
-- type: google
-  icon: "fas fa-mortar-board"
+- type: google-scholar
+  icon: "/assets/icons/google-scholar.svg"
   url: https://scholar.google.com/citations?user=uBGjz-EAAAAJ
 
  
