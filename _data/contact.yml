@@ -8,6 +8,10 @@
   icon: "fas fa-user-graduate"
   url: https://scholar.google.com/citations?user=uBGjz-EAAAAJ
 
+- type: openreview
+  icon: "assets/icons/favicon-32x32.png"
+  url: "https://openreview.net/profile?id=~Jian_Chen9"
+
 - type: github
   icon: "fab fa-github"
   url: https://github.com/puar-playground 
