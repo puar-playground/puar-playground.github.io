@@ -27,7 +27,7 @@ I'm currently an Ph.D. student at University at Buffalo, Department of Computer 
 - Jacobs School of Medicine and Biomedical Sciences at UB, Research Assistant, *09/2018 - 09/2021*
 
 ## <i class="fas fa-user-graduate"></i> [Research](https://scholar.google.com/citations?user=uBGjz-EAAAAJ&hl=en&oi=ao)
-### <i class="fas fa-file-alt"></i> Selected Publications 
+### Selected Publications 
 
 - **Jian Chen**, Ruiyi Zhang, Yufan Zhou, Tong Yu, Franck Dernoncourt, Jiuxiang Gu, Ryan A. Rossi, Changyou Chen, Tong Sun, "SV-RAG: LoRA-Contextualizing Adaptation of MLLMs for Long Document Understanding", ICLR 2025
 
@@ -46,7 +46,7 @@ I'm currently an Ph.D. student at University at Buffalo, Department of Computer 
 - **Jian Chen**, Le Yang, Lu Li, Steve Goodison, and Yijun Sun. "Alignment-free Comparison of Metagenomics Sequences via Approximate String Matching". Bioinformatics Advances, 2022
 
 
-### <i class="far fa-file-alt"></i> Selected Preprint:
+### Selected Preprint:
 
 - **Jian Chen**, Ruiyi Zhang, Yufan Zhou, Ryan Rossi, Jiuxiang Gu, Changyou Chen, "MMR: Evaluating Reading Ability of Large Multimodal Models", arXiv 2024
 
