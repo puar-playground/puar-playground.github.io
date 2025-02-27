@@ -7,9 +7,9 @@ order: 1
 <!-- Include Font Awesome -->
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 
-## Jian Chen [<i class="fas fa-address-card"></i>]({{ site.url }}/download/Jian_Chen_CV_en.pdf)
-
+## Jian Chen
 I'm currently an Ph.D. student at University at Buffalo, Department of Computer Science and Engineering. I will graduate this spring!<br /> 
+> <i class="fas fa-address-card"></i> Download [CV]({{ site.url }}/download/Jian_Chen_CV_en.pdf)
 <i class="fas fa-envelope"></i> jchen378@buffalo.edu
 
 ## Education
@@ -51,8 +51,8 @@ I'm currently an Ph.D. student at University at Buffalo, Department of Computer 
 - Ruiyi Zhang, Yufan Zhou, **Jian Chen**, Jiuxiang Gu, Changyou Chen, Tong Sun, "LLaVA-Read: Enhancing Reading Ability of Multimodal Language Models", arXiv 2024
 
 ## Reviewer Service:
-- *2025*- ICCV, CVPR, ICLR
-- *2024*- ICML, TMLR, TETCI, PLOS ONE
+- *2025*: ICCV, CVPR, ICLR
+- *2024*: ICML, TMLR, TETCI, PLOS ONE
 
 ## Awards:
 <i class="fa fa-trophy"></i> Best Graduation Thesis: "Low-rank tensor optimization for video image recovery." Hunan University, *2015*
