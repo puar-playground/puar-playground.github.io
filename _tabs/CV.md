@@ -7,24 +7,24 @@ order: 1
 <!-- Include Font Awesome -->
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 
-## <i class="fas fa-address-card"></i> [Jian Chen]({{ site.url }}/download/Jian_Chen_CV_en.pdf)
+## Jian Chen [<i class="fas fa-address-card"></i>]({{ site.url }}/download/Jian_Chen_CV_en.pdf)
 
 I'm currently an Ph.D. student at University at Buffalo, Department of Computer Science and Engineering. I will graduate this spring!<br /> 
 <i class="fas fa-envelope"></i> jchen378@buffalo.edu
 
-## <i class="fas fa-school"></i> Education
+## Education
 - Ph.D. in Computer Science, University at Buffalo, *2018 Fall - 2025 Spring* 
 - M.S. in Electrical Engineering, Drexel University, *2015 Fall - 2017 Spring*
 - B.S. in Applied Mathematics, Hunan University, *2011 Fall - 2015 Spring*
 
 
-## <i class="fab fa-linkedin"></i> [Experience](https://www.linkedin.com/in/jian-chen-1a0b9a11b/)
+## Experience [<i class="fab fa-linkedin"></i>](https://www.linkedin.com/in/jian-chen-1a0b9a11b/)
 - Dolby Laboratories, Senior Foundational Audio AI Researcher, *06/2025*
 - Adobe, Intern Research Scientist/Engineer, *05/2024 - 11/2024*
 - Mohamed bin Zayed University of Artificial Intelligence, Research Assistant, *10/2023 - 02/2024*
 - Jacobs School of Medicine and Biomedical Sciences at UB, Research Assistant, *09/2018 - 09/2021*
 
-## <i class="fas fa-user-graduate"></i> [Research](https://scholar.google.com/citations?user=uBGjz-EAAAAJ&hl=en&oi=ao)
+## Research [<i class="fas fa-user-graduate"></i>](https://scholar.google.com/citations?user=uBGjz-EAAAAJ&hl=en&oi=ao)
 ### Selected Publications 
 
 - **Jian Chen**, Ruiyi Zhang, Yufan Zhou, Tong Yu, Franck Dernoncourt, Jiuxiang Gu, Ryan A. Rossi, Changyou Chen, Tong Sun, "SV-RAG: LoRA-Contextualizing Adaptation of MLLMs for Long Document Understanding", ICLR 2025
@@ -50,13 +50,13 @@ I'm currently an Ph.D. student at University at Buffalo, Department of Computer 
 
 - Ruiyi Zhang, Yufan Zhou, **Jian Chen**, Jiuxiang Gu, Changyou Chen, Tong Sun, "LLaVA-Read: Enhancing Reading Ability of Multimodal Language Models", arXiv 2024
 
-## <i class="fas fa-book-reader"></i> Reviewer Service:
+## Reviewer Service:
 - *2025*- ICCV, CVPR, ICLR
 - *2024*- ICML, TMLR, TETCI, PLOS ONE
 
-## <i class="fa fa-trophy"></i> Awards:
-- Best Graduation Thesis: "Low-rank tensor optimization for video image recovery." Hunan University, *2015*
+## Awards:
+<i class="fa fa-trophy"></i> Best Graduation Thesis: "Low-rank tensor optimization for video image recovery." Hunan University, *2015*
 
-## <i class="fas fa-music"></i> Music 
+## Music <i class="fas fa-music"></i> 
 I play guitar and do music arrangement as a hobby. And, I have a Youtube Channel: [<i class="fab fa-youtube"></i>](https://www.youtube.com/@jianchen2550)
 
