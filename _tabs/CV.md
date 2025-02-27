@@ -58,5 +58,5 @@ I'm currently an Ph.D. student at University at Buffalo, Department of Computer 
 - Best Graduation Thesis: "Low-rank tensor optimization for video image recovery." Hunan University, *2015*
 
 ## <i class="fas fa-music"></i> Music 
-I play guitar and do arrangement for music that I like as a hobby. And, I have a Youtube Channel: [<i class="fab fa-youtube"></i>](https://www.youtube.com/@jianchen2550)
+I play guitar and do music arrangement as a hobby. And, I have a Youtube Channel: [<i class="fab fa-youtube"></i>](https://www.youtube.com/@jianchen2550)
 
