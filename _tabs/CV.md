@@ -7,12 +7,10 @@ order: 1
 <!-- Include Font Awesome -->
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 
-## Jian Chen
+## <i class="fas fa-address-card"></i> [Jian Chen]({{ site.url }}/download/Jian_Chen_CV_en.pdf)
 
 I'm currently an Ph.D. student at University at Buffalo, Department of Computer Science and Engineering. I will graduate this spring!<br /> 
-<i class="fas fa-envelope"></i> jchen378@buffalo.edu <br /> 
-<i class="fas fa-address-card"></i> A PDF [CV]({{ site.url }}/download/Jian_Chen_CV_en.pdf).
-<!-- {: .prompt-tip } -->
+<i class="fas fa-envelope"></i> jchen378@buffalo.edu
 
 ## <i class="fas fa-school"></i> Education
 - Ph.D. in Computer Science, University at Buffalo, *2018 Fall - 2025 Spring* 
