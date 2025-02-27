@@ -50,9 +50,9 @@ I'm currently an Ph.D. student at University at Buffalo, Department of Computer 
 
 - Ruiyi Zhang, Yufan Zhou, **Jian Chen**, Jiuxiang Gu, Changyou Chen, Tong Sun, "LLaVA-Read: Enhancing Reading Ability of Multimodal Language Models", arXiv 2024
 
-## Reviewer Service:
-- *2025*: ICCV, CVPR, ICLR
-- *2024*: ICML, TMLR, TETCI, PLOS ONE
+## Reviewer Service  
+- **2025**: ICCV, CVPR, ICLR  
+- **2024**: ICML, TMLR, TETCI, PLOS ONE  
 
 ## Awards:
 <i class="fa fa-trophy"></i> Best Graduation Thesis: "Low-rank tensor optimization for video image recovery." Hunan University, *2015*
