@@ -201,7 +201,7 @@ exclude:
   - node_modules
   - package*.json
 
-jekyll-timeline:
+jekyll-archives:
   enabled: [categories, tags]
   layouts:
     category: category
