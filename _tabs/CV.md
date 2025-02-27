@@ -9,7 +9,8 @@ order: 1
 
 ## Jian Chen
 I'm currently an Ph.D. student at University at Buffalo, Department of Computer Science and Engineering. I will graduate this spring!<br /> 
-> [<i class="fas fa-address-card"></i>]({{ site.url }}/download/Jian_Chen_CV_en.pdf)[<i class="fas fa-envelope"></i>](mailto:jchen378@buffalo.edu)
+>  [<i class="fas fa-address-card"></i>]({{ site.url }}/download/Jian_Chen_CV_en.pdf) CV in PDF <br /> 
+> [<i class="fas fa-envelope"></i>](mailto:jchen378@buffalo.edu) jchen378@buffalo.edu
 
 ## Education
 - Ph.D. in Computer Science, University at Buffalo, *2018 Fall - 2025 Spring* 
