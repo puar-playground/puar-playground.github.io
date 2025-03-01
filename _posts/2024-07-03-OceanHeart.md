@@ -1,7 +1,7 @@
 ---
 title: OceanHeart cmap
 date: 2024-07-03 16:20:00 +500
-categories: [code, plot]
+categories: [Code, plot]
 tags: [plot]
 ---
 Here is a customized color map for python plot, I name it "OceanHeart".<br />

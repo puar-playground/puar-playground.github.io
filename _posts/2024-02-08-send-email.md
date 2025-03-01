@@ -1,7 +1,7 @@
 ---
 title: Auto email script
 date: 2024-02-08 00:00:01 +500
-categories: [code, tool]
+categories: [Code, tool]
 tags: [tool]
 ---
 This is a python script that send email automatically. To use this script, you need to setup an app password for your gmail, following this [tutorial](https://support.google.com/accounts/answer/185833).<br /> 
