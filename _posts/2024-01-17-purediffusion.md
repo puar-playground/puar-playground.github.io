@@ -2,7 +2,7 @@
 title: >-
     Repo: purediffusion
 date: 2024-01-17 15:56:00 +500
-categories: [code]
+categories: [code, torch]
 tags: [NN]
 ---
 I created a repo, [`purediffusion`](https://github.com/puar-playground/purediffusion).  <br />

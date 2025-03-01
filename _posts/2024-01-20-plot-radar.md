@@ -1,7 +1,7 @@
 ---
 title: Radar plot demo
 date: 2024-01-20 16:20:00 +500
-categories: [code]
+categories: [code, plot]
 tags: [plot]
 ---
 Here is a radar plot function. The python script is available here: [radar plot](https://github.com/puar-playground/puar-playground.github.io/blob/main/download/radar_plot.py).<br />
