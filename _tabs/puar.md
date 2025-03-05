@@ -1,6 +1,6 @@
 ---
 # the default layout is 'page'
-title: Puar ｜ 普洱
+title: Puar | 普洱
 icon: fas fa-cat
 order: 2
 ---
