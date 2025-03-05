@@ -1,7 +1,7 @@
 ---
 # the default layout is 'page'
 title: Unit-Yi | 乙门
-icon: fas fa-cat
+icon: fas fa-camera-retro
 order: 2
 ---
 ![unityi]({{ site.url }}/assets/img/unityi/avatar.png)
