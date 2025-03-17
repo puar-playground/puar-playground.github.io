@@ -34,7 +34,7 @@ I'm currently an Ph.D. student at University at Buffalo, Department of Computer 
 
 - Ruiyi Zhang, Yanzhe Zhang, **Jian Chen**, Yufan Zhou, Jiuxiang Gu, Changyou Chen, Tong Sun, "TRINS: Towards Multimodal Language Models that Can Read", CVPR 2024
 
-- **Jian Chen**, Ruiyi Zhang, Yufan Zhou, Rajiv Jain, Ryan Rossi, Changyou Chen, "Towards Aligned Layout Generation via Diffusion Model with Aesthetic Constraints", ICLR 2024
+- **Jian Chen**, Ruiyi Zhang, Yufan Zhou, Rajiv Jain, Zhiqiang Xu, Ryan Rossi, Changyou Chen, "Towards Aligned Layout Generation via Diffusion Model with Aesthetic Constraints", ICLR 2024
 
 - **Jian Chen**, Ruiyi Zhang, Tong Yu, Rohan Sharma, Zhiqiang Xu, Tong Sun, Changyou Chen, “Label-Retrieval-Augmented Diffusion Models for Learning from Noisy Labels”, NeurIPS 2023
 
