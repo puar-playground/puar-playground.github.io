@@ -122,13 +122,6 @@ async function sendMessage() {
   }
 }
 
-// Allow sending message by pressing Enter
-document.getElementById("user-input").addEventListener("keydown", function (event) {
-  if (event.key === "Enter" && !event.shiftKey) {
-    event.preventDefault();
-    sendMessage();
-  }
-});
 
 function appendMessage(role, content) {
   const messagesDiv = document.getElementById("messages");
@@ -138,4 +131,18 @@ function appendMessage(role, content) {
   messagesDiv.appendChild(messageDiv);
   messagesDiv.scrollTop = messagesDiv.scrollHeight;
 }
+
+// 🔁 等 DOM 加载完成后绑定事件
+window.addEventListener("DOMContentLoaded", function () {
+  document.getElementById("user-input").addEventListener("keydown", function (event) {
+    if (event.key === "Enter" && !event.shiftKey) {
+      event.preventDefault();
+      sendMessage();
+    }
+  });
+
+  document.getElementById("send-button").addEventListener("click", function () {
+    sendMessage();
+  });
+});
 </script>
