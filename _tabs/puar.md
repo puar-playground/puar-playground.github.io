@@ -2,7 +2,7 @@
 # the default layout is 'page'
 title: Puar | 普洱
 icon: fas fa-cat
-order: 2
+order: 3
 ---
 ![puar1]({{ site.url }}/assets/img/puar/puar_guitar_wide.png)
 

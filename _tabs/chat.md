@@ -3,9 +3,10 @@ layout: page
 title: 绫华 Assist
 permalink: /chat/
 icon: far fa-comment-dots
-order: 1
+order: 2
 ---
 ![Ayaka1]({{ site.url }}/assets/img/Ayaka/Ayaka.jpg)
+
 <style>
 #chat-container {
   max-width: 1000px;
@@ -78,7 +79,7 @@ order: 1
   <div id="messages"></div>
   <div id="input-area">
     <input id="user-input" placeholder="Type your message..." />
-    <button id="send-button" onclick="sendMessage()">Send</button>
+    <button id="send-button">Send</button>
   </div>
 </div>
 
@@ -122,7 +123,6 @@ async function sendMessage() {
   }
 }
 
-
 function appendMessage(role, content) {
   const messagesDiv = document.getElementById("messages");
   const messageDiv = document.createElement("div");
@@ -132,16 +132,19 @@ function appendMessage(role, content) {
   messagesDiv.scrollTop = messagesDiv.scrollHeight;
 }
 
+// ⏳ Wait until DOM is ready before binding
+document.addEventListener("DOMContentLoaded", function () {
+  const input = document.getElementById("user-input");
+  const sendBtn = document.getElementById("send-button");
 
-window.addEventListener("DOMContentLoaded", function () {
-  document.getElementById("user-input").addEventListener("keydown", function (event) {
+  input.addEventListener("keydown", function (event) {
     if (event.key === "Enter" && !event.shiftKey) {
       event.preventDefault();
       sendMessage();
     }
   });
 
-  document.getElementById("send-button").addEventListener("click", function () {
+  sendBtn.addEventListener("click", function () {
     sendMessage();
   });
 });

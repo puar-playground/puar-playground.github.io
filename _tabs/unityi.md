@@ -2,7 +2,7 @@
 # the default layout is 'page'
 title: Unit-Yi | 乙门
 icon: fas fa-camera-retro
-order: 2
+order: 4
 ---
 <img src="{{ site.url }}/assets/img/unityi/avatar.png" alt="drawing" width="400"/>
 
