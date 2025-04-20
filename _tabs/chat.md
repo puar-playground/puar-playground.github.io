@@ -85,19 +85,11 @@ order: 2
 </div>
 
 <script>
-document.addEventListener("DOMContentLoaded", function () {
+(function () {
   const API_URL = "https://web-production-2f71a.up.railway.app/chat";
-
-  // Generate session ID
   let sessionId = localStorage.getItem("chat_session_id");
   if (!sessionId) {
-    try {
-      sessionId = ([1e7]+-1e3+-4e3+-8e3+-1e11).replace(/[018]/g, function(c) {
-        return (c ^ crypto.getRandomValues(new Uint8Array(1))[0] & 15 >> c / 4).toString(16);
-      });
-    } catch (e) {
-      sessionId = Math.random().toString(36).substr(2, 9);
-    }
+    sessionId = crypto.randomUUID();
     localStorage.setItem("chat_session_id", sessionId);
   }
 
@@ -140,19 +132,20 @@ document.addEventListener("DOMContentLoaded", function () {
     messagesDiv.scrollTop = messagesDiv.scrollHeight;
   }
 
-  // Bind both Enter and Click events
-  const input = document.getElementById("user-input");
-  const button = document.getElementById("send-button");
+  document.addEventListener("DOMContentLoaded", function () {
+    const input = document.getElementById("user-input");
+    const button = document.getElementById("send-button");
 
-  input.addEventListener("keydown", function (event) {
-    if (event.key === "Enter" && !event.shiftKey) {
-      event.preventDefault();
+    input.addEventListener("keydown", function (e) {
+      if (e.key === "Enter" && !e.shiftKey) {
+        e.preventDefault();
+        sendMessage();
+      }
+    });
+
+    button.addEventListener("click", function () {
       sendMessage();
-    }
+    });
   });
-
-  button.addEventListener("click", function () {
-    sendMessage();
-  });
-});
+})();
 </script>
