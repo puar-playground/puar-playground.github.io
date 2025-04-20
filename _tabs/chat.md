@@ -143,15 +143,7 @@ document.addEventListener("DOMContentLoaded", function () {
   }
 
   // Event listeners with Safari compatibility
-  const input = document.getElementById("user-input");
   const button = document.getElementById("send-button");
-
-  input.addEventListener("keypress", function (e) {
-    if (e.key === "Enter" && !e.shiftKey) {
-      e.preventDefault();
-      sendMessage();
-    }
-  });
 
   button.addEventListener("click", function (e) {
     e.preventDefault();
