@@ -132,7 +132,7 @@ function appendMessage(role, content) {
   messagesDiv.scrollTop = messagesDiv.scrollHeight;
 }
 
-// 🔁 等 DOM 加载完成后绑定事件
+
 window.addEventListener("DOMContentLoaded", function () {
   document.getElementById("user-input").addEventListener("keydown", function (event) {
     if (event.key === "Enter" && !event.shiftKey) {
