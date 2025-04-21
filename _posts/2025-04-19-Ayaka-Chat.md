@@ -8,7 +8,8 @@ tags: [social]
 
 我部署了一个模仿游戏《原神》中神里绫华人格的聊天机器人。在左侧边栏也可以与绫华聊天。快试试吧。
 
-A chatbot inspired by Kamisato Ayaka’s personality from Genshin Impact is now available. Should you wish to speak with her, Ayaka awaits you in the sidebar to the left. She would be delighted to hear from you. Please go ahead and try talking to her:
+A chatbot inspired by Kamisato Ayaka’s personality from Genshin Impact is now available below and in the sidebar to the left.
+She would be delighted to hear from you. Please start a conversation.
 
 <style>
 #chat-container {

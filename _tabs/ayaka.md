@@ -7,6 +7,7 @@ order: 2
 ---
 
 我部署了一个模仿游戏《原神》中神里绫华人格的聊天机器人。快试试吧。
+A chatbot inspired by Kamisato Ayaka’s personality from Genshin Impact is now available below. Please have a try:
 
 <style>
 #chat-container {
