@@ -2,7 +2,7 @@
 title: >-
     I am a Doctor!!!
 date: 2025-03-24 00:00:00 +500
-categories: [Social]
+categories: [Social, News]
 tags: [social]
 ---
 
