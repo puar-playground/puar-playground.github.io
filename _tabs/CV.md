@@ -23,7 +23,7 @@ I'm currently an Ph.D. student at University at Buffalo, Department of Computer 
 - Mohamed bin Zayed University of Artificial Intelligence, Research Assistant, *10/2023 - 02/2024*
 - Jacobs School of Medicine and Biomedical Sciences at UB, Research Assistant, *09/2018 - 09/2021*
 
-## Research [<i class="fas fa-user-graduate"></i>](https://scholar.google.com/citations?user=uBGjz-EAAAAJ&hl=en&oi=ao)
+## Research [<i class="fas fa-user-graduate"></i>](https://scholar.google.com/citations?user=uBGjz-EAAAAJ)
 ### Selected Publications 
 
 - **Jian Chen**, Ruiyi Zhang, Yufan Zhou, Tong Yu, Franck Dernoncourt, Jiuxiang Gu, Ryan A. Rossi, Changyou Chen, Tong Sun, "SV-RAG: LoRA-Contextualizing Adaptation of MLLMs for Long Document Understanding", ICLR 2025
