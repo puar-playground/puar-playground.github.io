@@ -17,8 +17,12 @@
   url: https://github.com/puar-playground 
 
 - type: huggingface
-  icon: " fas fa-laugh-beam"
+  icon: "fas fa-laugh-beam"
   url: https://huggingface.co/puar-playground
+
+- type: orcid
+  icon: "fa-brands fa-orcid"
+  url: "https://orcid.org/0000-0002-1999-1137"
 
  
 - type: linkedin

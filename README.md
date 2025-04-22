@@ -25,3 +25,6 @@ To generate a [sitemap](https://www.xml-sitemaps.com)
 ### 4 change icon
 [cheat sheet](https://www.w3schools.com/icons/fontawesome5_icons_brands.asp) for icon
 
+
+### 5 Backend
+Currently, Ayaka Assist backend is powered by [Railway](https://railway.com/dashboard)
