@@ -2,7 +2,7 @@
 layout: page
 title: 绫华 Assist
 permalink: /ayaka/
-icon: far fa-comment-dots
+icon: far fa-snowflake
 order: 2
 ---
 
