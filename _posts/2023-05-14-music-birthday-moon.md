@@ -1,7 +1,7 @@
 ---
 title: Birthday on the moon.
 date: 2023-12-23 12:00:00 +500
-categories: [Music, sheet]
+categories: [Music, Sheet]
 tags: [MIDI]
 ---
 

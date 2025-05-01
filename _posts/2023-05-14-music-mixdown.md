@@ -1,7 +1,7 @@
 ---
 title: A music piece from my friend Refar.
 date: 2023-05-14 12:20:00 +500
-categories: [Music, sheet]
+categories: [Music, Sheet]
 tags: [MIDI]
 ---
 

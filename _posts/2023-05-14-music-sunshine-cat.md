@@ -1,7 +1,7 @@
 ---
 title: 陽だまりにて和む猫 fingerstyle guitar.
 date: 2023-05-15 03:20:00 +500
-categories: [Music, sheet]
+categories: [Music, Sheet]
 tags: [guitar]
 ---
 
