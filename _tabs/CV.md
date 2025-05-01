@@ -16,6 +16,8 @@ I'm currently an Ph.D. student at University at Buffalo, Department of Computer 
 - M.S. in Electrical Engineering, Drexel University, *2015 Fall - 2017 Spring*
 - B.S. in Applied Mathematics, Hunan University, *2011 Fall - 2015 Spring*
 
+### Licenses & certifications
+- Certificate, Songwriting: Writing the Music, Berklee Online, *2025 May*
 
 ## Experience [<i class="fab fa-linkedin"></i>](https://www.linkedin.com/in/jian-chen-1a0b9a11b/)
 - Dolby Laboratories, Senior Foundational Audio AI Researcher, *06/2025*
