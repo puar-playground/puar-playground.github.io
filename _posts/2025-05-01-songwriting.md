@@ -8,4 +8,4 @@ tags: [course]
 
 I’ve earned my [Songwriting certificate](https://www.coursera.org/account/accomplishments/verify/8NL465U4ZQVK) from Berklee Online via Coursera. 
 
-![demo1]({{ site.url }}/download/writing_the_music.png)
+![demo1]({{ site.url }}/download/Songwriting.png)
