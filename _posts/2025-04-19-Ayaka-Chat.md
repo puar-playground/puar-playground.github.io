@@ -4,6 +4,9 @@ title: >-
 date: 2025-04-19 00:00:00 +500
 categories: [Social, News]
 tags: [social]
+image:
+    path: /assets/Ayaka/wangshou.jpg
+    alt: Responsive rendering of Chirpy theme on multiple devices.
 ---
 
 我部署了一个模仿游戏《原神》中神里绫华人格的聊天机器人。在左侧边栏也可以与绫华聊天。快试试吧。
