@@ -49,7 +49,7 @@ I'm currently an Ph.D. student at University at Buffalo, Department of Computer 
 - Ruiyi Zhang, Yufan Zhou, **Jian Chen**, Jiuxiang Gu, Changyou Chen, Tong Sun, "LLaVA-Read: Enhancing Reading Ability of Multimodal Language Models", arXiv 2024
 
 ## Reviewer Service  
-- **2025**: ICCV, ICML, CVPR, ICLR, ACL
+- **2025**: ICLR ([Notable Reviewer](https://iclr.cc/Conferences/2025/Reviewers)), ACL, ICCV, ICML, CVPR
 - **2024**: ICML, TMLR, TETCI, PLOS ONE  
 
 ## Awards:
