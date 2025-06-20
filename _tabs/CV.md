@@ -9,7 +9,7 @@ order: 1
 
 ## Jian Chen
 I am a Senior Researcher at Dolby Laboratories in the Advanced Technology Group, where I focus on foundational audio AI research.
->[<i class="fas fa-address-card"></i>]({{ site.url }}/download/Jian_Chen_CV_en.pdf) CV in PDF,  [<i class="fas fa-envelope"></i>](mailto:jian.chen@dolby.com) jian.chen@dolby.com
+>[<i class="fas fa-address-card"></i>]({{ site.url }}/download/Jian_Chen_CV_en.pdf) CV in PDF, [<i class="fas fa-envelope"></i>](mailto:jian.chen@dolby.com) jian.chen@dolby.com
 
 ## Education
 - Ph.D. in Computer Science, University at Buffalo, *2018 Fall - 2025 Spring* 
