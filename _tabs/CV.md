@@ -8,7 +8,7 @@ order: 1
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 
 ## Jian Chen
-I'm currently an Ph.D. student at University at Buffalo, Department of Computer Science and Engineering. I will graduate this spring! 
+I am a Senior Researcher at Dolby Laboratories in the Advanced Technology Group, where I focus on foundational audio AI research.
 >[<i class="fas fa-address-card"></i>]({{ site.url }}/download/Jian_Chen_CV_en.pdf) CV in PDF, [<i class="fas fa-envelope"></i>](mailto:jchen378@buffalo.edu) jchen378@buffalo.edu
 
 ## Education
