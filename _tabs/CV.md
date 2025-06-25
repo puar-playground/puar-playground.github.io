@@ -8,7 +8,10 @@ order: 1
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 
 ## Jian Chen
-I am a Senior Researcher at Dolby Laboratories in the Advanced Technology Group, where I focus on foundational audio AI research.
+I am a Senior Foundational AI Researcher at Dolby Laboratories in the Advanced Technology Group, where I focus on multimodal AI research aimed at enabling immersive digital experiences and ensuring data integrity and security. 
+
+I also continue to collaborate actively with academic partners on the application and optimization of multimodal-LLMs and ML algorithms.
+
 >[<i class="fas fa-address-card"></i>]({{ site.url }}/download/Jian_Chen_CV_en.pdf) CV in PDF, [<i class="fas fa-envelope"></i>](mailto:jian.chen@dolby.com) jian.chen@dolby.com
 
 ## Education
