@@ -28,28 +28,28 @@ I also continue to collaborate actively with academic partners on the applicatio
 ## Research [<i class="fas fa-user-graduate"></i>](https://scholar.google.com/citations?user=uBGjz-EAAAAJ)
 ### Selected Publications 
 
-- **Jian Chen**, Ruiyi Zhang, Yufan Zhou, Tong Yu, Franck Dernoncourt, Jiuxiang Gu, Ryan A. Rossi, Changyou Chen, Tong Sun, "SV-RAG: LoRA-Contextualizing Adaptation of MLLMs for Long Document Understanding", ICLR 2025
+- **Jian Chen**, Ruiyi Zhang, Yufan Zhou, Tong Yu, Franck Dernoncourt, Jiuxiang Gu, Ryan A. Rossi, Changyou Chen, Tong Sun, "[SV-RAG: LoRA-Contextualizing Adaptation of MLLMs for Long Document Understanding](https://openreview.net/forum?id=FDaHjwInXO)", ICLR 2025
 
-- Jiayu Qin, **Jian Chen**, Rohan Sharma, Jingchen Sun, Changyou Chen "A probability contrastive learning framework for 3D molecular representation learning", NeurIPS 2024
+- Jiayu Qin, **Jian Chen**, Rohan Sharma, Jingchen Sun, Changyou Chen "[A probability contrastive learning framework for 3D molecular representation learning](https://proceedings.neurips.cc/paper_files/paper/2024/hash/6adaf0cbeba11705d4ea67a62044f63d-Abstract-Conference.html)", NeurIPS 2024
 
-- **Jian Chen**, Ruiyi Zhang, Yufan Zhou, Jennifer Healey, Jiuxiang Gu, Changyou Chen, "Customizing Language Models for Text-to-Layout Planning", EMNLP 2024
+- **Jian Chen**, Ruiyi Zhang, Yufan Zhou, Jennifer Healey, Jiuxiang Gu, Changyou Chen, "[TextLap: Customizing Language Models for Text-to-Layout Planning](https://aclanthology.org/2024.findings-emnlp.833/)", EMNLP 2024
 
-- Ruiyi Zhang, Yanzhe Zhang, **Jian Chen**, Yufan Zhou, Jiuxiang Gu, Changyou Chen, Tong Sun, "TRINS: Towards Multimodal Language Models that Can Read", CVPR 2024
+- Ruiyi Zhang, Yanzhe Zhang, **Jian Chen**, Yufan Zhou, Jiuxiang Gu, Changyou Chen, Tong Sun, "[TRINS: Towards Multimodal Language Models that Can Read](https://openaccess.thecvf.com/content/CVPR2024/html/Zhang_TRINS_Towards_Multimodal_Language_Models_that_Can_Read_CVPR_2024_paper.html)", CVPR 2024
 
-- **Jian Chen**, Ruiyi Zhang, Yufan Zhou, Rajiv Jain, Zhiqiang Xu, Ryan Rossi, Changyou Chen, "Towards Aligned Layout Generation via Diffusion Model with Aesthetic Constraints", ICLR 2024
+- **Jian Chen**, Ruiyi Zhang, Yufan Zhou, Rajiv Jain, Zhiqiang Xu, Ryan Rossi, Changyou Chen, "[Towards Aligned Layout Generation via Diffusion Model with Aesthetic Constraints](https://arxiv.org/abs/2402.04754)", ICLR 2024
 
-- **Jian Chen**, Ruiyi Zhang, Tong Yu, Rohan Sharma, Zhiqiang Xu, Tong Sun, Changyou Chen, “Label-Retrieval-Augmented Diffusion Models for Learning from Noisy Labels”, NeurIPS 2023
+- **Jian Chen**, Ruiyi Zhang, Tong Yu, Rohan Sharma, Zhiqiang Xu, Tong Sun, Changyou Chen, “[Label-Retrieval-Augmented Diffusion Models for Learning from Noisy Labels](https://proceedings.neurips.cc/paper_files/paper/2023/hash/d191ba4c8923ed8fd8935b7c98658b5f-Abstract-Conference.html)”, NeurIPS 2023
 
-- **Jian Chen** , “Timed hazard networks: Incorporating temporal difference for oncogenetic analysis”. PLOS ONE, 18(3):e0283004, 2023
+- **Jian Chen** , “[Timed hazard networks: Incorporating temporal difference for oncogenetic analysis](https://journals.plos.org/plosone/article?id=10.1371/journal.pone.0283004)”. PLOS ONE, 18(3):e0283004, 2023
 
-- **Jian Chen**, Le Yang, Lu Li, Steve Goodison, and Yijun Sun. "Alignment-free Comparison of Metagenomics Sequences via Approximate String Matching". Bioinformatics Advances, 2022
 
 
 ### Selected Preprint:
+- **Jian Chen**, Wenye Ma, Penghang Liu, Wei Wang, Tengwei Song, Ming Li, Chenguang Wang, Ruiyi Zhang, Changyou Chen, "[MusiXQA: Advancing Visual Music Understanding in Multimodal Large Language Models](https://puar-playground.github.io/assets/paper/2025-06-27/MusiXQA.pdf)", arXiv 2025
 
-- **Jian Chen**, Ruiyi Zhang, Yufan Zhou, Ryan Rossi, Jiuxiang Gu, Changyou Chen, "MMR: Evaluating Reading Ability of Large Multimodal Models", arXiv 2024
+- **Jian Chen**, Ruiyi Zhang, Yufan Zhou, Ryan Rossi, Jiuxiang Gu, Changyou Chen, "[MMR: Evaluating Reading Ability of Large Multimodal Models](https://arxiv.org/abs/2408.14594)", arXiv 2024
 
-- Ruiyi Zhang, Yufan Zhou, **Jian Chen**, Jiuxiang Gu, Changyou Chen, Tong Sun, "LLaVA-Read: Enhancing Reading Ability of Multimodal Language Models", arXiv 2024
+- Ruiyi Zhang, Yufan Zhou, **Jian Chen**, Jiuxiang Gu, Changyou Chen, Tong Sun, "[LLaVA-Read: Enhancing Reading Ability of Multimodal Language Models](https://arxiv.org/abs/2407.19185)", arXiv 2024
 
 ## Reviewer Service  
 - **2025**: ICLR ([Notable Reviewer](https://iclr.cc/Conferences/2025/Reviewers)), ACL, ICCV, ICML, CVPR
