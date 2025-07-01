@@ -45,7 +45,7 @@ I also continue to collaborate actively with academic partners on the applicatio
 
 
 ### Selected Preprint:
-- **Jian Chen**, Wenye Ma, Penghang Liu, Wei Wang, Tengwei Song, Ming Li, Chenguang Wang, Ruiyi Zhang, Changyou Chen, "[MusiXQA: Advancing Visual Music Understanding in Multimodal Large Language Models](https://puar-playground.github.io/assets/paper/2025-06-27/MusiXQA.pdf)", arXiv 2025
+- **Jian Chen**, Wenye Ma, Penghang Liu, Wei Wang, Tengwei Song, Ming Li, Chenguang Wang, Ruiyi Zhang, Changyou Chen, "[MusiXQA: Advancing Visual Music Understanding in Multimodal Large Language Models](https://arxiv.org/abs/2506.23009)", arXiv 2025
 
 - **Jian Chen**, Ruiyi Zhang, Yufan Zhou, Ryan Rossi, Jiuxiang Gu, Changyou Chen, "[MMR: Evaluating Reading Ability of Large Multimodal Models](https://arxiv.org/abs/2408.14594)", arXiv 2024
 
