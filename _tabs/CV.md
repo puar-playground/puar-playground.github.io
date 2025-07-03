@@ -15,7 +15,7 @@ I also continue to collaborate actively with academic partners on the applicatio
 >[<i class="fas fa-address-card"></i>]({{ site.url }}/download/Jian_Chen_CV_en.pdf) CV in PDF, [<i class="fas fa-envelope"></i>](mailto:jian.chen@dolby.com) jian.chen@dolby.com
 
 ## Education
-- Ph.D. in Computer Science, University at Buffalo, *2018 Fall - 2025 Spring* 
+- [Ph.D](https://puar-playground.github.io/download/CeD.25HM-0PED-JAN9.pdf). in Computer Science, University at Buffalo, *2018 Fall - 2025 Spring* 
 - M.S. in Electrical Engineering, Drexel University, *2015 Fall - 2017 Spring*
 - B.S. in Applied Mathematics, Hunan University, *2011 Fall - 2015 Spring*
 
