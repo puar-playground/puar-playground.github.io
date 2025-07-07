@@ -52,7 +52,7 @@ I also continue to collaborate actively with academic partners on the applicatio
 - Ruiyi Zhang, Yufan Zhou, **Jian Chen**, Jiuxiang Gu, Changyou Chen, Tong Sun, "[LLaVA-Read: Enhancing Reading Ability of Multimodal Language Models](https://arxiv.org/abs/2407.19185)", arXiv 2024
 
 ## Reviewer Service  
-- **2025**: ICLR ([Notable Reviewer](https://iclr.cc/Conferences/2025/Reviewers)), ACL, ICCV, ICML, CVPR, NeurIPS
+- **2025**: ICLR ([Notable Reviewer](https://iclr.cc/Conferences/2025/Reviewers)), ACL, ICCV, ICML, CVPR, NeurIPS, IJCAI
 - **2024**: ICML, TMLR, TETCI, PLOS ONE  
 
 ## Awards:
