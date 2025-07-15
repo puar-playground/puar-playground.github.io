@@ -15,4 +15,4 @@ I have got my official diploma!!!
 
 >And perm download [link](https://secure.cecredentialtrust.com/account/mysettings/).
 
-![diploma](https://puar-playground.github.io/download/CeD.25HM-0PED-JAN9.png)
+![diploma](https://puar-playground.github.io/assets/img/2025-03-24/diploma.jpg)
