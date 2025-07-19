@@ -13,6 +13,7 @@ Puar is a female domestic shorthair cat. Her name echoes the sound of 'purr' and
 ![puar2](https://puar-playground.github.io/assets/img/cats/puar.png)
 
 I adopted her from [Philly PAWS](https://phillypaws.org) on July 22, 2017, when she was just 3 months old. Originally found near 50th Street at a tender age of one month, Puar had a distinctive 90-degree malunion (bones do not heal in their proper position) in her tail. She learned not to interfere with human food and has never knocked anything over. She is friendly to human visitors but isn't fond of other animals. In March 2018, I brought puar back with me to China, where she now lives happily with my parents.<br /> 
+Puar is registered with TICA to formally document our companionship. [<i class="fas fa-award"></i>](https://puar-playground.github.io/download/Puar.pdf)
 
 ---
 ## Moonshine | 酒月
