@@ -88,7 +88,9 @@ A chatbot inspired by Kamisato Ayaka’s personality from Genshin Impact is now 
 
 <script>
 (function () {
-  const API_URL = "https://web-production-2f71a.up.railway.app/chat";
+
+
+  const API_URL = "https://gpt-chat-backend-production.up.railway.app/chat";
   let sessionId = localStorage.getItem("chat_session_id");
   if (!sessionId) {
     sessionId = crypto.randomUUID();
