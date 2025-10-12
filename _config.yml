@@ -40,7 +40,7 @@ social:
   # Change to your full name.
   # It will be displayed as the default author of the posts and the copyright owner in the Footer
   name: Jian Chen & puar
-  email: jchen378@buffalo.com # change to your email address
+  email: jian.chen@dolby.com # change to your email address
   links:
     # The first element serves as the copyright owner's link
     # - https://twitter.com/aaronl1u # change to your twitter homepage
@@ -86,7 +86,7 @@ theme_mode: # [light|dark]
 img_cdn:
 
 # the avatar on sidebar, support local or CORS resources
-avatar: /assets/img/avatar.png
+avatar: /assets/img/avatar_me.jpg
 
 # boolean type, the global switch for TOC in posts.
 toc: true
