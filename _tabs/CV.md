@@ -63,4 +63,9 @@ I play guitar and do music arrangement as a hobby. And, I have a Youtube Channel
 - Certificate, Songwriting: Writing the Music, Berklee Online, *2025 May*
 
 
-<div style="text-align: right;"><life-ticker-bar birth="1992-12-23T05:00:00+08:00" text="life timestamp"> </life-ticker-bar> </div>
+<div style="text-align: right;">
+  <life-ticker-bar
+    birth="1992-12-23T05:00:00+08:00"
+    text="life timestamp">
+  </life-ticker-bar>
+</div>
