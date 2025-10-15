@@ -16,6 +16,7 @@ order: 1
     text="life timestamp">
   </life-ticker-bar>
 </div>
+<br>
 
 I am a Senior Foundational AI Researcher at Dolby Laboratories.<br>
 My research focus on multimodal AI research aimed at enabling immersive digital experiences and ensuring data integrity and security. I also continue to collaborate actively with academic partners on the application and optimization of multimodal-LLMs and ML algorithms.
