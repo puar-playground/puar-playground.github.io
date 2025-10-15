@@ -7,12 +7,21 @@ order: 1
 <!-- Include Font Awesome -->
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 
-## Jian Chen
-I am a Senior Foundational AI Researcher at Dolby Laboratories in the Advanced Technology Group, where I focus on multimodal AI research aimed at enabling immersive digital experiences and ensuring data integrity and security. 
+<!-- Include life-ticker-bar component -->
+<script type="module" src="{{ '/assets/js/life-ticker-bar.js' | relative_url }}"></script>
 
-I also continue to collaborate actively with academic partners on the application and optimization of multimodal-LLMs and ML algorithms.
+<div style="text-align: right;">
+  <life-ticker-bar
+    birth="1992-12-23T05:00:00+08:00"
+    text="life timestamp">
+  </life-ticker-bar>
+</div>
+
+I am a Senior Foundational AI Researcher at Dolby Laboratories.<br>
+My research focus on multimodal AI research aimed at enabling immersive digital experiences and ensuring data integrity and security. I also continue to collaborate actively with academic partners on the application and optimization of multimodal-LLMs and ML algorithms.
 
 >[<i class="fas fa-address-card"></i>]({{ site.url }}/download/Jian_Chen_CV_en.pdf) CV in PDF, [<i class="fas fa-envelope"></i>](mailto:jian.chen@dolby.com) jian.chen@dolby.com
+
 
 ## Education
 - [Ph.D](https://puar-playground.github.io/posts/defense_passed/). in Computer Science, University at Buffalo, *2018 Fall - 2025 Spring* 
@@ -47,8 +56,8 @@ I also continue to collaborate actively with academic partners on the applicatio
 - Ruiyi Zhang, Yufan Zhou, **Jian Chen**, Jiuxiang Gu, Changyou Chen, Tong Sun, "[LLaVA-Read: Enhancing Reading Ability of Multimodal Language Models](https://arxiv.org/abs/2407.19185)", arXiv 2024
 
 ## Reviewer Service  
-- **2025**: ICLR ([Notable Reviewer](https://iclr.cc/Conferences/2025/Reviewers)), ACL, ICCV, ICML, CVPR, NeurIPS, IJCAI
-- **2024**: ICML, TMLR, TETCI, PLOS ONE  
+- **2025**: NeurIPS, ICLR ([Notable Reviewer](https://iclr.cc/Conferences/2025/Reviewers)), TMLR, AAAI, ACL, ICCV, ICML, CVPR, IJCAI
+- **2024**: NeurIPS, ICLR, ICML, TMLR, TETCI, PLOS ONE
 
 ## Awards:
 <i class="fa fa-trophy"></i> Best Graduation Thesis: "Low-rank tensor optimization for video image recovery." Hunan University, *2015*

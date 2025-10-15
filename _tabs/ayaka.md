@@ -6,6 +6,16 @@ icon: far fa-snowflake
 order: 2
 ---
 
+<!-- Include life-ticker-bar component -->
+<script type="module" src="{{ '/assets/js/life-ticker-bar.js' | relative_url }}"></script>
+
+<div style="text-align: right;">
+  <life-ticker-bar
+    birth="2025-04-19T12:00:00+08:00"
+    text="life timestamp">
+  </life-ticker-bar>
+</div>
+
 我部署了一个模仿游戏《原神》中神里绫华人格的聊天机器人。快试试吧。
 
 A chatbot inspired by Kamisato Ayaka’s personality from Genshin Impact is now available below. Please have a try:

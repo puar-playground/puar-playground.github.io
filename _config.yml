@@ -3,6 +3,8 @@
 head:
   custom: |
      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+     <script type="module" src="{{ '/assets/js/life-ticker-bar.js' | relative_url }}"></script>
+     
 
 # Import the theme
 theme: jekyll-theme-chirpy
