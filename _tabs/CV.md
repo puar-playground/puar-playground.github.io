@@ -10,8 +10,7 @@ order: 1
 <!-- Include life-ticker-bar component -->
 <script type="module" src="{{ '/assets/js/life-ticker-bar.js' | relative_url }}"></script>
 
-## Jian Chen <div style="text-align: right;"><life-ticker-bar birth="1992-12-23T05:00:00+08:00" text="life timestamp"> </life-ticker-bar> </div>
-
+## Jian Chen 
 I am a Senior Foundational AI Researcher at Dolby Laboratories.<br>
 My research focus on multimodal AI research aimed at enabling immersive digital experiences and ensuring data integrity and security. I also continue to collaborate actively with academic partners on the application and optimization of multimodal-LLMs and ML algorithms.
 
@@ -64,3 +63,4 @@ I play guitar and do music arrangement as a hobby. And, I have a Youtube Channel
 - Certificate, Songwriting: Writing the Music, Berklee Online, *2025 May*
 
 
+<div style="text-align: right;"><life-ticker-bar birth="1992-12-23T05:00:00+08:00" text="life timestamp"> </life-ticker-bar> </div>
