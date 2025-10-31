@@ -95,6 +95,31 @@ order: 2
   const grid=$('#ax-grid'), q=$('#ax-q'), kwInp=$('#ax-kw'), chips=$('#ax-chips'), count=$('#ax-count');
   const sortSel=$('#ax-sort'), btnCard=$('#ax-view-card'), btnList=$('#ax-view-list'), moreBtn=$('#ax-more'), favBtn=$('#ax-fav-only'), dateSel=$('#ax-date'), dl=$('#ax-download');
 
+  // network fallback (handle CORS on GitHub Pages)
+  let useProxy=false;
+  const proxyUrl = u => `https://cors.isomorphic-git.org/${u}`;
+  const maybeProxy = u => useProxy ? proxyUrl(u) : u;
+  async function fetchJSON(u){
+    try{
+      const res = await fetch(maybeProxy(u), {cache:'no-store'});
+      if(!res.ok) throw new Error('HTTP '+res.status);
+      return await res.json();
+    }catch(err){
+      // If not already using proxy, switch once and retry (likely CORS in production)
+      if(!useProxy){
+        useProxy = true;
+        try{
+          const res2 = await fetch(proxyUrl(u), {cache:'no-store'});
+          if(!res2.ok) throw new Error('HTTP '+res2.status);
+          return await res2.json();
+        }catch(e2){
+          // fall through to throw original
+        }
+      }
+      throw err;
+    }
+  }
+
   // local favorites
   const FKEY='arxiv:favs';
   const favSet=new Set(JSON.parse(localStorage.getItem(FKEY)||'[]'));
@@ -144,16 +169,15 @@ order: 2
     if (cat)          params.set('cat', cat);
     params.set('filter','1'); // zip with filtered contents
     const qs = params.toString();
-    dl.href = qs ? `${url}?${qs}` : url;
+    const href = qs ? `${url}?${qs}` : url;
+    dl.href = maybeProxy(href);
   }
 
   async function loadServer() {
     skeleton();
     try{
       const url = buildDataURL();
-      const res = await fetch(url, {cache:'no-store'});
-      if(!res.ok) throw new Error('HTTP '+res.status);
-      ALL = await res.json();
+      ALL = await fetchJSON(url);
       render(true);
     }catch(e){
       console.error(e);
@@ -165,9 +189,7 @@ order: 2
 
   async function loadHistoryList(){
     try{
-      const res = await fetch(`${API_BASE}/history`, {cache:'no-store'});
-      if(!res.ok) throw new Error('HTTP '+res.status);
-      const files = await res.json();
+      const files = await fetchJSON(`${API_BASE}/history`);
       files.forEach(fn=>{
         const d = fn.replace(/\.json$/,'');
         const opt = document.createElement('option');
