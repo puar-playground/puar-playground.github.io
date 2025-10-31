@@ -84,8 +84,9 @@ order: 2
   </div>
 </div>
 
+{% raw %}
 <script>
-(function(){
+(function() {
   const API_BASE = 'https://arxiv-backend-production.up.railway.app/arxiv';
   const CATS = ['cs.CL','cs.LG','cs.AI','cs.SD','eess.AS','cs.CV','cs.MM','cs.IR','cs.NE','stat.ML'];
 
@@ -430,5 +431,6 @@ order: 2
   
   // Also handle PJAX navigation (Chirpy theme)
   document.addEventListener('pjax:complete', boot);
-})();
+})(); // End of IIFE
 </script>
+{% endraw %}
