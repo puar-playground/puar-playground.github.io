@@ -7,7 +7,10 @@ head:
      
 
 # Import the theme
-theme: jekyll-theme-chirpy
+# theme: jekyll-theme-chirpy
+remote_theme: cotes2020/jekyll-theme-chirpy
+plugins:
+  - jekyll-remote-theme
 
 # Change the following value to '/PROJECT_NAME' ONLY IF your site type is GitHub Pages Project sites
 # and doesn't have a custom domain.
