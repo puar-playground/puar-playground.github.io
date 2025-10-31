@@ -126,3 +126,13 @@
 
 /* light/dark tiny tune-ups */
 html[data-mode=dark] #arxiv-app .ax-card{ border-color: rgba(255,255,255,.06) }
+
+
+/* 确保顶栏按钮永远可点 */
+#topbar, #topbar .btn, .mode-toggle.btn { position: relative; z-index: 10; }
+
+/* 避免你的内容层盖住顶栏（有些主题用负/正 z-index 的交互） */
+#arxiv-app, .ax-wrap { position: relative; z-index: 0; }
+
+/* 万一有全屏遮罩，确保默认隐藏 */
+#mask { pointer-events: none; }

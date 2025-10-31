@@ -456,6 +456,7 @@ async function boot(){
   await ensureMathJax();
   await loadHistoryList();
   await loadServer();
+  bindThemeToggleOnce(); 
 }
 
 // DOM Ready / PJAX
@@ -463,3 +464,62 @@ if (document.readyState === 'loading'){
   document.addEventListener('DOMContentLoaded', boot);
 } else { boot(); }
 document.addEventListener('pjax:complete', boot);
+
+/* ===== 在 PJAX 完成后重绑主题按钮（不会报错，没 PJAX 也没关系） ===== */
+(function setupPjaxHook(){
+  if (window.__axPjaxHooked) return;           // 防重复安装
+  window.__axPjaxHooked = true;
+
+  // Chirpy 会在局部加载后触发这个事件；不存在也不会报错
+  document.addEventListener('pjax:complete', () => {
+    try { bindThemeToggleOnce(); } catch (e) { console.warn(e); }
+  });
+
+  // 保险：某些情况下按钮是后插入的，用一次性 MutationObserver 兜底
+  try {
+    const mo = new MutationObserver(() => { bindThemeToggleOnce(); });
+    mo.observe(document.documentElement, { childList: true, subtree: true });
+    // 观察 3 秒足够覆盖 PJAX 切换过程，随后自动停止
+    setTimeout(() => mo.disconnect(), 3000);
+  } catch(_) {}
+})();
+
+
+
+/* ===== Hotfix: re-bind theme toggle on this page (Chirpy-compatible) ===== */
+function bindThemeToggleOnce() {
+  const btn = document.querySelector('.mode-toggle');   // 主题右上角按钮
+  if (!btn || btn.dataset.axBound) return;              // 防重复绑定
+
+  // 拿到或创建一个 ModeToggle 实例（主题里用 const，不挂 window）
+  function getModeInstance() {
+    if (window.__axModeToggle) return window.__axModeToggle;
+    if (typeof window.ModeToggle === 'function') {
+      window.__axModeToggle = new window.ModeToggle();
+      return window.__axModeToggle;
+    }
+    return null;
+  }
+
+  btn.addEventListener('click', () => {
+    try {
+      const inst = getModeInstance();
+      if (inst && typeof inst.flipMode === 'function') {
+        inst.flipMode();                       // ✅ 走主题原生切换
+      } else {
+        // 兜底方案：直接切换 html[data-mode] & sessionStorage
+        const root = document.documentElement;
+        const cur  = root.getAttribute('data-mode');
+        const next = cur === 'dark' ? 'light' : 'dark';
+        root.setAttribute('data-mode', next);
+        try { sessionStorage.setItem('mode', next); } catch {}
+        // 通知其他监听者（主题里会用 postMessage 同步）
+        window.postMessage({ direction: 'mode-toggle', message: next }, '*');
+      }
+    } catch (err) {
+      console.warn('Theme toggle fallback failed:', err);
+    }
+  }, { passive: true });
+
+  btn.dataset.axBound = '1';
+}
