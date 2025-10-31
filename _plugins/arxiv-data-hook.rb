@@ -70,19 +70,23 @@ Jekyll::Hooks.register :site, :pre_render do |site|
   end
   
   # Also write data to a JSON file for client-side loading (avoids CORS)
+  # Write to source directory so Jekyll will copy it to the output
   begin
     data_dir = File.join(site.source, 'assets', 'js', 'data')
     FileUtils.mkdir_p(data_dir) unless File.directory?(data_dir)
     
     arxiv_json_path = File.join(data_dir, 'arxiv-latest.json')
-    File.write(arxiv_json_path, JSON.pretty_generate(site.data['arxiv_latest'] || []))
-    Jekyll.logger.info "arXiv:", "Written JSON data to #{arxiv_json_path}"
+    json_content = JSON.pretty_generate(site.data['arxiv_latest'] || [])
+    File.write(arxiv_json_path, json_content)
+    Jekyll.logger.info "arXiv:", "Written JSON data to #{arxiv_json_path} (#{json_content.bytesize} bytes)"
     
     history_json_path = File.join(data_dir, 'arxiv-history.json')
-    File.write(history_json_path, JSON.pretty_generate(site.data['arxiv_history'] || []))
-    Jekyll.logger.info "arXiv:", "Written history data to #{history_json_path}"
+    history_content = JSON.pretty_generate(site.data['arxiv_history'] || [])
+    File.write(history_json_path, history_content)
+    Jekyll.logger.info "arXiv:", "Written history data to #{history_json_path} (#{history_content.bytesize} bytes)"
   rescue StandardError => e
-    Jekyll.logger.warn "arXiv:", "Failed to write JSON files: #{e.message}"
+    Jekyll.logger.error "arXiv:", "Failed to write JSON files: #{e.class} - #{e.message}"
+    Jekyll.logger.error "arXiv:", e.backtrace.first(3).join("\n") if e.backtrace
   end
 end
 

@@ -105,8 +105,21 @@ order: 2
   const toggleFav=id=>{ isFav(id)?favSet.delete(id):favSet.add(id); saveFavs(); render(true); refreshDownloadLink(); };
 
   function toast(msg, ms=2200){ const t=document.createElement('div'); t.className='ax-toast'; t.textContent=msg; document.body.appendChild(t); setTimeout(()=>t.remove(), ms); }
-  function escapeHTML(s){return (s||'').replace(/[&<>"']/g, ch=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[ch]))}
-  function hl(text,q){ if(!q) return escapeHTML(text||''); const esc=escapeHTML(text||''); const re=new RegExp('('+q.replace(/[.*+?^${}()|[\]\\]/g,'\\$&')+')','ig'); return esc.replace(re,'<span class="ax-hl">$1</span>'); }
+  function escapeHTML(s){return String(s||'').replace(/[&<>"']/g, ch=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[ch]))}
+  function hl(text,q){ 
+    const textStr = String(text||'');
+    if(!q) return escapeHTML(textStr); 
+    const esc=escapeHTML(textStr); 
+    const qStr = String(q||'');
+    if(!qStr.trim()) return esc;
+    try {
+      const re=new RegExp('('+qStr.replace(/[.*+?^${}()|[\]\\]/g,'\\$&')+')','ig'); 
+      return esc.replace(re,'<span class="ax-hl">$1</span>');
+    }catch(e){
+      console.warn('Highlight regex failed:', e);
+      return esc;
+    }
+  }
 
   function bibtex(p){
     const id=(p.id||'').replace(/v\d+$/,'')||'arxiv';
@@ -162,12 +175,15 @@ order: 2
           const res = await fetch(proxyUrl, {cache:'no-store', mode:'cors'});
           if(res.ok){
             const proxyData = await res.json();
-            const parsed = JSON.parse(proxyData.contents);
+            if(!proxyData.contents){
+              throw new Error('Invalid proxy response: missing contents');
+            }
+            const parsed = typeof proxyData.contents === 'string' ? JSON.parse(proxyData.contents) : proxyData.contents;
             console.log('Loaded from API via CORS proxy');
             return parsed;
           }
         }catch(proxyErr){
-          console.warn('CORS proxy also failed');
+          console.warn('CORS proxy also failed:', proxyErr.message);
         }
       }
       throw err;
@@ -379,17 +395,31 @@ order: 2
     // Always update chips to reflect current category selection
     renderChips();
     
+    if(!grid || !count || !moreBtn) {
+      console.error('Required DOM elements missing in render()');
+      return;
+    }
+    
     const items=filteredClient();
     if(resetLayout) grid.classList.toggle('ax-list', view==='list');
     const total=items.length;
     const start=page*pageSize, end=Math.min(start+pageSize,total);
     if(start===0) grid.innerHTML='';
     const chunk=items.slice(start,end);
-    const html=chunk.map(cardHTML).join('');
-    const frag=document.createElement('div'); frag.innerHTML=html; attachActions(frag);
-    grid.append(...frag.childNodes);
-    count.textContent=`${total} item${total!==1?'s':''}${cat?` · ${cat}`:''}${query?` · "${query}"`:''}${kw?` · kw:${kw}`:''}${favOnly?' · ⭐':''}${day?` · ${day}`:' · Today'}`;
-    moreBtn.style.display=end<total?'block':'none';
+    
+    if(chunk.length === 0 && total === 0 && start === 0){
+      grid.innerHTML = `<div class="ax-card ax-empty" style="padding:2rem;text-align:center;">
+        <p>No papers found.</p>
+        <p style="font-size:.85rem;opacity:.7;margin-top:.5rem;">Try adjusting your search or filters.</p>
+      </div>`;
+    } else {
+      const html=chunk.map(cardHTML).join('');
+      const frag=document.createElement('div'); frag.innerHTML=html; attachActions(frag);
+      grid.append(...frag.childNodes);
+    }
+    
+    if(count) count.textContent=`${total} item${total!==1?'s':''}${cat?` · ${cat}`:''}${query?` · "${query}"`:''}${kw?` · kw:${kw}`:''}${favOnly?' · ⭐':''}${day?` · ${day}`:' · Today'}`;
+    if(moreBtn) moreBtn.style.display=end<total?'block':'none';
   }
 
   function reset(){ page=0; grid.innerHTML=''; render(true); refreshDownloadLink(); }
