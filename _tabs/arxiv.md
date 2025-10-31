@@ -124,6 +124,55 @@ order: 2
   const copy=text=>navigator.clipboard.writeText(text).then(()=>toast('Copied!'));
 
   // ------------ server interaction ------------
+  // Try to load from same-origin JSON file first (no CORS), fallback to API
+  async function fetchWithFallback(url) {
+    // First try: local JSON file (only if no filters applied, since local file has no filters)
+    // If filters are active, we need to fetch from API which applies server-side filtering
+    const hasFilters = query.trim() || kw.trim() || cat;
+    
+    if(!hasFilters && !day){
+      try {
+        const localUrl = '/assets/js/data/arxiv-latest.json';
+        const res = await fetch(localUrl, {cache:'no-store'});
+        if(res.ok){
+          const data = await res.json();
+          if(data && Array.isArray(data) && data.length > 0){
+            console.log('Loaded from local JSON file (no CORS needed)');
+            return data;
+          }
+        }
+      }catch(e){
+        console.log('Local JSON not available, using API');
+      }
+    }
+    
+    // Fallback: fetch from API (may fail due to CORS)
+    try {
+      const res = await fetch(url, {cache:'no-store', mode:'cors'});
+      if(!res.ok) throw new Error('HTTP '+res.status);
+      const data = await res.json();
+      console.log('Loaded from API');
+      return data;
+    }catch(err){
+      // If CORS fails, try a public CORS proxy as last resort
+      if(err.message.includes('CORS') || err.message.includes('Failed to fetch')){
+        try {
+          const proxyUrl = `https://api.allorigins.win/get?url=${encodeURIComponent(url)}`;
+          const res = await fetch(proxyUrl, {cache:'no-store', mode:'cors'});
+          if(res.ok){
+            const proxyData = await res.json();
+            const parsed = JSON.parse(proxyData.contents);
+            console.log('Loaded from API via CORS proxy');
+            return parsed;
+          }
+        }catch(proxyErr){
+          console.warn('CORS proxy also failed');
+        }
+      }
+      throw err;
+    }
+  }
+
   function buildDataURL() {
     const base = day ? `${API_BASE}/history/${day}.json` : `${API_BASE}/latest.json`;
     const params = new URLSearchParams();
@@ -152,13 +201,19 @@ order: 2
     skeleton();
     try{
       const url = buildDataURL();
-      const res = await fetch(url, {cache:'no-store'});
-      if(!res.ok) throw new Error('HTTP '+res.status);
-      ALL = await res.json();
+      // Use fetchWithFallback which tries local JSON first, then API
+      ALL = await fetchWithFallback(url);
+      if(!Array.isArray(ALL)){
+        throw new Error('Response is not an array');
+      }
       render(true);
     }catch(e){
-      console.error(e);
-      grid.innerHTML = `<div class="ax-card ax-empty">Failed to load arXiv feed.</div>`;
+      console.error('Failed to load data:', e);
+      grid.innerHTML = `<div class="ax-card ax-empty" style="padding:2rem;text-align:center;">
+        <p><strong>Failed to load arXiv feed.</strong></p>
+        <p style="font-size:.85rem;opacity:.7;margin-top:.5rem;">Error: ${escapeHTML(e.message)}</p>
+        <p style="font-size:.85rem;opacity:.7;margin-top:.5rem;">Try refreshing the page or check your network connection.</p>
+      </div>`;
     } finally {
       refreshDownloadLink();
     }
@@ -166,16 +221,39 @@ order: 2
 
   async function loadHistoryList(){
     try{
-      const res = await fetch(`${API_BASE}/history`, {cache:'no-store'});
+      // Try local JSON first
+      try {
+        const localRes = await fetch('/assets/js/data/arxiv-history.json', {cache:'no-store'});
+        if(localRes.ok){
+          const files = await localRes.json();
+          if(Array.isArray(files)){
+            files.forEach(fn=>{
+              const d = fn.replace(/\.json$/,'');
+              const opt = document.createElement('option');
+              opt.value = d;
+              opt.textContent = d;
+              dateSel.appendChild(opt);
+            });
+            return; // Success, exit early
+          }
+        }
+      }catch(e){
+        console.log('Local history not available, trying API');
+      }
+      
+      // Fallback to API
+      const res = await fetch(`${API_BASE}/history`, {cache:'no-store', mode:'cors'});
       if(!res.ok) throw new Error('HTTP '+res.status);
       const files = await res.json();
-      files.forEach(fn=>{
-        const d = fn.replace(/\.json$/,'');
-        const opt = document.createElement('option');
-        opt.value = d;
-        opt.textContent = d;
-        dateSel.appendChild(opt);
-      });
+      if(Array.isArray(files)){
+        files.forEach(fn=>{
+          const d = fn.replace(/\.json$/,'');
+          const opt = document.createElement('option');
+          opt.value = d;
+          opt.textContent = d;
+          dateSel.appendChild(opt);
+        });
+      }
     }catch(e){
       console.warn('history list unavailable (ok if first day)', e);
     }
