@@ -5,7 +5,7 @@ head:
      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
      <script type="module" src="{{ '/assets/js/life-ticker-bar.js' | relative_url }}"></script>
      
-
+ 
 # Import the theme
 theme: jekyll-theme-chirpy
 
@@ -26,7 +26,7 @@ timezone: America/New_York
 
 title: Jian Chen # the main title
 
-tagline: Cat, Research, Music. # it will display as the sub-title
+tagline: Research, Music, Cat. # it will display as the sub-title
 
 description: >- # used by seo meta and the atom feed
   Jian's home page.
