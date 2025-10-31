@@ -3,27 +3,34 @@
  * Drop-in script for GitHub Pages + Jekyll (Chirpy)
  */
 
-/* ---- MathJax robust loader (works on GitHub Pages) ---- */
+/* ---------------- 防重复初始化（PJAX 友好） ---------------- */
+const __APP__ = document.getElementById('arxiv-app');
+if (__APP__) {
+  if (__APP__.dataset.inited === '1') {
+    console.debug('[arxiv] already inited, skip');
+  } else {
+    __APP__.dataset.inited = '1';
+  }
+}
+
+/* ---------------- MathJax：稳健加载 + 排版 ---------------- */
 let __MJX_PROMISE = null;
-
 async function ensureMathJax() {
-  if (window.MathJax?.typesetPromise) return; // already ready
-
+  if (window.MathJax?.typesetPromise) return;
   if (!__MJX_PROMISE) {
     __MJX_PROMISE = new Promise((resolve) => {
-      // 1) config MUST be set before script tag is evaluated
       if (!window.MathJax) {
         window.MathJax = {
           tex: {
             inlineMath: [['$', '$'], ['\\(', '\\)']],
             displayMath: [['$$','$$'], ['\\[','\\]']],
-            processEscapes: true
+            processEscapes: true,
+            processEnvironments: true
           },
           options: {
-            skipHtmlTags: { '[-]': ['script','noscript','style','textarea','pre','code'] }
+            skipHtmlTags: ['script','noscript','style','textarea','pre','code']
           },
           startup: {
-            // we’ll control when to typeset; just resolve when ready
             ready: () => {
               MathJax.startup.defaultReady();
               resolve();
@@ -31,19 +38,14 @@ async function ensureMathJax() {
           }
         };
       }
-
-      // 2) inject script if not present
       if (!document.getElementById('mjx-script')) {
         const s = document.createElement('script');
         s.id = 'mjx-script';
         s.async = true;
-        // 固定 v3 主线；加个 cache bust 避免 GH Pages 老缓存
         s.src = 'https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js?v=3.2.2';
         s.onerror = () => { console.warn('MathJax load failed'); resolve(); };
         document.head.appendChild(s);
       }
-
-      // 3) double-guard: if ready wasn’t hit (e.g., cached), poll typesetPromise
       const tick = () => {
         if (window.MathJax?.typesetPromise) return resolve();
         setTimeout(tick, 50);
@@ -53,35 +55,28 @@ async function ensureMathJax() {
   }
   await __MJX_PROMISE;
 }
-
-/* 改造原来的 typeset 函数：先确保 MathJax 到位再排版 */
 async function typesetMath(scope){
   await ensureMathJax();
-  try {
-    await MathJax.typesetPromise(scope ? [scope] : undefined);
-  } catch (e) {
-    console.warn('MathJax typeset error:', e);
-  }
+  try { await MathJax.typesetPromise(scope ? [scope] : undefined); }
+  catch(e){ console.warn('MathJax typeset error:', e); }
 }
 
-
-/* ===================== Config ===================== */
+/* ---------------- Config ---------------- */
 const API_BASE = 'https://arxiv-backend-production.up.railway.app/arxiv';
 const CATS = ['cs.CL','cs.LG','cs.AI','cs.SD','eess.AS','cs.CV','cs.MM','cs.IR','cs.NE','stat.ML'];
-// 从 <meta name="baseurl" content="..."> 读取站点 baseurl（在 arxiv.md 里我们已注入）
 const BASE = document.querySelector('meta[name="baseurl"]')?.content || '';
 
-/* ===================== State & DOM ===================== */
-let ALL = [];                 // 当前已加载的数据（数组）
-let query = '';               // q= 文本检索（title/abstract/authors）
-let kw = '';                  // kw= 关键词（逗号分隔）
-let cat = null;               // 当前选中分类
-let sort = 'date_desc';       // 排序
-let view = 'card';            // 视图：card/list
-let favOnly = false;          // 只看收藏
-let day = '';                 // 历史日期（yyyy-mm-dd）
-let page = 0;                 // 前端分页页码
-let pageSize = 12;            // 每页条数
+/* ---------------- State & DOM ---------------- */
+let ALL = [];
+let query = '';
+let kw = '';
+let cat = null;
+let sort = 'date_desc';
+let view = 'card';
+let favOnly = false;
+let day = '';
+let page = 0;
+let pageSize = 12;
 
 const $ = s => document.querySelector(s);
 const app = () => document.getElementById('arxiv-app');
@@ -98,7 +93,7 @@ const favBtn = $('#ax-fav-only');
 const dateSel = $('#ax-date');
 const dl = $('#ax-download');
 
-/* ===================== Utils ===================== */
+/* ---------------- Utils ---------------- */
 const FKEY = 'arxiv:favs';
 const favSet = new Set(JSON.parse(localStorage.getItem(FKEY) || '[]'));
 const saveFavs = () => localStorage.setItem(FKEY, JSON.stringify([...favSet]));
@@ -112,14 +107,13 @@ function toast(msg, ms=2000){
   document.body.appendChild(t);
   setTimeout(() => t.remove(), ms);
 }
-
 function escapeHTML(s){
   return String(s || '').replace(/[&<>"']/g, ch => (
     {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;','\'':'&#39;'}[ch]
   ));
 }
 
-/* 高亮：若包含数学分隔符，则跳过高亮以免破坏公式（简洁稳妥版） */
+/* 高亮：包含数学时跳过，避免破坏公式 */
 function hl(text, q){
   const s = String(text || '');
   const hasMath = /(\$\$[\s\S]*?\$\$)|(\$[^$]*\$)|\\\(|\\\)|\\\[|\\\]/.test(s);
@@ -149,17 +143,41 @@ function bibtex(p){
 }
 const copy = txt => navigator.clipboard.writeText(txt).then(() => toast('Copied'));
 
-/* MathJax：对指定 scope 进行 typeset（动态 DOM 必需） */
-function typesetMath(scope){
-  if (window.MathJax && MathJax.typesetPromise) {
-    return MathJax.typesetPromise([scope]).catch(err => console.warn('MathJax typeset error:', err));
+/* ---------------- 去重：按基本 arXiv ID 保留最高版本 ---------------- */
+function normId(it) {
+  const raw = it.id || it.arxiv_id || it.aid || it.identifier || it.url || '';
+  let s = String(raw).trim();
+  const m = s.match(/arxiv\.org\/(?:abs|pdf)\/([^?#/]+)(?:\.pdf)?/i);
+  if (m) s = m[1];
+  s = s.replace(/^arXiv:/i, '').trim();
+  return s;
+}
+function parseArxivId(idStr) {
+  const m = String(idStr).match(/^(.*?)(?:v(\d+))?$/i);
+  if (!m) return { base: idStr, v: 1 };
+  return { base: m[1], v: m[2] ? parseInt(m[2], 10) : 1 };
+}
+function dedupeKeepLatest(arr) {
+  const map = new Map(); // base -> item(with _v)
+  for (const it of arr) {
+    const id = normId(it);
+    if (!id) continue;
+    const { base, v } = parseArxivId(id);
+    const curV = Number.isFinite(v) ? v : (it.version || 1);
+    const prev = map.get(base);
+    if (!prev || curV > prev._v) {
+      const copy = { ...it };
+      copy._v = curV;
+      copy._id = id;
+      map.set(base, copy);
+    }
   }
+  return Array.from(map.values());
 }
 
-/* ===================== Data fetch ===================== */
-/* 优先尝试本地 JSON（避免 CORS），失败再走 API，最后兜底 CORS 代理 */
+/* ---------------- Data fetch ---------------- */
 async function fetchWithFallback(url){
-  const hasFilters = query.trim() || kw.trim() || cat || day; // 本地 latest.json 仅用于“当天且无过滤”
+  const hasFilters = query.trim() || kw.trim() || cat || day;
   if (!hasFilters){
     try{
       const localUrl = `${BASE}/assets/js/data/arxiv-latest.json`;
@@ -173,7 +191,6 @@ async function fetchWithFallback(url){
       }
     }catch(e){ console.log('Local latest.json not available'); }
   }
-  // API
   try{
     const r = await fetch(url, {cache:'no-store', mode:'cors'});
     if (!r.ok) throw new Error('HTTP ' + r.status);
@@ -196,7 +213,6 @@ async function fetchWithFallback(url){
     throw err;
   }
 }
-
 function buildDataURL(){
   const base = day ? `${API_BASE}/history/${day}.json` : `${API_BASE}/latest.json`;
   const qs = new URLSearchParams();
@@ -207,7 +223,6 @@ function buildDataURL(){
   const s = qs.toString();
   return s ? `${base}?${s}` : base;
 }
-
 function refreshDownloadLink(){
   let url = `${API_BASE}/history.zip`;
   const qs = new URLSearchParams();
@@ -215,16 +230,17 @@ function refreshDownloadLink(){
   if (query.trim()) qs.set('q', query.trim());
   if (kw.trim()) qs.set('kw', kw.trim());
   if (cat) qs.set('cat', cat);
-  qs.set('filter','1'); // 仅打包过滤后的
+  qs.set('filter','1');
   dl.href = (qs.toString() ? `${url}?${qs}` : url);
 }
-
 async function loadServer(){
   skeleton();
   try{
     const url = buildDataURL();
-    ALL = await fetchWithFallback(url);
-    if (!Array.isArray(ALL)) throw new Error('Response is not an array');
+    let data = await fetchWithFallback(url);
+    if (!Array.isArray(data)) throw new Error('Response is not an array');
+    // ✅ 去重并保留最新版本
+    ALL = dedupeKeepLatest(data);
     render(true);
   }catch(e){
     console.error('Failed to load data:', e);
@@ -236,10 +252,8 @@ async function loadServer(){
     refreshDownloadLink();
   }
 }
-
 async function loadHistoryList(){
   try{
-    // 先尝试本地 arxiv-history.json
     try{
       const r = await fetch(`${BASE}/assets/js/data/arxiv-history.json`, {cache:'no-store'});
       if (r.ok){
@@ -255,7 +269,6 @@ async function loadHistoryList(){
         }
       }
     }catch{ /* ignore */ }
-    // 再尝试 API
     const r2 = await fetch(`${API_BASE}/history`, {cache:'no-store', mode:'cors'});
     if (!r2.ok) throw new Error('HTTP ' + r2.status);
     const files2 = await r2.json();
@@ -270,7 +283,7 @@ async function loadHistoryList(){
   }catch(e){ console.warn('history list unavailable:', e); }
 }
 
-/* ===================== UI helpers ===================== */
+/* ---------------- UI helpers ---------------- */
 function chip(label){
   const b = document.createElement('button');
   b.className = 'ax-chip' + (cat === label ? ' active' : '');
@@ -278,7 +291,6 @@ function chip(label){
   b.onclick = () => { cat = (cat === label ? null : label); resetAndLoad(); };
   return b;
 }
-
 function renderChips(){
   const holder = document.getElementById('ax-chips');
   if (!holder) return;
@@ -290,7 +302,6 @@ function renderChips(){
     holder.appendChild(x);
   }
 }
-
 function filteredClient(){
   let arr = ALL.slice();
   // 排序
@@ -313,9 +324,7 @@ function filteredClient(){
   }
   return arr;
 }
-
 function iconStar(active){ return active ? '⭐' : '☆'; }
-
 function cardHTML(p){
   const baseId = (p.id||'').replace(/v\d+$/,'');
   const title  = p.title || '';
@@ -373,7 +382,6 @@ function cardHTML(p){
     </article>`;
   }
 }
-
 function attachActions(scope){
   scope.querySelectorAll('[data-bib]').forEach(b => {
     b.onclick = () => {
@@ -385,18 +393,15 @@ function attachActions(scope){
   scope.querySelectorAll('[data-fav]').forEach(b => {
     b.onclick = () => toggleFav(b.getAttribute('data-fav'));
   });
-  // 摘要详情展开时再 typeset 一次，确保布局后渲染
   scope.querySelectorAll('details > summary').forEach(sum => {
     sum.addEventListener('click', () => {
       setTimeout(() => typesetMath(app()), 0);
     });
   });
 }
-
 function skeleton(n=6){
   grid.innerHTML = Array.from({length: n}).map(() => `<div class="ax-skel"></div>`).join('');
 }
-
 function render(resetLayout=false){
   renderChips();
 
@@ -427,18 +432,15 @@ function render(resetLayout=false){
 
   if (moreBtn) moreBtn.style.display = (end < total ? 'block' : 'none');
 
-  // ✅ 对刚刚渲染出的 DOM 进行公式排版
   typesetMath(app());
 }
-
 function reset(){ page = 0; grid.innerHTML=''; render(true); refreshDownloadLink(); }
 function resetAndLoad(){ page = 0; loadServer(); }
 
-/* ===================== Boot ===================== */
+/* ---------------- Boot ---------------- */
 async function boot(){
   if (!grid || !qInp || !kwInp) return;
 
-  // 初始控件
   qInp.value = ''; kwInp.value = '';
   query=''; kw=''; cat=null; sort='date_desc'; view='card'; favOnly=false; day='';
 
@@ -451,47 +453,42 @@ async function boot(){
   moreBtn.onclick = () => { page++; render(); refreshDownloadLink(); };
   dateSel.onchange= e => { day = e.target.value; resetAndLoad(); };
 
-  // 先画 chips 再加载数据
   renderChips();
   await ensureMathJax();
   await loadHistoryList();
   await loadServer();
-  bindThemeToggleOnce(); 
+  bindThemeToggleOnce();
 }
 
-// DOM Ready / PJAX
+/* DOM Ready / PJAX */
 if (document.readyState === 'loading'){
-  document.addEventListener('DOMContentLoaded', boot);
+  document.addEventListener('DOMContentLoaded', boot, { once: true });
 } else { boot(); }
-document.addEventListener('pjax:complete', boot);
+document.addEventListener('pjax:complete', () => {
+  const appEl = document.getElementById('arxiv-app');
+  if (appEl && appEl.dataset.inited !== '1') boot();
+}, { passive: true });
 
-/* ===== 在 PJAX 完成后重绑主题按钮（不会报错，没 PJAX 也没关系） ===== */
+/* ---------------- 主题切换 & 顶栏兜底 ---------------- */
 (function setupPjaxHook(){
-  if (window.__axPjaxHooked) return;           // 防重复安装
+  if (window.__axPjaxHooked) return;
   window.__axPjaxHooked = true;
 
-  // Chirpy 会在局部加载后触发这个事件；不存在也不会报错
   document.addEventListener('pjax:complete', () => {
     try { bindThemeToggleOnce(); } catch (e) { console.warn(e); }
   });
 
-  // 保险：某些情况下按钮是后插入的，用一次性 MutationObserver 兜底
   try {
     const mo = new MutationObserver(() => { bindThemeToggleOnce(); });
     mo.observe(document.documentElement, { childList: true, subtree: true });
-    // 观察 3 秒足够覆盖 PJAX 切换过程，随后自动停止
     setTimeout(() => mo.disconnect(), 3000);
   } catch(_) {}
 })();
 
-
-
-/* ===== Hotfix: re-bind theme toggle on this page (Chirpy-compatible) ===== */
 function bindThemeToggleOnce() {
-  const btn = document.querySelector('.mode-toggle');   // 主题右上角按钮
-  if (!btn || btn.dataset.axBound) return;              // 防重复绑定
+  const btn = document.querySelector('.mode-toggle');
+  if (!btn || btn.dataset.axBound) return;
 
-  // 拿到或创建一个 ModeToggle 实例（主题里用 const，不挂 window）
   function getModeInstance() {
     if (window.__axModeToggle) return window.__axModeToggle;
     if (typeof window.ModeToggle === 'function') {
@@ -505,15 +502,13 @@ function bindThemeToggleOnce() {
     try {
       const inst = getModeInstance();
       if (inst && typeof inst.flipMode === 'function') {
-        inst.flipMode();                       // ✅ 走主题原生切换
+        inst.flipMode();
       } else {
-        // 兜底方案：直接切换 html[data-mode] & sessionStorage
         const root = document.documentElement;
         const cur  = root.getAttribute('data-mode');
         const next = cur === 'dark' ? 'light' : 'dark';
         root.setAttribute('data-mode', next);
         try { sessionStorage.setItem('mode', next); } catch {}
-        // 通知其他监听者（主题里会用 postMessage 同步）
         window.postMessage({ direction: 'mode-toggle', message: next }, '*');
       }
     } catch (err) {
@@ -524,15 +519,12 @@ function bindThemeToggleOnce() {
   btn.dataset.axBound = '1';
 }
 
-
-// ---- Fallback binder for Chirpy topbar controls ----
 function bindChirpyTopbarFallback() {
   try {
-    // 侧栏开关：Chirpy 用的是在 <html> 节点上加/去 attribute: [sidebar-display]
     const sideBtn = document.getElementById('sidebar-trigger');
     if (sideBtn && !sideBtn.dataset.axBound) {
       sideBtn.addEventListener('click', () => {
-        const root = document.documentElement; // <html>
+        const root = document.documentElement;
         if (root.hasAttribute('sidebar-display')) {
           root.removeAttribute('sidebar-display');
         } else {
@@ -542,7 +534,6 @@ function bindChirpyTopbarFallback() {
       sideBtn.dataset.axBound = '1';
     }
 
-    // 搜索弹层（尽量不改主题逻辑，仅兜底显隐）
     const searchBtn  = document.getElementById('search-trigger');
     const cancelBtn  = document.getElementById('search-cancel');
     const resultWrap = document.getElementById('search-result-wrapper');
@@ -565,16 +556,9 @@ function bindChirpyTopbarFallback() {
     console.warn('[arxiv] topbar fallback failed:', e);
   }
 }
+document.addEventListener('DOMContentLoaded', () => { try { bindChirpyTopbarFallback(); } catch(_) {} });
+document.addEventListener('pjax:complete', () => { try { bindChirpyTopbarFallback(); } catch(_) {} });
 
-// 页面初次 + PJAX 返回时都兜底一次（try/catch 防止抛错影响其他监听器）
-document.addEventListener('DOMContentLoaded', () => {
-  try { bindChirpyTopbarFallback(); } catch(_) {}
-});
-document.addEventListener('pjax:complete', () => {
-  try { bindChirpyTopbarFallback(); } catch(_) {}
-});
-
-// 同时，把你自己的 boot 也包一层，避免异常“中断”其他监听器
 const _origBoot = typeof boot === 'function' ? boot : null;
 async function safeBoot() {
   try { if (_origBoot) await _origBoot(); }
