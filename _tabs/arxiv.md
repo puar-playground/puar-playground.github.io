@@ -6,7 +6,7 @@ permalink: /arxiv/
 order: 2
 ---
 
-<!-- 可选：注入 baseurl，便于 JS 复用 -->
+<!-- 注入 baseurl，供 JS 读取（Option A 核心） -->
 <meta name="baseurl" content="{{ site.baseurl }}">
 
 <style>
@@ -92,6 +92,9 @@ order: 2
   const API_BASE = 'https://arxiv-backend-production.up.railway.app/arxiv';
   const CATS = ['cs.CL','cs.LG','cs.AI','cs.SD','eess.AS','cs.CV','cs.MM','cs.IR','cs.NE','stat.ML'];
 
+  // ✅ 读取 meta 中的 baseurl（Option A 核心）
+  const BASE = document.querySelector('meta[name="baseurl"]')?.content || '';
+
   // state
   let ALL=[], query='', kw='', cat=null, sort='date_desc', view='card', favOnly=false, day='';
   let page=0, pageSize=12;
@@ -148,8 +151,8 @@ order: 2
     
     if(!hasFilters && !day){
       try {
-        // ✅ 修正：从 '/assets/...' 改为 '{{ site.baseurl }}/assets/...'
-        const localUrl = '{{ site.baseurl }}/assets/js/data/arxiv-latest.json';
+        // ✅ 改为通过 BASE 绝对路径（避免 raw 吃掉 Liquid）
+        const localUrl = `${BASE}/assets/js/data/arxiv-latest.json`;
         const res = await fetch(localUrl, {cache:'no-store'});
         if(res.ok){
           const data = await res.json();
@@ -243,8 +246,8 @@ order: 2
     try{
       // Try local JSON first
       try {
-        // ✅ 修正：从 '/assets/...' 改为 '{{ site.baseurl }}/assets/...'
-        const localRes = await fetch('{{ site.baseurl }}/assets/js/data/arxiv-history.json', {cache:'no-store'});
+        // ✅ 改为通过 BASE 绝对路径
+        const localRes = await fetch(`${BASE}/assets/js/data/arxiv-history.json`, {cache:'no-store'});
         if(localRes.ok){
           const files = await localRes.json();
           if(Array.isArray(files)){
