@@ -125,8 +125,8 @@ html[data-mode=dark] #arxiv-app .ax-view-toggle .ax-btn:not(.ax-ghost) {
 /* 控制最多 3 栏：3 * 最小列宽 + 2 * gap */
 
 #arxiv-app {
-  /* 调这个最小列宽：340px 越大 → 只有更宽时才变 3 栏 */
-  --ax-min-col: 340px;
+  /* 调这个最小列宽：380px 越大 → 只有更宽时才变 3 栏 */
+  --ax-min-col: 380px;
   max-width: calc(3 * var(--ax-min-col) + 2 * var(--ax-gap));
   margin: 0 auto; /* 居中 */
 }
