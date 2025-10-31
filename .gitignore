@@ -22,3 +22,9 @@ package-lock.json
 assets/js/dist
 
 **/.DS_Store
+
+
+assets/css/jekyll-theme-chirpy.css
+assets/css/jekyll-theme-chirpy.css.map
+assets/js/dist/
+assets/js/data/search.json
