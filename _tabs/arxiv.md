@@ -6,6 +6,8 @@ permalink: /arxiv/
 order: 2
 ---
 
+<!-- 可选：注入 baseurl，便于 JS 复用 -->
+<meta name="baseurl" content="{{ site.baseurl }}">
 
 <style>
   /* ===== Fancy+ Pro with History, filters, and subtle download ===== */
@@ -146,7 +148,8 @@ order: 2
     
     if(!hasFilters && !day){
       try {
-        const localUrl = '/assets/js/data/arxiv-latest.json';
+        // ✅ 修正：从 '/assets/...' 改为 '{{ site.baseurl }}/assets/...'
+        const localUrl = '{{ site.baseurl }}/assets/js/data/arxiv-latest.json';
         const res = await fetch(localUrl, {cache:'no-store'});
         if(res.ok){
           const data = await res.json();
@@ -240,7 +243,8 @@ order: 2
     try{
       // Try local JSON first
       try {
-        const localRes = await fetch('/assets/js/data/arxiv-history.json', {cache:'no-store'});
+        // ✅ 修正：从 '/assets/...' 改为 '{{ site.baseurl }}/assets/...'
+        const localRes = await fetch('{{ site.baseurl }}/assets/js/data/arxiv-history.json', {cache:'no-store'});
         if(localRes.ok){
           const files = await localRes.json();
           if(Array.isArray(files)){
