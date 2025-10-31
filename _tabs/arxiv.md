@@ -30,7 +30,8 @@ order: 2
   @keyframes sh{0%{background-position:200% 0}100%{background-position:-200% 0}}
   .ax-empty{opacity:.7}
   .ax-hl{background:linear-gradient(transparent 60%, #ffe08a88 0)}
-  .ax-row{display:flex;gap:10px;align-items:center}
+  .ax-row{display:flex;gap:10px;align-items:center;flex-wrap:wrap}
+  #ax-chips{min-height:32px;margin-bottom:8px}
   .ax-view-toggle .ax-btn{padding:.35rem .55rem}
   .ax-list .ax-card{display:flex;gap:12px;align-items:flex-start}
   .ax-leftbar{display:flex;flex-direction:column;gap:6px;align-items:center}
@@ -186,7 +187,24 @@ order: 2
     b.onclick=()=>{ cat=(cat===label?null:label); resetAndLoad(); };
     return b;
   }
-  function renderChips(){ chips.innerHTML=''; CATS.forEach(c=>chips.appendChild(chip(c))); if(cat){ const x=chip('× clear'); x.onclick=()=>{cat=null; resetAndLoad();}; chips.appendChild(x);} }
+  function renderChips(){
+    // Get fresh reference to chips element in case DOM was updated
+    const chipsEl = document.getElementById('ax-chips');
+    if(!chipsEl) {
+      console.warn('Chips container not found');
+      return;
+    }
+    chipsEl.innerHTML=''; 
+    CATS.forEach(c=>{
+      const chipEl = chip(c);
+      if(chipEl) chipsEl.appendChild(chipEl);
+    }); 
+    if(cat){ 
+      const x=chip('× clear'); 
+      x.onclick=()=>{cat=null; resetAndLoad();}; 
+      chipsEl.appendChild(x);
+    }
+  }
 
   function filteredClient(){
     // server already applied q/kw/cat; keep local sort + favorites/pin
@@ -279,7 +297,9 @@ order: 2
   function skeleton(n=6){ grid.innerHTML=Array.from({length:n}).map(()=>`<div class="ax-skel"></div>`).join(''); }
 
   function render(resetLayout=false){
+    // Always update chips to reflect current category selection
     renderChips();
+    
     const items=filteredClient();
     if(resetLayout) grid.classList.toggle('ax-list', view==='list');
     const total=items.length;
@@ -289,7 +309,7 @@ order: 2
     const html=chunk.map(cardHTML).join('');
     const frag=document.createElement('div'); frag.innerHTML=html; attachActions(frag);
     grid.append(...frag.childNodes);
-    count.textContent=`${total} item${total!==1?'s':''}${cat?` · ${cat}`:''}${query?` · “${query}”`:''}${kw?` · kw:${kw}`:''}${favOnly?' · ⭐':''}${day?` · ${day}`:' · Today'}`;
+    count.textContent=`${total} item${total!==1?'s':''}${cat?` · ${cat}`:''}${query?` · "${query}"`:''}${kw?` · kw:${kw}`:''}${favOnly?' · ⭐':''}${day?` · ${day}`:' · Today'}`;
     moreBtn.style.display=end<total?'block':'none';
   }
 
@@ -298,6 +318,12 @@ order: 2
 
   // ------------ init ------------
   async function boot(){
+    // Ensure elements exist
+    if(!chips || !grid || !q || !kwInp){
+      console.error('Missing required DOM elements');
+      return;
+    }
+    
     // controls
     q.value=''; kwInp.value=''; query=''; kw=''; cat=null; sort='date_desc'; view='card'; favOnly=false; day='';
     q.oninput=e=>{ query=e.target.value; resetAndLoad(); };
@@ -309,13 +335,22 @@ order: 2
     moreBtn.onclick=()=>{ page++; render(); refreshDownloadLink(); };
     dateSel.onchange=e=>{ day=e.target.value; resetAndLoad(); };
 
-    chips.innerHTML=''; CATS.forEach(c=>chips.appendChild(chip(c)));
+    // Initialize chips immediately - this should happen before loading data
+    renderChips();
 
     await loadHistoryList();
     await loadServer();     // includes refreshDownloadLink()
   }
 
-  document.addEventListener('DOMContentLoaded', boot);
-  document.addEventListener('pjax:complete', boot); // Chirpy PJAX
+  // Run boot when DOM is ready
+  if(document.readyState === 'loading'){
+    document.addEventListener('DOMContentLoaded', boot);
+  } else {
+    // DOM already loaded
+    boot();
+  }
+  
+  // Also handle PJAX navigation (Chirpy theme)
+  document.addEventListener('pjax:complete', boot);
 })();
 </script>
