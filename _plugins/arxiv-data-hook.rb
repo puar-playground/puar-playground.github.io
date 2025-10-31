@@ -16,6 +16,8 @@ Jekyll::Hooks.register :site, :pre_render do |site|
     http.use_ssl = true
     http.read_timeout = 30
     http.open_timeout = 10
+    # Disable SSL verification for Railway backend (only needed if SSL cert has issues)
+    http.verify_mode = OpenSSL::SSL::VERIFY_NONE if defined?(OpenSSL::SSL::VERIFY_NONE)
     
     Jekyll.logger.info "arXiv:", "Fetching data from #{uri}..."
     response = http.get(uri.path + (uri.query ? "?#{uri.query}" : ''))
@@ -45,6 +47,8 @@ Jekyll::Hooks.register :site, :pre_render do |site|
     http_history.use_ssl = true
     http_history.read_timeout = 30
     http_history.open_timeout = 10
+    # Disable SSL verification for Railway backend (only needed if SSL cert has issues)
+    http_history.verify_mode = OpenSSL::SSL::VERIFY_NONE if defined?(OpenSSL::SSL::VERIFY_NONE)
     
     response_history = http_history.get(uri_history.path)
     
