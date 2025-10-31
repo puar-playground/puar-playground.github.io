@@ -210,7 +210,7 @@ order: 2
   function iconStar(active){return active?'⭐':'☆';}
 
   function cardHTML(p){
-    const baseId=(p.id||'').replace(/v\\d+$/,'');
+    const baseId=(p.id||'').replace(/v\d+$/,'');
     const title=p.title||''; const authors=Array.isArray(p.authors)?p.authors.join(', '):(p.authors||'');
     const abs=p.abs || (baseId?`https://arxiv.org/abs/${baseId}`:'#'); const pdf=p.pdf || (baseId?`https://arxiv.org/pdf/${baseId}.pdf`:'#');
     const primary=p.primary||'arXiv', date=p.date||''; const abstract=p.abstract||p.summary||'';
@@ -267,7 +267,7 @@ order: 2
     scope.querySelectorAll('[data-bib]').forEach(b=>{
       b.onclick=()=>{
         const id=b.getAttribute('data-bib');
-        const p=ALL.find(x=>(x.id||'').replace(/v\\d+$/,'')===id);
+        const p=ALL.find(x=>(x.id||'').replace(/v\d+$/,'')===id);
         if(p) copy(bibtex(p));
       };
     });
