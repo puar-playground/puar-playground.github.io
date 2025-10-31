@@ -6,57 +6,46 @@ permalink: /arxiv/
 order: 2
 ---
 
+<!-- 独立样式（可选）：在 assets/css/arxiv.css 里放你的 .ax-* 样式 -->
 <link rel="stylesheet" href="{{ '/assets/css/arxiv.css' | relative_url }}">
 
+<!-- 提供给前端 JS 的 baseurl（GitHub Pages 根仓库通常为空串） -->
 <meta name="baseurl" content="{{ site.baseurl | default: '' }}">
-
-<style>
-/* 你的 .ax-* 样式原样保留，这里略 */
-</style>
 
 <div class="ax-wrap" id="arxiv-app">
   <div class="ax-toolbar">
     <select id="ax-date" class="ax-select">
       <option value="">Today</option>
     </select>
+
     <input id="ax-q" class="ax-input" placeholder="Search title / abstract / author… (q=)"/>
     <input id="ax-kw" class="ax-input" style="min-width:200px" placeholder="Keywords (kw=, comma-separated)"/>
+
     <select id="ax-sort" class="ax-select">
       <option value="date_desc">Sort: Date ↓</option>
       <option value="date_asc">Sort: Date ↑</option>
       <option value="title_asc">Sort: Title A→Z</option>
       <option value="cat_asc">Sort: Category</option>
     </select>
+
     <div class="ax-view-toggle">
       <button id="ax-view-card" class="ax-btn">Cards</button>
       <button id="ax-view-list" class="ax-btn ax-ghost">List</button>
     </div>
+
     <button id="ax-fav-only" class="ax-btn ax-ghost">⭐ Favorites: Off</button>
     <span id="ax-count" class="ax-count"></span>
   </div>
+
   <div id="ax-chips" class="ax-row"></div>
   <div id="ax-grid" class="ax-grid"></div>
+
   <button id="ax-more" class="ax-btn" style="display:none;margin:0 auto;">Load more</button>
+
   <div class="ax-footer">
     <a id="ax-download" class="ax-download" href="#" rel="noopener" download>Download all history (ZIP)</a>
   </div>
 </div>
 
-<!-- 引入外链脚本（defer，避免阻塞；外链不受 Liquid/raw 干扰） -->
-<script defer src="{{ '/assets/js/arxiv-app.js' | relative_url }}"></script>
-
-
-<script>
-  window.MathJax = {
-    tex: {
-      inlineMath: [['$', '$'], ['\\(', '\\)']],
-      displayMath: [['$$','$$'], ['\\[','\\]']],
-      processEscapes: true,   // 允许 \$ 转义
-      processEnvironments: true
-    },
-    options: {
-      skipHtmlTags: ['script','noscript','style','textarea','pre','code'],
-    }
-  };
-</script>
-<script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+<!-- 让应用脚本负责：数据加载、UI渲染、以及 MathJax（ensureMathJax） -->
+<script defer src="{{ '/assets/js/arxiv-app.js' | relative_url }}?v=2025-10-31-2"></script>

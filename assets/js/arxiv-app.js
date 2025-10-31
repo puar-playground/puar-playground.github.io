@@ -3,6 +3,68 @@
  * Drop-in script for GitHub Pages + Jekyll (Chirpy)
  */
 
+/* ---- MathJax robust loader (works on GitHub Pages) ---- */
+let __MJX_PROMISE = null;
+
+async function ensureMathJax() {
+  if (window.MathJax?.typesetPromise) return; // already ready
+
+  if (!__MJX_PROMISE) {
+    __MJX_PROMISE = new Promise((resolve) => {
+      // 1) config MUST be set before script tag is evaluated
+      if (!window.MathJax) {
+        window.MathJax = {
+          tex: {
+            inlineMath: [['$', '$'], ['\\(', '\\)']],
+            displayMath: [['$$','$$'], ['\\[','\\]']],
+            processEscapes: true
+          },
+          options: {
+            skipHtmlTags: { '[-]': ['script','noscript','style','textarea','pre','code'] }
+          },
+          startup: {
+            // we’ll control when to typeset; just resolve when ready
+            ready: () => {
+              MathJax.startup.defaultReady();
+              resolve();
+            }
+          }
+        };
+      }
+
+      // 2) inject script if not present
+      if (!document.getElementById('mjx-script')) {
+        const s = document.createElement('script');
+        s.id = 'mjx-script';
+        s.async = true;
+        // 固定 v3 主线；加个 cache bust 避免 GH Pages 老缓存
+        s.src = 'https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js?v=3.2.2';
+        s.onerror = () => { console.warn('MathJax load failed'); resolve(); };
+        document.head.appendChild(s);
+      }
+
+      // 3) double-guard: if ready wasn’t hit (e.g., cached), poll typesetPromise
+      const tick = () => {
+        if (window.MathJax?.typesetPromise) return resolve();
+        setTimeout(tick, 50);
+      };
+      tick();
+    });
+  }
+  await __MJX_PROMISE;
+}
+
+/* 改造原来的 typeset 函数：先确保 MathJax 到位再排版 */
+async function typesetMath(scope){
+  await ensureMathJax();
+  try {
+    await MathJax.typesetPromise(scope ? [scope] : undefined);
+  } catch (e) {
+    console.warn('MathJax typeset error:', e);
+  }
+}
+
+
 /* ===================== Config ===================== */
 const API_BASE = 'https://arxiv-backend-production.up.railway.app/arxiv';
 const CATS = ['cs.CL','cs.LG','cs.AI','cs.SD','eess.AS','cs.CV','cs.MM','cs.IR','cs.NE','stat.ML'];
@@ -391,6 +453,7 @@ async function boot(){
 
   // 先画 chips 再加载数据
   renderChips();
+  await ensureMathJax();
   await loadHistoryList();
   await loadServer();
 }
