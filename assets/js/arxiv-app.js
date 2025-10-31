@@ -523,3 +523,66 @@ function bindThemeToggleOnce() {
 
   btn.dataset.axBound = '1';
 }
+
+
+// ---- Fallback binder for Chirpy topbar controls ----
+function bindChirpyTopbarFallback() {
+  try {
+    // 侧栏开关：Chirpy 用的是在 <html> 节点上加/去 attribute: [sidebar-display]
+    const sideBtn = document.getElementById('sidebar-trigger');
+    if (sideBtn && !sideBtn.dataset.axBound) {
+      sideBtn.addEventListener('click', () => {
+        const root = document.documentElement; // <html>
+        if (root.hasAttribute('sidebar-display')) {
+          root.removeAttribute('sidebar-display');
+        } else {
+          root.setAttribute('sidebar-display', '');
+        }
+      });
+      sideBtn.dataset.axBound = '1';
+    }
+
+    // 搜索弹层（尽量不改主题逻辑，仅兜底显隐）
+    const searchBtn  = document.getElementById('search-trigger');
+    const cancelBtn  = document.getElementById('search-cancel');
+    const resultWrap = document.getElementById('search-result-wrapper');
+    const input      = document.getElementById('search-input');
+
+    if (searchBtn && resultWrap && !searchBtn.dataset.axBound) {
+      searchBtn.addEventListener('click', () => {
+        resultWrap.classList.remove('unloaded');
+        if (input) input.focus();
+      });
+      searchBtn.dataset.axBound = '1';
+    }
+    if (cancelBtn && resultWrap && !cancelBtn.dataset.axBound) {
+      cancelBtn.addEventListener('click', () => {
+        resultWrap.classList.add('unloaded');
+      });
+      cancelBtn.dataset.axBound = '1';
+    }
+  } catch (e) {
+    console.warn('[arxiv] topbar fallback failed:', e);
+  }
+}
+
+// 页面初次 + PJAX 返回时都兜底一次（try/catch 防止抛错影响其他监听器）
+document.addEventListener('DOMContentLoaded', () => {
+  try { bindChirpyTopbarFallback(); } catch(_) {}
+});
+document.addEventListener('pjax:complete', () => {
+  try { bindChirpyTopbarFallback(); } catch(_) {}
+});
+
+// 同时，把你自己的 boot 也包一层，避免异常“中断”其他监听器
+const _origBoot = typeof boot === 'function' ? boot : null;
+async function safeBoot() {
+  try { if (_origBoot) await _origBoot(); }
+  catch (e) { console.error('[arxiv] boot error:', e); }
+}
+if (_origBoot) {
+  document.removeEventListener('DOMContentLoaded', _origBoot);
+  document.removeEventListener('pjax:complete', _origBoot);
+  document.addEventListener('DOMContentLoaded', safeBoot);
+  document.addEventListener('pjax:complete', safeBoot);
+}

@@ -47,5 +47,7 @@ order: 2
   </div>
 </div>
 
-<!-- 让应用脚本负责：数据加载、UI渲染、以及 MathJax（ensureMathJax） -->
-<script defer src="{{ '/assets/js/arxiv-app.js' | relative_url }}?v=2025-10-31-2"></script>
+
+
+
+<script defer src="{{ '/assets/js/arxiv-app.js' | relative_url }}?v=1"></script>
