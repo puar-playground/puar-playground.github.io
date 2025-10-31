@@ -3,7 +3,7 @@ layout: page
 title: 绫华 Assist
 permalink: /ayaka/
 icon: far fa-snowflake
-order: 2
+order: 3
 ---
 
 <!-- Include life-ticker-bar component -->

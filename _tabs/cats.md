@@ -2,7 +2,7 @@
 # the default layout is 'page'
 title: Cats
 icon: fas fa-cat
-order: 3
+order: 4
 ---
 
 <!-- Include life-ticker-bar component -->
