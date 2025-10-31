@@ -79,7 +79,7 @@ order: 2
 
   <!-- Subtle bottom download -->
   <div class="ax-footer">
-    <a id="ax-download" class="ax-download" href="#" rel="noopener" download>Download all history (ZIP)</a>
+    <a id="ax-download" class="ax-download" href="#" rel="noopener">Download all history (ZIP)</a>
   </div>
 </div>
 
@@ -109,64 +109,84 @@ order: 2
   async function fetchJSON(u){
     let lastError = null;
     const originalUrl = u;
-    const timeout = 15000; // 15 second timeout
+    const timeout = 20000; // 20 second timeout (increased for slower proxies)
     
     // Helper to add timeout to fetch
     const fetchWithTimeout = (url, opts) => {
       return Promise.race([
         fetch(url, opts),
         new Promise((_, reject) => 
-          setTimeout(() => reject(new Error('Request timeout')), timeout)
+          setTimeout(() => reject(new Error('Request timeout after ' + timeout + 'ms')), timeout)
         )
       ]);
     };
     
     // Try direct first
     try{
+      console.log('Attempting direct fetch to:', u);
       const res = await fetchWithTimeout(u, {cache:'no-store', mode:'cors'});
+      console.log('Direct fetch response status:', res.status, res.statusText);
       if(!res.ok) throw new Error(`HTTP ${res.status}: ${res.statusText}`);
       const data = await res.json();
-      console.log('✓ Direct fetch succeeded');
+      console.log('✓ Direct fetch succeeded, data type:', typeof data, 'isArray:', Array.isArray(data));
       return data;
     }catch(err){
-      console.warn('Direct fetch failed:', err.message);
-      if(err.name !== 'TypeError' && !err.message.includes('Failed to fetch') && !err.message.includes('CORS')){
-        // If it's not a CORS error, throw immediately
+      console.warn('Direct fetch failed:', err.name, err.message);
+      // Check if it's clearly a network/CORS error
+      const isCorsError = err.name === 'TypeError' || 
+                         err.message.includes('Failed to fetch') || 
+                         err.message.includes('CORS') ||
+                         err.message.includes('NetworkError') ||
+                         err.message.includes('network');
+      
+      if(!isCorsError && !err.message.includes('timeout')){
+        // If it's not a CORS/network error and not a timeout, throw immediately
+        console.error('Non-CORS error, not trying proxies:', err);
         throw err;
       }
       lastError = err;
     }
     
-    // Try proxies in order (only if CORS failed)
+    // Try proxies in order (only if CORS/network failed)
+    console.log('Attempting to use CORS proxies...');
     for(let i=0; i<proxies.length; i++){
       proxyIdx = i;
       useProxy = true;
       const proxiedUrl = getProxyUrl(originalUrl);
       try{
-        console.log(`Trying proxy ${i+1}:`, proxiedUrl);
+        console.log(`Trying proxy ${i+1}/${proxies.length}:`, proxiedUrl.substring(0, 100) + '...');
         const res = await fetchWithTimeout(proxiedUrl, {cache:'no-store', mode:'cors'});
+        console.log(`Proxy ${i+1} response status:`, res.status, res.statusText);
         if(!res.ok) throw new Error(`HTTP ${res.status}: ${res.statusText}`);
         
         let data = await res.json();
-        // Handle allorigins.win response format
-        if(data && typeof data === 'object' && data.contents){
+        console.log('Proxy response type:', typeof data, 'keys:', data && typeof data === 'object' ? Object.keys(data) : 'N/A');
+        
+        // Handle allorigins.win response format: {status: {...}, contents: "..."}
+        if(data && typeof data === 'object' && data.contents !== undefined){
           try {
-            data = JSON.parse(data.contents);
+            const parsed = typeof data.contents === 'string' ? JSON.parse(data.contents) : data.contents;
+            console.log(`✓ Proxy ${i+1} (allorigins) succeeded`);
+            return parsed;
           } catch(parseErr) {
-            console.warn('Failed to parse proxy response contents');
-            throw new Error('Invalid response from proxy');
+            console.warn('Failed to parse proxy contents:', parseErr);
+            throw new Error('Invalid JSON in proxy response contents');
           }
         }
-        // Handle corsproxy.io which returns data directly
-        console.log(`✓ Proxy ${i+1} succeeded`);
+        
+        // corsproxy.io returns data directly
+        // cors-anywhere also returns data directly
+        console.log(`✓ Proxy ${i+1} succeeded, data type:`, typeof data, 'isArray:', Array.isArray(data));
         return data;
       }catch(err){
-        console.warn(`Proxy ${i+1} failed:`, err.message);
+        console.warn(`Proxy ${i+1} failed:`, err.name, err.message);
         lastError = err;
       }
     }
     
-    throw lastError || new Error('All fetch methods failed. Check if backend is accessible.');
+    const finalError = lastError || new Error('All fetch methods failed. Check if backend is accessible.');
+    console.error('All fetch attempts failed. Last error:', finalError);
+    throw finalError;
   }
 
   // local favorites
@@ -210,7 +230,6 @@ order: 2
 
   function refreshDownloadLink() {
     // Build ZIP download link reflecting current day/q/kw/cat
-    // Note: ZIP downloads might not work through proxies, so use direct link
     let url = `${API_BASE}/history.zip`;
     const params = new URLSearchParams();
     if (day) { params.set('start', day); params.set('end', day); }
@@ -219,7 +238,49 @@ order: 2
     if (cat)          params.set('cat', cat);
     params.set('filter','1'); // zip with filtered contents
     const qs = params.toString();
-    dl.href = qs ? `${url}?${qs}` : url;
+    const finalUrl = qs ? `${url}?${qs}` : url;
+    
+    // Get fresh reference to download link (in case DOM was updated)
+    const currentDl = document.getElementById('ax-download');
+    if(!currentDl) return;
+    
+    // Set href and target
+    currentDl.href = finalUrl;
+    currentDl.target = '_blank'; // Open in new tab to avoid PJAX interception
+    
+    // Remove existing click handler and add new one
+    currentDl.onclick = async (e) => {
+      e.preventDefault();
+      e.stopPropagation();
+      
+      try {
+        // Try to fetch as blob for proper download (requires CORS)
+        const res = await fetch(finalUrl, {cache:'no-store'});
+        if(res.ok){
+          const contentType = res.headers.get('content-type') || '';
+          if(contentType.includes('zip') || contentType.includes('octet-stream')){
+            const blob = await res.blob();
+            const blobUrl = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = blobUrl;
+            a.download = `arxiv-history-${day || 'all'}.zip`;
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            URL.revokeObjectURL(blobUrl);
+            toast('Download started');
+            return false;
+          }
+        }
+        // Fallback: open direct link
+        window.open(finalUrl, '_blank');
+      } catch(err) {
+        console.warn('Fetch-based download failed, using direct link:', err);
+        // Fallback: open direct link (browser will handle download if server sends correct headers)
+        window.open(finalUrl, '_blank');
+      }
+      return false;
+    };
   }
 
   async function loadServer() {
@@ -227,19 +288,48 @@ order: 2
     try{
       const url = buildDataURL();
       console.log('Loading from:', url);
-      ALL = await fetchJSON(url);
+      const response = await fetchJSON(url);
+      console.log('Response received:', response);
+      console.log('Response type:', typeof response);
+      console.log('Is array?', Array.isArray(response));
+      
+      // Handle different response formats
+      if(Array.isArray(response)){
+        ALL = response;
+      } else if(response && typeof response === 'object'){
+        // Try common response wrapper formats
+        if(Array.isArray(response.data)){
+          ALL = response.data;
+        } else if(Array.isArray(response.items)){
+          ALL = response.items;
+        } else if(Array.isArray(response.results)){
+          ALL = response.results;
+        } else if(Array.isArray(response.papers)){
+          ALL = response.papers;
+        } else {
+          // Log the keys to help debug
+          console.warn('Response is an object but no array found. Keys:', Object.keys(response));
+          console.warn('Full response:', JSON.stringify(response).substring(0, 500));
+          throw new Error('Response is an object but no array field found. Response keys: ' + Object.keys(response).join(', '));
+        }
+      } else {
+        throw new Error('Response is not an array or object. Got: ' + typeof response);
+      }
+      
       console.log('Loaded', ALL.length, 'items');
-      if(!Array.isArray(ALL)){
-        throw new Error('Response is not an array. Got: ' + typeof ALL);
+      if(ALL.length === 0){
+        console.warn('No items loaded from backend');
       }
       render(true);
     }catch(e){
       console.error('loadServer error:', e);
+      console.error('Error stack:', e.stack);
       const errorMsg = e.message || 'Unknown error';
       grid.innerHTML = `<div class="ax-card ax-empty" style="padding:2rem;text-align:center;">
         <p><strong>Failed to load arXiv feed.</strong></p>
         <p style="font-size:.9rem;opacity:.8;margin-top:.5rem;">${escapeHTML(errorMsg)}</p>
         <p style="font-size:.85rem;opacity:.7;margin-top:.5rem;">Check browser console (F12) for details.</p>
+        <p style="font-size:.85rem;opacity:.7;margin-top:.5rem;">URL: ${escapeHTML(buildDataURL())}</p>
       </div>`;
     } finally {
       refreshDownloadLink();
@@ -273,7 +363,9 @@ order: 2
 
   function filteredClient(){
     // server already applied q/kw/cat; keep local sort + favorites/pin
+    console.log('filteredClient: ALL.length =', ALL.length);
     let arr=ALL.slice();
+    console.log('filteredClient: after slice, arr.length =', arr.length);
     arr.sort((a,b)=>{
       const ad=a.date||'', bd=b.date||'', at=(a.title||'').toLowerCase(), bt=(b.title||'').toLowerCase();
       const ac=(a.primary||''), bc=(b.primary||'');
@@ -283,10 +375,15 @@ order: 2
       if(sort==='cat_asc')   return ac.localeCompare(bc) || bd.localeCompare(ad);
       return 0;
     });
-    if(favOnly) arr=arr.filter(p=>isFav((p.id||'').replace(/v\d+$/,'')));
+    if(favOnly) {
+      const before = arr.length;
+      arr=arr.filter(p=>isFav((p.id||'').replace(/v\d+$/,'')));
+      console.log('filteredClient: favOnly filter: ', before, '->', arr.length);
+    }
     if(!favOnly){
       const F=[], N=[]; arr.forEach(p=>isFav((p.id||'').replace(/v\d+$/,''))?F.push(p):N.push(p)); arr=[...F,...N];
     }
+    console.log('filteredClient: returning', arr.length, 'items');
     return arr;
   }
 
@@ -362,18 +459,34 @@ order: 2
   function skeleton(n=6){ grid.innerHTML=Array.from({length:n}).map(()=>`<div class="ax-skel"></div>`).join(''); }
 
   function render(resetLayout=false){
+    console.log('render called, resetLayout:', resetLayout, 'ALL.length:', ALL.length);
+    if(!grid){
+      console.error('grid element not found!');
+      return;
+    }
     renderChips();
     const items=filteredClient();
+    console.log('render: items.length =', items.length);
     if(resetLayout) grid.classList.toggle('ax-list', view==='list');
     const total=items.length;
     const start=page*pageSize, end=Math.min(start+pageSize,total);
+    console.log('render: page', page, 'showing items', start, 'to', end, 'of', total);
     if(start===0) grid.innerHTML='';
     const chunk=items.slice(start,end);
-    const html=chunk.map(cardHTML).join('');
-    const frag=document.createElement('div'); frag.innerHTML=html; attachActions(frag);
-    grid.append(...frag.childNodes);
-    count.textContent=`${total} item${total!==1?'s':''}${cat?` · ${cat}`:''}${query?` · “${query}”`:''}${kw?` · kw:${kw}`:''}${favOnly?' · ⭐':''}${day?` · ${day}`:' · Today'}`;
+    console.log('render: chunk.length =', chunk.length);
+    if(chunk.length === 0 && total === 0){
+      grid.innerHTML = `<div class="ax-card ax-empty" style="padding:2rem;text-align:center;">
+        <p>No papers found.</p>
+        <p style="font-size:.85rem;opacity:.7;margin-top:.5rem;">Try adjusting your search or filters.</p>
+      </div>`;
+    } else {
+      const html=chunk.map(cardHTML).join('');
+      const frag=document.createElement('div'); frag.innerHTML=html; attachActions(frag);
+      grid.append(...frag.childNodes);
+    }
+    count.textContent=`${total} item${total!==1?'s':''}${cat?` · ${cat}`:''}${query?` · "${query}"`:''}${kw?` · kw:${kw}`:''}${favOnly?' · ⭐':''}${day?` · ${day}`:' · Today'}`;
     moreBtn.style.display=end<total?'block':'none';
+    console.log('render complete');
   }
 
   function reset(){ page=0; grid.innerHTML=''; render(true); refreshDownloadLink(); }
