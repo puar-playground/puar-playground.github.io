@@ -6,6 +6,8 @@ permalink: /arxiv/
 order: 2
 ---
 
+<link rel="stylesheet" href="{{ '/assets/css/arxiv.css' | relative_url }}">
+
 <meta name="baseurl" content="{{ site.baseurl | default: '' }}">
 
 <style>

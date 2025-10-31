@@ -1,0 +1,128 @@
+/* ===== Daly arXiv – polished UI for Chirpy ===== */
+#arxiv-app {
+  --ax-radius: 12px;
+  --ax-gap: 12px;
+  --ax-border: var(--card-shadow, rgba(0,0,0,0.05)) 0 1px 2px 0;
+  --ax-card-bg: var(--card-bg, #fff);
+  --ax-card-border: 1px solid var(--card-shadow, rgba(0,0,0,0.08));
+  --ax-chip-bg: var(--search-tag-bg, #f8f9fa);
+  --ax-chip-hover: var(--tag-hover, #e9ecef);
+  --ax-muted: var(--text-muted-color, #767676);
+  --ax-accent: var(--link-color, #0d6efd);
+  --ax-underline: var(--link-underline-color, #dee2e6);
+}
+
+/* toolbar layout */
+#arxiv-app .ax-toolbar{
+  display:flex;flex-wrap:wrap;gap:10px;align-items:center;
+  padding:.35rem .4rem .4rem .4rem;
+  background:var(--card-bg);
+  border:1px solid var(--btn-border-color,#e9ecef);
+  border-radius: var(--ax-radius);
+}
+
+/* inputs & selects */
+#arxiv-app .ax-input, #arxiv-app .ax-select {
+  height: 36px; line-height: 36px;
+  padding: 0 .75rem;
+  border:1px solid var(--btn-border-color,#e5e7eb);
+  border-radius: 10px;
+  background: var(--button-bg, #fff);
+  outline:none;
+}
+#arxiv-app .ax-input:focus, #arxiv-app .ax-select:focus{
+  border-color: var(--input-focus-border-color, #b8b8b8);
+  box-shadow: 0 0 0 2px rgba(13,110,253,.15);
+}
+
+/* buttons */
+#arxiv-app .ax-btn{
+  height: 34px; padding: 0 .7rem;
+  border:1px solid var(--btn-border-color,#e5e7eb);
+  border-radius:10px; background: var(--button-bg,#fff);
+  cursor:pointer; display:inline-flex; align-items:center; gap:6px;
+}
+#arxiv-app .ax-btn:hover{ box-shadow:0 1px 6px rgba(0,0,0,.06); }
+#arxiv-app .ax-ghost{ background:transparent }
+
+/* chips (categories) */
+#arxiv-app #ax-chips{ display:flex; flex-wrap:wrap; gap:8px; margin:8px 0 4px }
+#arxiv-app .ax-chip{
+  border:1px solid var(--btn-border-color,#e5e7eb);
+  background: var(--ax-chip-bg);
+  border-radius: 999px; padding:.25rem .6rem; font-size:.9rem; opacity:.95;
+}
+#arxiv-app .ax-chip:hover{ background: var(--ax-chip-hover); }
+#arxiv-app .ax-chip.active{
+  background: color-mix(in srgb, var(--ax-accent) 12%, transparent);
+  border-color: color-mix(in srgb, var(--ax-accent) 28%, var(--btn-border-color,#e5e7eb));
+}
+
+/* grid & cards */
+#arxiv-app .ax-grid{ display:grid; gap: var(--ax-gap); }
+@media (min-width: 700px){
+  #arxiv-app .ax-grid{ grid-template-columns: 1fr; }
+}
+#arxiv-app.ax-two .ax-grid{ grid-template-columns: repeat(2, minmax(0,1fr)); } /* 备用 */
+
+#arxiv-app .ax-card{
+  background: var(--ax-card-bg);
+  border: var(--ax-card-border);
+  border-radius: var(--ax-radius);
+  box-shadow: var(--card-shadow, rgba(0,0,0,.04) 0 2px 8px 0);
+  padding: .9rem 1rem;
+}
+#arxiv-app .ax-card:hover{
+  box-shadow: rgba(0,0,0,.06) 0 6px 14px 0, rgba(137,135,135,.18) 0 0 0 1px;
+  transform: translateY(-1px);
+  transition: all .18s ease;
+}
+
+/* list view left bar */
+#arxiv-app .ax-list .ax-card{ display:flex; gap:12px; }
+#arxiv-app .ax-leftbar{ display:flex; flex-direction:column; gap:8px; align-items:center; }
+
+/* badges & meta */
+#arxiv-app .ax-badge{
+  font-size:.75rem; padding:.18rem .45rem;
+  border-radius:6px; background: #0000000b;
+  border:1px solid #0000001a;
+}
+#arxiv-app .ax-meta{ color: var(--ax-muted); display:flex; flex-wrap:wrap; gap:6px; margin:.25rem 0 .4rem }
+
+/* title & links */
+#arxiv-app .ax-title{ margin:.1rem 0 .35rem; line-height:1.25 }
+#arxiv-app .ax-links .ax-btn{ height:30px; font-size:.95rem }
+
+/* abstract details */
+#arxiv-app details{ margin-top:.15rem }
+#arxiv-app summary{ color: var(--ax-muted); cursor:pointer }
+#arxiv-app .ax-abs{ white-space: pre-wrap; margin:.35rem 0 0 }
+
+/* skeleton loaders */
+#arxiv-app .ax-skel{
+  height:110px;border-radius:14px;
+  background: linear-gradient(90deg, #00000008, #00000014, #00000008);
+  background-size:200% 100%; animation: ax-sh 1.1s linear infinite;
+}
+@keyframes ax-sh{
+  0%{ background-position:200% 0 } 100%{ background-position:-200% 0 }
+}
+
+/* count line & footer */
+#arxiv-app .ax-count{ margin-left:auto; opacity:.8; font-size:.92rem }
+#arxiv-app .ax-footer{ display:flex; justify-content:center; margin-top:10px }
+#arxiv-app .ax-download{
+  font-size:.85rem; opacity:.8; border:1px dashed var(--btn-border-color,#e5e7eb);
+  padding:.4rem .7rem; border-radius:10px; text-decoration:none;
+}
+#arxiv-app .ax-download:hover{ opacity:1 }
+
+/* star */
+#arxiv-app .ax-star{ border-color:#0000; background:#0000; font-size:1rem; }
+
+/* highlight */
+#arxiv-app .ax-hl{ background: linear-gradient(transparent 60%, #ffe08a88 0) }
+
+/* light/dark tiny tune-ups */
+html[data-mode=dark] #arxiv-app .ax-card{ border-color: rgba(255,255,255,.06) }
