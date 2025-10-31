@@ -44,3 +44,19 @@ order: 2
 
 <!-- 引入外链脚本（defer，避免阻塞；外链不受 Liquid/raw 干扰） -->
 <script defer src="{{ '/assets/js/arxiv-app.js' | relative_url }}"></script>
+
+
+<script>
+  window.MathJax = {
+    tex: {
+      inlineMath: [['$', '$'], ['\\(', '\\)']],
+      displayMath: [['$$','$$'], ['\\[','\\]']],
+      processEscapes: true,   // 允许 \$ 转义
+      processEnvironments: true
+    },
+    options: {
+      skipHtmlTags: ['script','noscript','style','textarea','pre','code'],
+    }
+  };
+</script>
+<script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>

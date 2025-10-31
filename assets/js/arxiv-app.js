@@ -1,276 +1,402 @@
-// assets/js/arxiv-app.js
-(function () {
-  // —— 防重入（PJAX 导航来回切换时很常见）
-  if (window.__ARXIV_APP_INIT) {
-    console.debug('[arxiv] already initialized, skip.');
-    return;
+/* assets/js/arxiv-app.js
+ * Daly arXiv News — dynamic client with MathJax support
+ * Drop-in script for GitHub Pages + Jekyll (Chirpy)
+ */
+
+/* ===================== Config ===================== */
+const API_BASE = 'https://arxiv-backend-production.up.railway.app/arxiv';
+const CATS = ['cs.CL','cs.LG','cs.AI','cs.SD','eess.AS','cs.CV','cs.MM','cs.IR','cs.NE','stat.ML'];
+// 从 <meta name="baseurl" content="..."> 读取站点 baseurl（在 arxiv.md 里我们已注入）
+const BASE = document.querySelector('meta[name="baseurl"]')?.content || '';
+
+/* ===================== State & DOM ===================== */
+let ALL = [];                 // 当前已加载的数据（数组）
+let query = '';               // q= 文本检索（title/abstract/authors）
+let kw = '';                  // kw= 关键词（逗号分隔）
+let cat = null;               // 当前选中分类
+let sort = 'date_desc';       // 排序
+let view = 'card';            // 视图：card/list
+let favOnly = false;          // 只看收藏
+let day = '';                 // 历史日期（yyyy-mm-dd）
+let page = 0;                 // 前端分页页码
+let pageSize = 12;            // 每页条数
+
+const $ = s => document.querySelector(s);
+const app = () => document.getElementById('arxiv-app');
+const grid = $('#ax-grid');
+const chips = $('#ax-chips');
+const qInp = $('#ax-q');
+const kwInp = $('#ax-kw');
+const countEl = $('#ax-count');
+const sortSel = $('#ax-sort');
+const btnCard = $('#ax-view-card');
+const btnList = $('#ax-view-list');
+const moreBtn = $('#ax-more');
+const favBtn = $('#ax-fav-only');
+const dateSel = $('#ax-date');
+const dl = $('#ax-download');
+
+/* ===================== Utils ===================== */
+const FKEY = 'arxiv:favs';
+const favSet = new Set(JSON.parse(localStorage.getItem(FKEY) || '[]'));
+const saveFavs = () => localStorage.setItem(FKEY, JSON.stringify([...favSet]));
+const isFav = id => favSet.has(id);
+const toggleFav = id => { isFav(id) ? favSet.delete(id) : favSet.add(id); saveFavs(); render(true); refreshDownloadLink(); };
+
+function toast(msg, ms=2000){
+  const t = document.createElement('div');
+  t.className = 'ax-toast';
+  t.textContent = msg;
+  document.body.appendChild(t);
+  setTimeout(() => t.remove(), ms);
+}
+
+function escapeHTML(s){
+  return String(s || '').replace(/[&<>"']/g, ch => (
+    {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;','\'':'&#39;'}[ch]
+  ));
+}
+
+/* 高亮：若包含数学分隔符，则跳过高亮以免破坏公式（简洁稳妥版） */
+function hl(text, q){
+  const s = String(text || '');
+  const hasMath = /(\$\$[\s\S]*?\$\$)|(\$[^$]*\$)|\\\(|\\\)|\\\[|\\\]/.test(s);
+  if (!q || !q.trim() || hasMath) return escapeHTML(s);
+  const esc = escapeHTML(s);
+  try {
+    const re = new RegExp('(' + q.replace(/[.*+?^${}()|[\]\\]/g, '\\$&') + ')', 'ig');
+    return esc.replace(re, '<span class="ax-hl">$1</span>');
+  } catch { return esc; }
+}
+
+/* BibTeX */
+function bibtex(p){
+  const id = (p.id || '').replace(/v\d+$/,'') || 'arxiv';
+  const authors = (Array.isArray(p.authors) ? p.authors.join(' and ') : (p.authors || '')).replace(/&/g,'and');
+  const year = (p.date || '').slice(0,4) || new Date().getUTCFullYear();
+  const title = p.title || '';
+  const pc = p.primary || 'cs';
+  return `@misc{${id},
+  title={${title}},
+  author={${authors}},
+  year={${year}},
+  eprint={${id}},
+  archivePrefix={arXiv},
+  primaryClass={${pc}}
+}`;
+}
+const copy = txt => navigator.clipboard.writeText(txt).then(() => toast('Copied'));
+
+/* MathJax：对指定 scope 进行 typeset（动态 DOM 必需） */
+function typesetMath(scope){
+  if (window.MathJax && MathJax.typesetPromise) {
+    return MathJax.typesetPromise([scope]).catch(err => console.warn('MathJax typeset error:', err));
   }
-  window.__ARXIV_APP_INIT = true;
-  window.__ARXIV_DEBUG = { marks: [] };
-  const mark = (msg) => { console.debug('[arxiv]', msg); window.__ARXIV_DEBUG.marks.push(msg); };
+}
 
-  const API_BASE = 'https://arxiv-backend-production.up.railway.app/arxiv';
-  const CATS = ['cs.CL','cs.LG','cs.AI','cs.SD','eess.AS','cs.CV','cs.MM','cs.IR','cs.NE','stat.ML'];
-
-  // 从 <meta name="baseurl"> 读 base（User Page 下为空字符串）
-  const BASE = document.querySelector('meta[name="baseurl"]')?.content || '';
-
-  // ———— State / DOM ————
-  let ALL=[], query='', kw='', cat=null, sort='date_desc', view='card', favOnly=false, day='';
-  let page=0, pageSize=12;
-  const $ = s=>document.querySelector(s);
-  const grid=$('#ax-grid'), q=$('#ax-q'), kwInp=$('#ax-kw'), chips=$('#ax-chips'), count=$('#ax-count');
-  const sortSel=$('#ax-sort'), btnCard=$('#ax-view-card'), btnList=$('#ax-view-list'),
-        moreBtn=$('#ax-more'), favBtn=$('#ax-fav-only'), dateSel=$('#ax-date'), dl=$('#ax-download');
-
-  // ———— 小工具 ————
-  const FKEY='arxiv:favs';
-  const favSet=new Set(JSON.parse(localStorage.getItem(FKEY)||'[]'));
-  const saveFavs=()=>localStorage.setItem(FKEY, JSON.stringify([...favSet]));
-  const isFav=id=>favSet.has(id);
-  const toggleFav=id=>{ isFav(id)?favSet.delete(id):favSet.add(id); saveFavs(); render(true); refreshDownloadLink(); };
-  const escapeHTML=s=>String(s||'').replace(/[&<>"']/g, ch=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[ch]));
-  const hl=(text,q)=>{ const t=String(text||''); if(!q) return escapeHTML(t);
-    const esc=escapeHTML(t), qs=String(q||''); if(!qs.trim()) return esc;
-    try { const re=new RegExp('('+qs.replace(/[.*+?^${}()|[\]\\]/g,'\\$&')+')','ig'); return esc.replace(re,'<span class="ax-hl">$1</span>'); }
-    catch { return esc; } };
-  const bibtex=p=>{
-    const id=(p.id||'').replace(/v\d+$/,'')||'arxiv';
-    const authors=(Array.isArray(p.authors)?p.authors.join(' and '):(p.authors||'')).replace(/&/g,'and');
-    const year=(p.date||'').slice(0,4)||new Date().getUTCFullYear();
-    return `@misc{${id}, title={${p.title||''}}, author={${authors}}, year={${year}}, eprint={${id}}, archivePrefix={arXiv}, primaryClass={${p.primary||'cs'}} }`;
-  };
-  const copy = text => navigator.clipboard.writeText(text).catch(()=>{});
-
-  // ———— 数据获取（本地 JSON 优先，其次 API，最后 CORS 代理）———
-  async function fetchWithFallback(url) {
-    const hasFilters = (query.trim() || kw.trim() || cat || day);
-    if (!hasFilters) {
-      try {
-        const localUrl = `${BASE}/assets/js/data/arxiv-latest.json`;
-        const res = await fetch(localUrl, {cache:'no-store'});
-        if (res.ok) {
-          const data = await res.json();
-          if (Array.isArray(data) && data.length) return data;
-        }
-      } catch {}
-    }
-    try {
-      const res = await fetch(url, {cache:'no-store', mode:'cors'});
-      if (!res.ok) throw new Error('HTTP '+res.status);
-      return await res.json();
-    } catch (err) {
-      if (String(err.message).includes('CORS') || String(err.message).includes('Failed to fetch')) {
-        const proxyUrl = `https://api.allorigins.win/get?url=${encodeURIComponent(url)}`;
-        const res = await fetch(proxyUrl, {cache:'no-store', mode:'cors'});
-        if (res.ok) {
-          const pd = await res.json();
-          return typeof pd.contents === 'string' ? JSON.parse(pd.contents) : pd.contents;
+/* ===================== Data fetch ===================== */
+/* 优先尝试本地 JSON（避免 CORS），失败再走 API，最后兜底 CORS 代理 */
+async function fetchWithFallback(url){
+  const hasFilters = query.trim() || kw.trim() || cat || day; // 本地 latest.json 仅用于“当天且无过滤”
+  if (!hasFilters){
+    try{
+      const localUrl = `${BASE}/assets/js/data/arxiv-latest.json`;
+      const r = await fetch(localUrl, {cache:'no-store'});
+      if (r.ok){
+        const data = await r.json();
+        if (Array.isArray(data) && data.length) {
+          console.log('Loaded from local latest.json');
+          return data;
         }
       }
-      throw err;
+    }catch(e){ console.log('Local latest.json not available'); }
+  }
+  // API
+  try{
+    const r = await fetch(url, {cache:'no-store', mode:'cors'});
+    if (!r.ok) throw new Error('HTTP ' + r.status);
+    const data = await r.json();
+    console.log('Loaded from API');
+    return data;
+  }catch(err){
+    if (String(err).includes('CORS') || String(err).includes('Failed to fetch')){
+      try{
+        const proxy = `https://api.allorigins.win/get?url=${encodeURIComponent(url)}`;
+        const r = await fetch(proxy, {cache:'no-store', mode:'cors'});
+        if (r.ok){
+          const o = await r.json();
+          const parsed = typeof o.contents === 'string' ? JSON.parse(o.contents) : o.contents;
+          console.log('Loaded via CORS proxy');
+          return parsed;
+        }
+      }catch(e2){ console.warn('CORS proxy failed:', e2); }
     }
+    throw err;
   }
+}
 
-  function buildDataURL() {
-    const base = day ? `${API_BASE}/history/${day}.json` : `${API_BASE}/latest.json`;
-    const params = new URLSearchParams();
-    if (query.trim()) params.set('q', query.trim());
-    if (kw.trim())    params.set('kw', kw.trim());
-    if (cat)          params.set('cat', cat);
-    params.set('limit', String((page+1)*pageSize));
-    const qs = params.toString();
-    return qs ? `${base}?${qs}` : base;
+function buildDataURL(){
+  const base = day ? `${API_BASE}/history/${day}.json` : `${API_BASE}/latest.json`;
+  const qs = new URLSearchParams();
+  if (query.trim()) qs.set('q', query.trim());
+  if (kw.trim()) qs.set('kw', kw.trim());
+  if (cat) qs.set('cat', cat);
+  qs.set('limit', String((page+1)*pageSize));
+  const s = qs.toString();
+  return s ? `${base}?${s}` : base;
+}
+
+function refreshDownloadLink(){
+  let url = `${API_BASE}/history.zip`;
+  const qs = new URLSearchParams();
+  if (day){ qs.set('start', day); qs.set('end', day); }
+  if (query.trim()) qs.set('q', query.trim());
+  if (kw.trim()) qs.set('kw', kw.trim());
+  if (cat) qs.set('cat', cat);
+  qs.set('filter','1'); // 仅打包过滤后的
+  dl.href = (qs.toString() ? `${url}?${qs}` : url);
+}
+
+async function loadServer(){
+  skeleton();
+  try{
+    const url = buildDataURL();
+    ALL = await fetchWithFallback(url);
+    if (!Array.isArray(ALL)) throw new Error('Response is not an array');
+    render(true);
+  }catch(e){
+    console.error('Failed to load data:', e);
+    grid.innerHTML = `<div class="ax-card ax-empty" style="padding:2rem;text-align:center;">
+      <p><strong>Failed to load arXiv feed.</strong></p>
+      <p style="font-size:.85rem;opacity:.7;margin-top:.5rem;">Error: ${escapeHTML(e.message||String(e))}</p>
+    </div>`;
+  }finally{
+    refreshDownloadLink();
   }
+}
 
-  function refreshDownloadLink() {
-    let url = `${API_BASE}/history.zip`;
-    const params = new URLSearchParams();
-    if (day) { params.set('start', day); params.set('end', day); }
-    if (query.trim()) params.set('q', query.trim());
-    if (kw.trim())    params.set('kw', kw.trim());
-    if (cat)          params.set('cat', cat);
-    params.set('filter','1');
-    const qs = params.toString();
-    dl && (dl.href = qs ? `${url}?${qs}` : url);
-  }
-
-  async function loadServer() {
-    skeleton();
-    try {
-      const url = buildDataURL();
-      ALL = await fetchWithFallback(url);
-      if (!Array.isArray(ALL)) throw new Error('Response is not an array');
-      render(true);
-    } catch (e) {
-      grid.innerHTML = `<div class="ax-card ax-empty" style="padding:2rem;text-align:center;">
-        <p><strong>Failed to load arXiv feed.</strong></p>
-        <p style="font-size:.85rem;opacity:.7;margin-top:.5rem;">Error: ${escapeHTML(e.message)}</p></div>`;
-    } finally { refreshDownloadLink(); }
-  }
-
-  async function loadHistoryList() {
-    try {
-      const localRes = await fetch(`${BASE}/assets/js/data/arxiv-history.json`, {cache:'no-store'});
-      if (localRes.ok) {
-        const files = await localRes.json();
-        if (Array.isArray(files)) {
+async function loadHistoryList(){
+  try{
+    // 先尝试本地 arxiv-history.json
+    try{
+      const r = await fetch(`${BASE}/assets/js/data/arxiv-history.json`, {cache:'no-store'});
+      if (r.ok){
+        const files = await r.json();
+        if (Array.isArray(files)){
           files.forEach(fn => {
-            const d = String(fn).replace(/\.json$/,'');
+            const d = fn.replace(/\.json$/,'');
             const opt = document.createElement('option');
             opt.value = d; opt.textContent = d;
-            dateSel && dateSel.appendChild(opt);
+            dateSel.appendChild(opt);
           });
           return;
         }
       }
-    } catch {}
-    try {
-      const res = await fetch(`${API_BASE}/history`, {cache:'no-store', mode:'cors'});
-      if (res.ok) {
-        const files = await res.json();
-        if (Array.isArray(files)) {
-          files.forEach(fn => {
-            const d = String(fn).replace(/\.json$/,'');
-            const opt = document.createElement('option');
-            opt.value = d; opt.textContent = d;
-            dateSel && dateSel.appendChild(opt);
-          });
-        }
-      }
-    } catch {}
-  }
-
-  // ———— 渲染 ————
-  function chip(label){
-    const b=document.createElement('button');
-    b.className='ax-chip'+(cat===label?' active':''); b.textContent=label;
-    b.onclick=()=>{ cat=(cat===label?null:label); resetAndLoad(); };
-    return b;
-  }
-  function renderChips(){
-    const chipsEl = document.getElementById('ax-chips');
-    if(!chipsEl) return;
-    chipsEl.innerHTML='';
-    CATS.forEach(c => chipsEl.appendChild(chip(c)));
-    if(cat){
-      const x=chip('× clear'); x.onclick=()=>{cat=null; resetAndLoad();}; chipsEl.appendChild(x);
+    }catch{ /* ignore */ }
+    // 再尝试 API
+    const r2 = await fetch(`${API_BASE}/history`, {cache:'no-store', mode:'cors'});
+    if (!r2.ok) throw new Error('HTTP ' + r2.status);
+    const files2 = await r2.json();
+    if (Array.isArray(files2)){
+      files2.forEach(fn => {
+        const d = fn.replace(/\.json$/,'');
+        const opt = document.createElement('option');
+        opt.value = d; opt.textContent = d;
+        dateSel.appendChild(opt);
+      });
     }
-  }
-  function filteredClient(){
-    let arr=ALL.slice();
-    arr.sort((a,b)=>{
-      const ad=a.date||'', bd=b.date||'', at=(a.title||'').toLowerCase(), bt=(b.title||'').toLowerCase();
-      const ac=(a.primary||''), bc=(b.primary||'');
-      if(sort==='date_desc') return bd.localeCompare(ad) || at.localeCompare(bt);
-      if(sort==='date_asc')  return ad.localeCompare(bd) || at.localeCompare(bt);
-      if(sort==='title_asc') return at.localeCompare(bt);
-      if(sort==='cat_asc')   return ac.localeCompare(bc) || bd.localeCompare(ad);
-      return 0;
-    });
-    if(favOnly) arr=arr.filter(p=>isFav(String(p.id||'').replace(/v\d+$/,'')));
-    if(!favOnly){
-      const F=[], N=[];
-      arr.forEach(p=>isFav(String(p.id||'').replace(/v\d+$/,''))?F.push(p):N.push(p));
-      arr=[...F,...N];
-    }
-    return arr;
-  }
-  function iconStar(active){return active?'⭐':'☆';}
-  function cardHTML(p){
-    const baseId=String(p.id||'').replace(/v\d+$/,'');
-    const title=p.title||'';
-    const authors=Array.isArray(p.authors)?p.authors.join(', '):(p.authors||'');
-    const abs=baseId?`https://arxiv.org/abs/${baseId}`:'#';
-    const pdf=baseId?`https://arxiv.org/pdf/${baseId}.pdf`:'#';
-    const primary=p.primary||'arXiv', date=p.date||'';
-    const abstract=p.abstract||p.summary||'';
-    const fav=isFav(baseId);
-    return view==='card'
-      ? `<article class="ax-card"><div class="ax-row">
-            <h3 class="ax-title" style="flex:1 1 auto;">${hl(title,query)}</h3>
-            <div class="ax-actions">
-              <a href="${abs}" target="_blank" rel="noopener" class="ax-btn">abs</a>
-              <a href="${pdf}" target="_blank" rel="noopener" class="ax-btn">pdf</a>
-              <button class="ax-btn" data-bib="${baseId}">BibTeX</button>
-              <button class="ax-btn ax-ghost ax-star" data-fav="${baseId}">${iconStar(fav)}</button>
-            </div></div>
-          <div class="ax-meta"><span class="ax-badge">${primary}</span>${date?`<span class="ax-badge">${date}</span>`:''}
-          ${baseId?`<span class="ax-badge">arXiv:${baseId}</span>`:''}</div>
-          <div class="ax-meta">${hl(authors,query)}</div>
-          <details><summary style="cursor:pointer;opacity:.88">Abstract</summary>
-            <p class="ax-abs">${hl(abstract,query)}</p>
-          </details></article>`
-      : `<article class="ax-card"><div class="ax-leftbar">
-            <button class="ax-btn ax-ghost ax-star" data-fav="${baseId}">${iconStar(fav)}</button>
-            ${date?`<div class="ax-badge">${date}</div>`:''}<div class="ax-badge">${primary}</div>
-          </div>
-          <div style="flex:1">
-            <h3 class="ax-title">${hl(title,query)}</h3>
-            <div class="ax-meta">${baseId?`<span class="ax-badge">arXiv:${baseId}</span>`:''}</div>
-            <div class="ax-meta">${hl(authors,query)}</div>
-            <details><summary style="cursor:pointer;opacity:.88">Abstract</summary>
-              <p class="ax-abs">${hl(abstract,query)}</p>
-            </details>
-            <div class="ax-links">
-              <a class="ax-btn" target="_blank" rel="noopener" href="${abs}">abs</a>
-              <a class="ax-btn" target="_blank" rel="noopener" href="${pdf}">pdf</a>
-              <button class="ax-btn" data-bib="${baseId}">Copy BibTeX</button>
-            </div>
-          </div></article>`;
-  }
-  function attachActions(scope){
-    scope.querySelectorAll('[data-bib]').forEach(b=>{
-      b.onclick=()=>{ const id=b.getAttribute('data-bib'); const p=ALL.find(x=>String(x.id||'').replace(/v\d+$/,'')===id); if(p) copy(bibtex(p)); };
-    });
-    scope.querySelectorAll('[data-fav]').forEach(b=>{
-      b.onclick=()=>{ toggleFav(b.getAttribute('data-fav')); };
-    });
-  }
-  function skeleton(n=6){ grid && (grid.innerHTML=Array.from({length:n}).map(()=>`<div class="ax-skel"></div>`).join('')); }
-  function render(resetLayout=false){
-    renderChips();
-    if(!grid || !count || !moreBtn) return;
-    const items=filteredClient();
-    if(resetLayout) grid.classList.toggle('ax-list', view==='list');
-    const total=items.length, start=page*pageSize, end=Math.min(start+pageSize,total);
-    if(start===0) grid.innerHTML='';
-    const chunk=items.slice(start,end);
-    if(chunk.length===0 && total===0 && start===0){
-      grid.innerHTML = `<div class="ax-card ax-empty" style="padding:2rem;text-align:center;">No papers found.</div>`;
-    } else {
-      const frag=document.createElement('div'); frag.innerHTML=chunk.map(cardHTML).join('');
-      attachActions(frag); grid.append(...frag.childNodes);
-    }
-    count.textContent = `${total} item${total!==1?'s':''}${cat?` · ${cat}`:''}${query?` · "${query}"`:''}${kw?` · kw:${kw}`:''}${favOnly?' · ⭐':''}${day?` · ${day}`:' · Today'}`;
-    moreBtn.style.display = (end<total?'block':'none');
-  }
-  function reset(){ page=0; grid.innerHTML=''; render(true); refreshDownloadLink(); }
-  function resetAndLoad(){ page=0; loadServer(); }
+  }catch(e){ console.warn('history list unavailable:', e); }
+}
 
-  // ———— 初始化 ————
-  async function boot(){
-    if(!chips || !grid || !q || !kwInp) return;
-    q.value=''; kwInp.value='';
-    query=''; kw=''; cat=null; sort='date_desc'; view='card'; favOnly=false; day='';
-    q.oninput=e=>{ query=e.target.value; resetAndLoad(); };
-    kwInp.oninput=e=>{ kw=e.target.value; resetAndLoad(); };
-    sortSel && (sortSel.onchange=e=>{ sort=e.target.value; reset(); });
-    btnCard && (btnCard.onclick=()=>{ view='card'; btnCard.classList.remove('ax-ghost'); btnList.classList.add('ax-ghost'); reset(); });
-    btnList && (btnList.onclick=()=>{ view='list'; btnList.classList.remove('ax-ghost'); btnCard.classList.add('ax-ghost'); reset(); });
-    favBtn && (favBtn.onclick=()=>{ favOnly=!favOnly; favBtn.textContent=favOnly?'⭐ Favorites: On':'⭐ Favorites: Off'; reset(); });
-    moreBtn && (moreBtn.onclick=()=>{ page++; render(); refreshDownloadLink(); });
-    dateSel && (dateSel.onchange=e=>{ day=e.target.value; resetAndLoad(); });
+/* ===================== UI helpers ===================== */
+function chip(label){
+  const b = document.createElement('button');
+  b.className = 'ax-chip' + (cat === label ? ' active' : '');
+  b.textContent = label;
+  b.onclick = () => { cat = (cat === label ? null : label); resetAndLoad(); };
+  return b;
+}
 
-    renderChips();
-    await loadHistoryList();
-    await loadServer();
+function renderChips(){
+  const holder = document.getElementById('ax-chips');
+  if (!holder) return;
+  holder.innerHTML = '';
+  CATS.forEach(c => holder.appendChild(chip(c)));
+  if (cat){
+    const x = chip('× clear');
+    x.onclick = () => { cat = null; resetAndLoad(); };
+    holder.appendChild(x);
+  }
+}
+
+function filteredClient(){
+  let arr = ALL.slice();
+  // 排序
+  arr.sort((a,b) => {
+    const ad=a.date||'', bd=b.date||'';
+    const at=(a.title||'').toLowerCase(), bt=(b.title||'').toLowerCase();
+    const ac=(a.primary||''), bc=(b.primary||'');
+    if (sort==='date_desc') return bd.localeCompare(ad) || at.localeCompare(bt);
+    if (sort==='date_asc')  return ad.localeCompare(bd) || at.localeCompare(bt);
+    if (sort==='title_asc') return at.localeCompare(bt);
+    if (sort==='cat_asc')   return ac.localeCompare(bc) || bd.localeCompare(ad);
+    return 0;
+  });
+  // 收藏置顶 / 仅收藏
+  if (favOnly) arr = arr.filter(p => isFav((p.id||'').replace(/v\d+$/,'')));
+  if (!favOnly){
+    const F=[], N=[];
+    arr.forEach(p => isFav((p.id||'').replace(/v\d+$/,'')) ? F.push(p) : N.push(p));
+    arr = [...F, ...N];
+  }
+  return arr;
+}
+
+function iconStar(active){ return active ? '⭐' : '☆'; }
+
+function cardHTML(p){
+  const baseId = (p.id||'').replace(/v\d+$/,'');
+  const title  = p.title || '';
+  const authors= Array.isArray(p.authors) ? p.authors.join(', ') : (p.authors || '');
+  const absUrl = p.abs || (baseId ? `https://arxiv.org/abs/${baseId}` : '#');
+  const pdfUrl = p.pdf || (baseId ? `https://arxiv.org/pdf/${baseId}.pdf` : '#');
+  const primary= p.primary || 'arXiv';
+  const date   = p.date || '';
+  const abstract = p.abstract || p.summary || '';
+  const fav = isFav(baseId);
+
+  if (view === 'card'){
+    return `<article class="ax-card">
+      <div class="ax-row">
+        <h3 class="ax-title" style="flex:1 1 auto;">${hl(title, query)}</h3>
+        <div class="ax-actions">
+          <a href="${absUrl}" target="_blank" rel="noopener" class="ax-btn">abs</a>
+          <a href="${pdfUrl}" target="_blank" rel="noopener" class="ax-btn">pdf</a>
+          <button class="ax-btn" data-bib="${baseId}" title="Copy BibTeX">BibTeX</button>
+          <button class="ax-btn ax-ghost ax-star" data-fav="${baseId}" title="Toggle favorite">${iconStar(fav)}</button>
+        </div>
+      </div>
+      <div class="ax-meta">
+        <span class="ax-badge">${primary}</span>
+        ${date ? `<span class="ax-badge">${date}</span>` : ''}
+        ${baseId ? `<span class="ax-badge">arXiv:${baseId}</span>` : ''}
+      </div>
+      <div class="ax-meta">${hl(authors, query)}</div>
+      <details>
+        <summary style="cursor:pointer;opacity:.88">Abstract</summary>
+        <p class="ax-abs">${hl(abstract, query)}</p>
+      </details>
+    </article>`;
+  }else{
+    return `<article class="ax-card">
+      <div class="ax-leftbar">
+        <button class="ax-btn ax-ghost ax-star" data-fav="${baseId}" title="Toggle favorite">${iconStar(fav)}</button>
+        ${date ? `<div class="ax-badge">${date}</div>` : ''}
+        <div class="ax-badge">${primary}</div>
+      </div>
+      <div style="flex:1">
+        <h3 class="ax-title">${hl(title, query)}</h3>
+        <div class="ax-meta">${baseId ? `<span class="ax-badge">arXiv:${baseId}</span>` : ''}</div>
+        <div class="ax-meta">${hl(authors, query)}</div>
+        <details>
+          <summary style="cursor:pointer;opacity:.88">Abstract</summary>
+          <p class="ax-abs">${hl(abstract, query)}</p>
+        </details>
+        <div class="ax-links">
+          <a href="${absUrl}" target="_blank" rel="noopener" class="ax-btn">abs</a>
+          <a href="${pdfUrl}" target="_blank" rel="noopener" class="ax-btn">pdf</a>
+          <button class="ax-btn" data-bib="${baseId}" title="Copy BibTeX">Copy BibTeX</button>
+        </div>
+      </div>
+    </article>`;
+  }
+}
+
+function attachActions(scope){
+  scope.querySelectorAll('[data-bib]').forEach(b => {
+    b.onclick = () => {
+      const id = b.getAttribute('data-bib');
+      const p = ALL.find(x => (x.id||'').replace(/v\d+$/,'') === id);
+      if (p) copy(bibtex(p));
+    };
+  });
+  scope.querySelectorAll('[data-fav]').forEach(b => {
+    b.onclick = () => toggleFav(b.getAttribute('data-fav'));
+  });
+  // 摘要详情展开时再 typeset 一次，确保布局后渲染
+  scope.querySelectorAll('details > summary').forEach(sum => {
+    sum.addEventListener('click', () => {
+      setTimeout(() => typesetMath(app()), 0);
+    });
+  });
+}
+
+function skeleton(n=6){
+  grid.innerHTML = Array.from({length: n}).map(() => `<div class="ax-skel"></div>`).join('');
+}
+
+function render(resetLayout=false){
+  renderChips();
+
+  const items = filteredClient();
+  if (resetLayout) grid.classList.toggle('ax-list', view === 'list');
+
+  const total = items.length;
+  const start = page * pageSize;
+  const end   = Math.min(start + pageSize, total);
+
+  if (start === 0) grid.innerHTML = '';
+  const chunk = items.slice(start, end);
+
+  if (chunk.length === 0 && total === 0 && start === 0){
+    grid.innerHTML = `<div class="ax-card ax-empty" style="padding:2rem;text-align:center;">
+      <p>No papers found.</p>
+      <p style="font-size:.85rem;opacity:.7;margin-top:.5rem;">Try adjusting your search or filters.</p>
+    </div>`;
+  }else{
+    const frag = document.createElement('div');
+    frag.innerHTML = chunk.map(cardHTML).join('');
+    attachActions(frag);
+    grid.append(...frag.childNodes);
   }
 
-  if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', boot, { once:true });
-  } else {
-    boot();
-  }
-  document.addEventListener('pjax:complete', boot, { once:true });
-})();
+  if (countEl) countEl.textContent =
+    `${total} item${total!==1?'s':''}${cat?` · ${cat}`:''}${query?` · "${query}"`:''}${kw?` · kw:${kw}`:''}${favOnly?' · ⭐':''}${day?` · ${day}`:' · Today'}`;
+
+  if (moreBtn) moreBtn.style.display = (end < total ? 'block' : 'none');
+
+  // ✅ 对刚刚渲染出的 DOM 进行公式排版
+  typesetMath(app());
+}
+
+function reset(){ page = 0; grid.innerHTML=''; render(true); refreshDownloadLink(); }
+function resetAndLoad(){ page = 0; loadServer(); }
+
+/* ===================== Boot ===================== */
+async function boot(){
+  if (!grid || !qInp || !kwInp) return;
+
+  // 初始控件
+  qInp.value = ''; kwInp.value = '';
+  query=''; kw=''; cat=null; sort='date_desc'; view='card'; favOnly=false; day='';
+
+  qInp.oninput   = e => { query = e.target.value; resetAndLoad(); };
+  kwInp.oninput  = e => { kw = e.target.value; resetAndLoad(); };
+  sortSel.onchange = e => { sort = e.target.value; reset(); };
+  btnCard.onclick = () => { view='card'; btnCard.classList.remove('ax-ghost'); btnList.classList.add('ax-ghost'); reset(); };
+  btnList.onclick = () => { view='list'; btnList.classList.remove('ax-ghost'); btnCard.classList.add('ax-ghost'); reset(); };
+  favBtn.onclick  = () => { favOnly=!favOnly; favBtn.textContent = favOnly ? '⭐ Favorites: On' : '⭐ Favorites: Off'; reset(); };
+  moreBtn.onclick = () => { page++; render(); refreshDownloadLink(); };
+  dateSel.onchange= e => { day = e.target.value; resetAndLoad(); };
+
+  // 先画 chips 再加载数据
+  renderChips();
+  await loadHistoryList();
+  await loadServer();
+}
+
+// DOM Ready / PJAX
+if (document.readyState === 'loading'){
+  document.addEventListener('DOMContentLoaded', boot);
+} else { boot(); }
+document.addEventListener('pjax:complete', boot);
