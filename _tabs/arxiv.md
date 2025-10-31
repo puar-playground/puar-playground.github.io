@@ -97,27 +97,76 @@ order: 2
 
   // network fallback (handle CORS on GitHub Pages)
   let useProxy=false;
-  const proxyUrl = u => `https://cors.isomorphic-git.org/${u}`;
-  const maybeProxy = u => useProxy ? proxyUrl(u) : u;
+  const proxies = [
+    u => `https://api.allorigins.win/get?url=${encodeURIComponent(u)}`,
+    u => `https://corsproxy.io/?${encodeURIComponent(u)}`,
+    u => `https://cors-anywhere.herokuapp.com/${u}`
+  ];
+  let proxyIdx = 0;
+  const getProxyUrl = u => proxies[proxyIdx](u);
+  const maybeProxy = u => useProxy ? getProxyUrl(u) : u;
+  
   async function fetchJSON(u){
+    let lastError = null;
+    const originalUrl = u;
+    const timeout = 15000; // 15 second timeout
+    
+    // Helper to add timeout to fetch
+    const fetchWithTimeout = (url, opts) => {
+      return Promise.race([
+        fetch(url, opts),
+        new Promise((_, reject) => 
+          setTimeout(() => reject(new Error('Request timeout')), timeout)
+        )
+      ]);
+    };
+    
+    // Try direct first
     try{
-      const res = await fetch(maybeProxy(u), {cache:'no-store'});
-      if(!res.ok) throw new Error('HTTP '+res.status);
-      return await res.json();
+      const res = await fetchWithTimeout(u, {cache:'no-store', mode:'cors'});
+      if(!res.ok) throw new Error(`HTTP ${res.status}: ${res.statusText}`);
+      const data = await res.json();
+      console.log('✓ Direct fetch succeeded');
+      return data;
     }catch(err){
-      // If not already using proxy, switch once and retry (likely CORS in production)
-      if(!useProxy){
-        useProxy = true;
-        try{
-          const res2 = await fetch(proxyUrl(u), {cache:'no-store'});
-          if(!res2.ok) throw new Error('HTTP '+res2.status);
-          return await res2.json();
-        }catch(e2){
-          // fall through to throw original
-        }
+      console.warn('Direct fetch failed:', err.message);
+      if(err.name !== 'TypeError' && !err.message.includes('Failed to fetch') && !err.message.includes('CORS')){
+        // If it's not a CORS error, throw immediately
+        throw err;
       }
-      throw err;
+      lastError = err;
     }
+    
+    // Try proxies in order (only if CORS failed)
+    for(let i=0; i<proxies.length; i++){
+      proxyIdx = i;
+      useProxy = true;
+      const proxiedUrl = getProxyUrl(originalUrl);
+      try{
+        console.log(`Trying proxy ${i+1}:`, proxiedUrl);
+        const res = await fetchWithTimeout(proxiedUrl, {cache:'no-store', mode:'cors'});
+        if(!res.ok) throw new Error(`HTTP ${res.status}: ${res.statusText}`);
+        
+        let data = await res.json();
+        // Handle allorigins.win response format
+        if(data && typeof data === 'object' && data.contents){
+          try {
+            data = JSON.parse(data.contents);
+          } catch(parseErr) {
+            console.warn('Failed to parse proxy response contents');
+            throw new Error('Invalid response from proxy');
+          }
+        }
+        // Handle corsproxy.io which returns data directly
+        console.log(`✓ Proxy ${i+1} succeeded`);
+        return data;
+      }catch(err){
+        console.warn(`Proxy ${i+1} failed:`, err.message);
+        lastError = err;
+      }
+    }
+    
+    throw lastError || new Error('All fetch methods failed. Check if backend is accessible.');
   }
 
   // local favorites
@@ -161,6 +210,7 @@ order: 2
 
   function refreshDownloadLink() {
     // Build ZIP download link reflecting current day/q/kw/cat
+    // Note: ZIP downloads might not work through proxies, so use direct link
     let url = `${API_BASE}/history.zip`;
     const params = new URLSearchParams();
     if (day) { params.set('start', day); params.set('end', day); }
@@ -169,19 +219,28 @@ order: 2
     if (cat)          params.set('cat', cat);
     params.set('filter','1'); // zip with filtered contents
     const qs = params.toString();
-    const href = qs ? `${url}?${qs}` : url;
-    dl.href = maybeProxy(href);
+    dl.href = qs ? `${url}?${qs}` : url;
   }
 
   async function loadServer() {
     skeleton();
     try{
       const url = buildDataURL();
+      console.log('Loading from:', url);
       ALL = await fetchJSON(url);
+      console.log('Loaded', ALL.length, 'items');
+      if(!Array.isArray(ALL)){
+        throw new Error('Response is not an array. Got: ' + typeof ALL);
+      }
       render(true);
     }catch(e){
-      console.error(e);
-      grid.innerHTML = `<div class="ax-card ax-empty">Failed to load arXiv feed.</div>`;
+      console.error('loadServer error:', e);
+      const errorMsg = e.message || 'Unknown error';
+      grid.innerHTML = `<div class="ax-card ax-empty" style="padding:2rem;text-align:center;">
+        <p><strong>Failed to load arXiv feed.</strong></p>
+        <p style="font-size:.9rem;opacity:.8;margin-top:.5rem;">${escapeHTML(errorMsg)}</p>
+        <p style="font-size:.85rem;opacity:.7;margin-top:.5rem;">Check browser console (F12) for details.</p>
+      </div>`;
     } finally {
       refreshDownloadLink();
     }
@@ -190,13 +249,15 @@ order: 2
   async function loadHistoryList(){
     try{
       const files = await fetchJSON(`${API_BASE}/history`);
-      files.forEach(fn=>{
-        const d = fn.replace(/\.json$/,'');
-        const opt = document.createElement('option');
-        opt.value = d;
-        opt.textContent = d;
-        dateSel.appendChild(opt);
-      });
+      if(Array.isArray(files)){
+        files.forEach(fn=>{
+          const d = fn.replace(/\.json$/,'');
+          const opt = document.createElement('option');
+          opt.value = d;
+          opt.textContent = d;
+          dateSel.appendChild(opt);
+        });
+      }
     }catch(e){
       console.warn('history list unavailable (ok if first day)', e);
     }
@@ -320,6 +381,14 @@ order: 2
 
   // ------------ init ------------
   async function boot(){
+    console.log('arXiv app booting...');
+    
+    // Ensure elements exist
+    if(!grid || !q || !kwInp || !chips || !count){
+      console.error('Missing required DOM elements');
+      return;
+    }
+    
     // controls
     q.value=''; kwInp.value=''; query=''; kw=''; cat=null; sort='date_desc'; view='card'; favOnly=false; day='';
     q.oninput=e=>{ query=e.target.value; resetAndLoad(); };
@@ -335,9 +404,26 @@ order: 2
 
     await loadHistoryList();
     await loadServer();     // includes refreshDownloadLink()
+    console.log('arXiv app booted');
   }
 
-  document.addEventListener('DOMContentLoaded', boot);
-  document.addEventListener('pjax:complete', boot); // Chirpy PJAX
+  // Run immediately if DOM is ready, otherwise wait
+  if(document.readyState === 'loading'){
+    document.addEventListener('DOMContentLoaded', boot);
+  } else {
+    // DOM already loaded
+    boot();
+  }
+  
+  // Also handle PJAX navigation (Chirpy theme)
+  document.addEventListener('pjax:complete', boot);
+  
+  // Fallback: try to boot after a short delay if elements are available
+  setTimeout(() => {
+    if(grid && grid.innerHTML === '' && document.querySelector('#arxiv-app')){
+      console.log('Fallback boot triggered');
+      boot();
+    }
+  }, 500);
 })();
 </script>
