@@ -12,3 +12,4 @@ pip install purediffusion
 ```
 `purediffusion` is a torch implementation I used for DDPM with DDIM sampling. This implementation is not restricted for Image data. It is a convinient start to build a diffusion model for arbitrary data type. One can just design the network structure and data format, without coping with the coefficients in the diffusion schedule and the generation process.
 
+ 
