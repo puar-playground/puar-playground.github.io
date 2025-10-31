@@ -80,8 +80,16 @@ order: 2
   <!-- Subtle bottom download -->
   <div class="ax-footer">
     <a id="ax-download" class="ax-download" href="#" rel="noopener">Download all history (ZIP)</a>
+    <button id="ax-refresh" class="ax-btn ax-ghost" style="margin-left:10px;" title="Refresh from backend">🔄 Refresh</button>
   </div>
 </div>
+
+{% if site.data.arxiv_latest %}
+<script id="arxiv-initial-data" type="application/json">{{ site.data.arxiv_latest | jsonify }}</script>
+{% endif %}
+{% if site.data.arxiv_history %}
+<script id="arxiv-history-data" type="application/json">{{ site.data.arxiv_history | jsonify }}</script>
+{% endif %}
 
 <script>
 (function(){
@@ -492,6 +500,59 @@ order: 2
   function reset(){ page=0; grid.innerHTML=''; render(true); refreshDownloadLink(); }
   function resetAndLoad(){ page=0; loadServer(); } // refreshDownloadLink() is called inside loadServer()
 
+  // Try to load initial data from build-time embedded JSON
+  function loadInitialData(){
+    const dataScript = document.getElementById('arxiv-initial-data');
+    const historyScript = document.getElementById('arxiv-history-data');
+    
+    if(dataScript){
+      try{
+        const data = JSON.parse(dataScript.textContent);
+        console.log('Loading initial data from build-time embed:', data.length || 'object');
+        
+        // Handle different formats
+        if(Array.isArray(data)){
+          ALL = data;
+        } else if(data && typeof data === 'object'){
+          if(Array.isArray(data.data)) ALL = data.data;
+          else if(Array.isArray(data.items)) ALL = data.items;
+          else if(Array.isArray(data.results)) ALL = data.results;
+          else if(Array.isArray(data.papers)) ALL = data.papers;
+          else ALL = [];
+        } else {
+          ALL = [];
+        }
+        
+        console.log('Initial data loaded:', ALL.length, 'items');
+        render(true);
+        
+        // Load history list from embedded data
+        if(historyScript){
+          try{
+            const historyData = JSON.parse(historyScript.textContent);
+            if(Array.isArray(historyData)){
+              historyData.forEach(fn=>{
+                const d = fn.replace(/\.json$/,'');
+                const opt = document.createElement('option');
+                opt.value = d;
+                opt.textContent = d;
+                dateSel.appendChild(opt);
+              });
+            }
+          }catch(e){
+            console.warn('Failed to parse history data:', e);
+          }
+        }
+        
+        refreshDownloadLink();
+        return true; // Successfully loaded from build-time data
+      }catch(e){
+        console.warn('Failed to load initial data from embed:', e);
+      }
+    }
+    return false; // No build-time data available
+  }
+
   // ------------ init ------------
   async function boot(){
     console.log('arXiv app booting...');
@@ -512,11 +573,39 @@ order: 2
     favBtn.onclick=()=>{ favOnly=!favOnly; favBtn.textContent=favOnly?'⭐ Favorites: On':'⭐ Favorites: Off'; reset(); };
     moreBtn.onclick=()=>{ page++; render(); refreshDownloadLink(); };
     dateSel.onchange=e=>{ day=e.target.value; resetAndLoad(); };
+    
+    // Refresh button
+    const refreshBtn = document.getElementById('ax-refresh');
+    if(refreshBtn){
+      refreshBtn.onclick = async () => {
+        refreshBtn.textContent = '⏳ Loading...';
+        refreshBtn.disabled = true;
+        try{
+          await loadHistoryList();
+          await loadServer();
+          toast('Data refreshed!');
+        }catch(e){
+          toast('Refresh failed. Using cached data.');
+          console.error('Refresh error:', e);
+        }finally{
+          refreshBtn.textContent = '🔄 Refresh';
+          refreshBtn.disabled = false;
+        }
+      };
+    }
 
     chips.innerHTML=''; CATS.forEach(c=>chips.appendChild(chip(c)));
 
-    await loadHistoryList();
-    await loadServer();     // includes refreshDownloadLink()
+    // Try to load from build-time data first
+    const hasInitialData = loadInitialData();
+    
+    if(!hasInitialData){
+      // Fallback: fetch from API
+      console.log('No build-time data, fetching from API...');
+      await loadHistoryList();
+      await loadServer();
+    }
+    
     console.log('arXiv app booted');
   }
 
