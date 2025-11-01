@@ -3,12 +3,10 @@
  * Drop-in script for GitHub Pages + Jekyll (Chirpy)
  */
 
-/* ---------------- 防重复初始化（PJAX 友好） ---------------- */
+/* ---------------- 防重复初始化标记（不 return） ---------------- */
 const __APP__ = document.getElementById('arxiv-app');
 if (__APP__) {
-  if (__APP__.dataset.inited === '1') {
-    console.debug('[arxiv] already inited, skip');
-  } else {
+  if (!__APP__.dataset.inited) {
     __APP__.dataset.inited = '1';
   }
 }
@@ -176,43 +174,59 @@ function dedupeKeepLatest(arr) {
 }
 
 /* ---------------- Data fetch ---------------- */
+// 可选开关：url?force_local=1 时走本地优先
+const FORCE_LOCAL = new URLSearchParams(location.search).has('force_local');
+
+// 建议把本地路径改成 Jekyll 相对路径（放在 MD 里会被编译）：
+// const LOCAL_LATEST = "{{ '/assets/js/data/arxiv-latest.json' | relative_url }}";
+const LOCAL_LATEST = `${BASE}/assets/js/data/arxiv-latest.json`;
+
 async function fetchWithFallback(url){
-  const hasFilters = query.trim() || kw.trim() || cat || day;
-  if (!hasFilters){
+  // —— API 优先（除非强制本地）
+  if (!FORCE_LOCAL) {
     try{
-      const localUrl = `${BASE}/assets/js/data/arxiv-latest.json`;
-      const r = await fetch(localUrl, {cache:'no-store'});
-      if (r.ok){
-        const data = await r.json();
-        if (Array.isArray(data) && data.length) {
-          console.log('Loaded from local latest.json');
-          return data;
-        }
-      }
-    }catch(e){ console.log('Local latest.json not available'); }
-  }
-  try{
-    const r = await fetch(url, {cache:'no-store', mode:'cors'});
-    if (!r.ok) throw new Error('HTTP ' + r.status);
-    const data = await r.json();
-    console.log('Loaded from API');
-    return data;
-  }catch(err){
-    if (String(err).includes('CORS') || String(err).includes('Failed to fetch')){
-      try{
-        const proxy = `https://api.allorigins.win/get?url=${encodeURIComponent(url)}`;
-        const r = await fetch(proxy, {cache:'no-store', mode:'cors'});
-        if (r.ok){
-          const o = await r.json();
-          const parsed = typeof o.contents === 'string' ? JSON.parse(o.contents) : o.contents;
-          console.log('Loaded via CORS proxy');
-          return parsed;
-        }
-      }catch(e2){ console.warn('CORS proxy failed:', e2); }
+      const apiUrl = url + (url.includes('?') ? '&' : '?') + `_t=${Date.now()}`; // 防缓存
+      const r = await fetch(apiUrl, { cache:'no-store', mode:'cors' });
+      if (!r.ok) throw new Error('HTTP ' + r.status);
+      const data = await r.json();
+      console.log('Loaded from API');
+      return data;
+    }catch(err){
+      console.warn('API failed, will try local or proxy:', err.message);
+      // 不中断，继续尝试本地/代理
     }
-    throw err;
+  }
+
+  // —— 本地兜底（仅在首页/无过滤时才有意义）
+  try{
+    const localUrl = LOCAL_LATEST + `?_t=${Date.now()}`;
+    const r = await fetch(localUrl, { cache:'no-store' });
+    if (r.ok){
+      const data = await r.json();
+      if (Array.isArray(data) && data.length){
+        console.log('Loaded from local latest.json');
+        return data;
+      }
+    }
+  }catch(e){ console.log('Local latest.json not available'); }
+
+  // —— 最后兜底：CORS 代理
+  try{
+    const proxy = `https://api.allorigins.win/get?url=${encodeURIComponent(url)}`;
+    const r = await fetch(proxy, { cache:'no-store', mode:'cors' });
+    if (!r.ok) throw new Error('HTTP ' + r.status);
+    const o = await r.json();
+    const parsed = typeof o.contents === 'string' ? JSON.parse(o.contents) : o.contents;
+    console.log('Loaded via CORS proxy');
+    return parsed;
+  }catch(e2){
+    console.warn('CORS proxy failed:', e2);
+    throw e2; // 全部失败才抛
   }
 }
+
+
+
 function buildDataURL(){
   const base = day ? `${API_BASE}/history/${day}.json` : `${API_BASE}/latest.json`;
   const qs = new URLSearchParams();
@@ -252,35 +266,78 @@ async function loadServer(){
     refreshDownloadLink();
   }
 }
-async function loadHistoryList(){
-  try{
-    try{
-      const r = await fetch(`${BASE}/assets/js/data/arxiv-history.json`, {cache:'no-store'});
-      if (r.ok){
+
+// async function loadHistoryList(){
+//   try{
+//     try{
+//       const r = await fetch(`${BASE}/assets/js/data/arxiv-history.json`, {cache:'no-store'});
+//       if (r.ok){
+//         const files = await r.json();
+//         if (Array.isArray(files)){
+//           files.forEach(fn => {
+//             const d = fn.replace(/\.json$/,'');
+//             const opt = document.createElement('option');
+//             opt.value = d; opt.textContent = d;
+//             dateSel.appendChild(opt);
+//           });
+//           return;
+//         }
+//       }
+//     }catch{ /* ignore */ }
+//     const r2 = await fetch(`${API_BASE}/history`, {cache:'no-store', mode:'cors'});
+//     if (!r2.ok) throw new Error('HTTP ' + r2.status);
+//     const files2 = await r2.json();
+//     if (Array.isArray(files2)){
+//       files2.forEach(fn => {
+//         const d = fn.replace(/\.json$/,'');
+//         const opt = document.createElement('option');
+//         opt.value = d; opt.textContent = d;
+//         dateSel.appendChild(opt);
+//       });
+//     }
+//   }catch(e){ console.warn('history list unavailable:', e); }
+// }
+
+async function loadHistoryList() {
+  try {
+    // ✅ 在追加之前清空 “Today” 以外的所有选项 (解决重复)
+    while (dateSel.options.length > 1) dateSel.remove(1);
+
+    const seen = new Set();   // ✅ Set 去重
+
+    const pushOpt = (fn) => {
+      const d = fn.replace(/\.json$/,'');
+      if (!d || seen.has(d)) return;
+      seen.add(d);
+      const opt = document.createElement('option');
+      opt.value = d;
+      opt.textContent = d;
+      dateSel.appendChild(opt);
+    };
+
+    // 先尝试本地 history.json
+    try {
+      const r = await fetch(`${BASE}/assets/js/data/arxiv-history.json`, { cache:'no-store' });
+      if (r.ok) {
         const files = await r.json();
-        if (Array.isArray(files)){
-          files.forEach(fn => {
-            const d = fn.replace(/\.json$/,'');
-            const opt = document.createElement('option');
-            opt.value = d; opt.textContent = d;
-            dateSel.appendChild(opt);
-          });
-          return;
-        }
+        if (Array.isArray(files)) files.forEach(pushOpt);
       }
-    }catch{ /* ignore */ }
-    const r2 = await fetch(`${API_BASE}/history`, {cache:'no-store', mode:'cors'});
-    if (!r2.ok) throw new Error('HTTP ' + r2.status);
-    const files2 = await r2.json();
-    if (Array.isArray(files2)){
-      files2.forEach(fn => {
-        const d = fn.replace(/\.json$/,'');
-        const opt = document.createElement('option');
-        opt.value = d; opt.textContent = d;
-        dateSel.appendChild(opt);
-      });
+    } catch {}
+
+    // 再去 API 取（Railway），补全本地缺的
+    try {
+      const r2 = await fetch(`${API_BASE}/history`, { cache:'no-store', mode:'cors' });
+      if (r2.ok) {
+        const files2 = await r2.json();
+        if (Array.isArray(files2)) files2.forEach(pushOpt);
+      }
+    } catch(e) {
+      console.warn("history list unavailable", e);
     }
-  }catch(e){ console.warn('history list unavailable:', e); }
+
+  } catch (e) {
+    console.warn("loadHistoryList() failed:", e);
+  }
 }
 
 /* ---------------- UI helpers ---------------- */
@@ -439,6 +496,11 @@ function resetAndLoad(){ page = 0; loadServer(); }
 
 /* ---------------- Boot ---------------- */
 async function boot(){
+  // ✅ 防止 boot 被 PJAX 或 DOM 再次调用
+  const el = document.getElementById('arxiv-app');
+  if (!el || el.dataset.booted === '1') return;
+  el.dataset.booted = '1';
+  
   if (!grid || !qInp || !kwInp) return;
 
   qInp.value = ''; kwInp.value = '';
