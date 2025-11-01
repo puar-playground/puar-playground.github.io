@@ -689,3 +689,4 @@ if (_origBoot) {
   // Initial run
   applyMaskBounds();
 })();
+
