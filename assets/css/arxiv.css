@@ -249,29 +249,39 @@ html[data-mode=dark] #arxiv-app .ax-card:hover {
 
 
 
-/* 不要让 arxiv-app 创造更高的层级，避免盖住遮罩 */
+/* ===========================
+ * side bar
+ * =========================== */
+
+/* arxiv 页面不要提升层级 */
 #arxiv-app {
   position: static !important;
   z-index: auto !important;
 }
 
-/* 侧栏未打开：遮罩不接收点击，不挡任何元素 */
+/* sidebar 未打开时，mask 不拦截点击 */
 html:not([sidebar-display]) #mask {
   pointer-events: none !important;
 }
 
-/* 侧栏已打开：让遮罩覆盖整个可点击区域，点击即可关闭（Chirpy 会处理） */
-html[sidebar-display] #mask {
+/* sidebar 永远在 mask 上层 */
+#sidebar {
   position: fixed !important;
-  inset: 0 !important;              /* top/right/bottom/left = 0 */
-  pointer-events: auto !important;  /* 接收点击 */
-  z-index: 2147483646 !important;   /* 高于页面内容即可 */
-  background: transparent;          /* 或需要暗层可设 rgba(0,0,0,.15) */
+  z-index: 10002 !important;
 }
 
-/* 确保顶部菜单按钮在“未打开侧栏”时位于内容之上，保证能点开 */
-html:not([sidebar-display]) #topbar,
-html:not([sidebar-display]) #topbar-wrapper {
-  position: relative !important;
-  z-index: 2147483647 !important;
+/* sidebar 打开时，mask 只覆盖右侧内容，不挡住 sidebar */
+html[sidebar-display] #mask {
+  position: fixed !important;
+  top: 0; right: 0; bottom: 0;
+  left: var(--sidebar-width, 300px) !important;
+  pointer-events: auto !important;
+  z-index: 10001 !important;
+  background: transparent;
+}
+
+@media (max-width: 640px) {
+  html[sidebar-display] #mask {
+    left: var(--sidebar-width, 260px) !important;
+  }
 }

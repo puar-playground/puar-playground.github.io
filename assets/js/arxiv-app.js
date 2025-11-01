@@ -652,22 +652,3 @@ if (_origBoot) {
   }, { passive: true });
 })();
 
-
-// Optional: only on /arxiv/, close sidebar when tapping the app area (not the sidebar/trigger)
-(function () {
-  const appEl = document.getElementById('arxiv-app');
-  if (!appEl) return;
-
-  appEl.addEventListener('click', (e) => {
-    // let theme handlers finish first (important for desktop)
-    setTimeout(() => {
-      const html = document.documentElement;
-      if (!html.hasAttribute('sidebar-display')) return;
-
-      const t = e.target;
-      if (t.closest('#sidebar') || t.closest('#sidebar-trigger')) return;
-
-      html.removeAttribute('sidebar-display');
-    }, 0);
-  }, { passive: true });
-})();
