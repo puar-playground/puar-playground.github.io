@@ -632,3 +632,11 @@ if (_origBoot) {
   document.addEventListener('DOMContentLoaded', safeBoot);
   document.addEventListener('pjax:complete', safeBoot);
 }
+
+
+document.addEventListener('click', () => {
+  const root = document.documentElement;
+  if (root.hasAttribute('sidebar-display')) {
+    root.removeAttribute('sidebar-display');
+  }
+});
