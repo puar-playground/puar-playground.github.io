@@ -253,35 +253,24 @@ html[data-mode=dark] #arxiv-app .ax-card:hover {
  * side bar
  * =========================== */
 
-/* arxiv 页面不要提升层级 */
+/* /arxiv/: don't create higher stacking levels for the app */
 #arxiv-app {
   position: static !important;
   z-index: auto !important;
 }
 
-/* sidebar 未打开时，mask 不拦截点击 */
-html:not([sidebar-display]) #mask {
-  pointer-events: none !important;
-}
-
-/* sidebar 永远在 mask 上层 */
+/* Ensure the sidebar is above the mask so its tabs stay clickable */
 #sidebar {
   position: fixed !important;
   z-index: 10002 !important;
 }
 
-/* sidebar 打开时，mask 只覆盖右侧内容，不挡住 sidebar */
-html[sidebar-display] #mask {
+/* Keep the mask just below the sidebar, above content (actual sizing set in JS) */
+#mask {
   position: fixed !important;
-  top: 0; right: 0; bottom: 0;
-  left: var(--sidebar-width, 300px) !important;
-  pointer-events: auto !important;
   z-index: 10001 !important;
-  background: transparent;
-}
-
-@media (max-width: 640px) {
-  html[sidebar-display] #mask {
-    left: var(--sidebar-width, 260px) !important;
-  }
+  top: 0; right: 0; bottom: 0;
+  /* left will be set dynamically to sidebar width */
+  pointer-events: auto;
+  background: transparent; /* or rgba(0,0,0,.15) if you want dimming */
 }

@@ -652,3 +652,40 @@ if (_origBoot) {
   }, { passive: true });
 })();
 
+
+
+
+
+// ########################################################################
+// /arxiv/: keep mask off the sidebar, so sidebar stays clickable
+(() => {
+  const app = document.getElementById('arxiv-app');
+  if (!app) return;
+
+  const html    = document.documentElement;
+  const mask    = document.getElementById('mask');
+  const sidebar = document.getElementById('sidebar');
+  if (!mask || !sidebar) return;
+
+  function applyMaskBounds() {
+    // If sidebar is closed, let theme do its thing
+    if (!html.hasAttribute('sidebar-display')) {
+      mask.style.left = '';
+      return;
+    }
+    // Measure sidebar width and keep mask to the right of it
+    const w = sidebar.getBoundingClientRect().width || 300; // fallback
+    mask.style.left = w + 'px';
+  }
+
+  // Observe sidebar open/close
+  const mo = new MutationObserver(applyMaskBounds);
+  mo.observe(html, { attributes: true, attributeFilter: ['sidebar-display'] });
+
+  // Update on resize and PJAX nav
+  window.addEventListener('resize', applyMaskBounds, { passive: true });
+  document.addEventListener('pjax:complete', applyMaskBounds, { passive: true });
+
+  // Initial run
+  applyMaskBounds();
+})();
