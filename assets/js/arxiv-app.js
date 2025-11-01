@@ -633,10 +633,21 @@ if (_origBoot) {
   document.addEventListener('pjax:complete', safeBoot);
 }
 
+// Close sidebar when tapping outside it — scoped to /arxiv/ only
+(function () {
+  const root = document.getElementById('arxiv-app');
+  if (!root) return;
 
-document.addEventListener('click', () => {
-  const root = document.documentElement;
-  if (root.hasAttribute('sidebar-display')) {
-    root.removeAttribute('sidebar-display');
-  }
-});
+  root.addEventListener('click', function (e) {
+    const html = document.documentElement;
+    // only act if sidebar is currently open
+    if (!html.hasAttribute('sidebar-display')) return;
+
+    const t = e.target;
+    // don't close if click is on the trigger button or inside the sidebar
+    if (t.closest('#sidebar') || t.closest('#sidebar-trigger')) return;
+
+    // close sidebar safely
+    html.removeAttribute('sidebar-display');
+  }, { passive: true });
+})();

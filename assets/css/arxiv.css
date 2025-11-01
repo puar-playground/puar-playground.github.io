@@ -248,13 +248,3 @@ html[data-mode=dark] #arxiv-app .ax-card:hover {
 }
 
 
-/* 让 arxiv 页面不要盖住 sidebar-mask */
-#arxiv-app {
-  position: relative !important;
-  z-index: 1 !important;   /* 降低层级，避免挡住 mask */
-}
-
-/* 确保 mask 在最上层，可以接收点击 */
-#sidebar-mask {
-  z-index: 9999 !important;
-}
