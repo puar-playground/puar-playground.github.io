@@ -12,6 +12,9 @@ order: 2
 <!-- 提供给前端 JS 的 baseurl（GitHub Pages 根仓库通常为空串） -->
 <meta name="baseurl" content="{{ site.baseurl | default: '' }}">
 
+<!-- ✅ Chirpy expects #search to exist; provide a harmless stub -->
+<div id="search" hidden></div>
+
 <div class="ax-wrap" id="arxiv-app">
   <div class="ax-toolbar">
     <select id="ax-date" class="ax-select">
