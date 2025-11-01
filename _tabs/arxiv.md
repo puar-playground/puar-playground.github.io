@@ -1,6 +1,6 @@
 ---
 layout: page
-title: Daly arXiv News
+title: Daily arXiv News
 icon: far fa-lightbulb
 permalink: /arxiv/
 order: 2
