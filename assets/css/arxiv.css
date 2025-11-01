@@ -248,24 +248,30 @@ html[data-mode=dark] #arxiv-app .ax-card:hover {
 }
 
 
-/* --- Keep arxiv app from creating a higher stacking context --- */
+
+/* 不要让 arxiv-app 创造更高的层级，避免盖住遮罩 */
 #arxiv-app {
   position: static !important;
   z-index: auto !important;
 }
 
-/* --- Ensure the topbar (with the menu button) sits above the app --- */
-#topbar-wrapper,
-#topbar {
-  position: relative !important;
-  z-index: 10 !important;   /* just needs to be above #arxiv-app */
-}
-
-/* --- Mask should only capture clicks when sidebar is open --- */
-html[sidebar-display] #mask {
-  pointer-events: auto !important;
-}
-
+/* 侧栏未打开：遮罩不接收点击，不挡任何元素 */
 html:not([sidebar-display]) #mask {
   pointer-events: none !important;
+}
+
+/* 侧栏已打开：让遮罩覆盖整个可点击区域，点击即可关闭（Chirpy 会处理） */
+html[sidebar-display] #mask {
+  position: fixed !important;
+  inset: 0 !important;              /* top/right/bottom/left = 0 */
+  pointer-events: auto !important;  /* 接收点击 */
+  z-index: 2147483646 !important;   /* 高于页面内容即可 */
+  background: transparent;          /* 或需要暗层可设 rgba(0,0,0,.15) */
+}
+
+/* 确保顶部菜单按钮在“未打开侧栏”时位于内容之上，保证能点开 */
+html:not([sidebar-display]) #topbar,
+html:not([sidebar-display]) #topbar-wrapper {
+  position: relative !important;
+  z-index: 2147483647 !important;
 }
