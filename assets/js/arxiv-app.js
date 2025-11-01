@@ -522,7 +522,8 @@ async function boot(){
   bindThemeToggleOnce();
 }
 
-/* DOM Ready / PJAX */
+
+/* ---------------- DOM Ready / PJAX ---------------- */
 if (document.readyState === 'loading'){
   document.addEventListener('DOMContentLoaded', boot, { once: true });
 } else { boot(); }
@@ -530,6 +531,7 @@ document.addEventListener('pjax:complete', () => {
   const appEl = document.getElementById('arxiv-app');
   if (appEl && appEl.dataset.inited !== '1') boot();
 }, { passive: true });
+
 
 /* ---------------- 主题切换 & 顶栏兜底 ---------------- */
 (function setupPjaxHook(){
