@@ -1,14 +1,17 @@
 ---
-title: 绫华 Assist is Online!!!
+title: ❄️ 绫华 Assist is Online!!!
 date: 2025-04-19 00:00:00 +500
-categories: [Social, News]
-tags: [social]
+categories: [News, Features]
+tags: [features]
 ---
 
-我部署了一个模仿游戏《原神》中神里绫华人格的聊天机器人。在左侧边栏也可以与绫华聊天。快试试吧。
+## 🌸 New Feature: 绫华 Assist
+我部署了一个模仿游戏《原神》中 神里绫华 人格的聊天机器人。在左侧边栏也可以与绫华聊天。快试试吧。
 
 A chatbot inspired by Kamisato Ayaka’s personality from Genshin Impact is now available below and in the sidebar to the left.
 She would be delighted to hear from you. Please start a conversation.
+
+---
 
 <style>
 #chat-container {
@@ -152,6 +155,7 @@ She would be delighted to hear from you. Please start a conversation.
 })();
 </script>
 
+---
 
 ### 「清梦寄雪，白鹭来栖」
 
