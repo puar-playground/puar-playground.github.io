@@ -2,7 +2,7 @@
 title: ❄️ 绫华 Assist is Online!!!
 date: 2025-04-19 00:00:00 +500
 categories: [News, Features]
-tags: [features]
+tags: [feature]
 ---
 
 ## 🌸 New Feature: 绫华 Assist

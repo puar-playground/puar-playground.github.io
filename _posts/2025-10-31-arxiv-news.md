@@ -2,7 +2,7 @@
 title: 💡 Daily arXiv News Online!!!
 date: 2025-10-31 00:00:00 +500
 categories: [News, Features]
-tags: [features]
+tags: [feature]
 ---
 
 ## 📌 New Feature: DAILY ARXIV NEWS
