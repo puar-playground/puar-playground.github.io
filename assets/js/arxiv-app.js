@@ -493,7 +493,7 @@ async function boot(){
   btnCard.onclick = () => { view='card'; btnCard.classList.remove('ax-ghost'); btnList.classList.add('ax-ghost'); reset(); };
   btnList.onclick = () => { view='list'; btnList.classList.remove('ax-ghost'); btnCard.classList.add('ax-ghost'); reset(); };
   favBtn.onclick  = () => { favOnly=!favOnly; favBtn.textContent = favOnly ? '⭐ Favorites: On' : '⭐ Favorites: Off'; reset(); };
-  moreBtn.onclick = () => { page++; render(); };
+  moreBtn.onclick = () => { page++; loadServer(true); };
   dateSel.onchange= e => { day = e.target.value; resetAndLoad(); };
 
   renderChips();

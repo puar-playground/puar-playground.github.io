@@ -21,8 +21,8 @@ order: 2
       <option value="">Today</option>
     </select>
 
-    <input id="ax-q" class="ax-input" placeholder="Search title / abstract / author… (q=)"/>
-    <input id="ax-kw" class="ax-input" style="min-width:200px" placeholder="Keywords (kw=, comma-separated)"/>
+    <input id="ax-q" class="ax-input" placeholder="Keywords"/>
+    <input id="ax-kw" class="ax-input" style="min-width:200px" placeholder="Search title"/>
 
     <select id="ax-sort" class="ax-select">
       <option value="date_desc">Sort: Date ↓</option>
