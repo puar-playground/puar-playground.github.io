@@ -267,36 +267,6 @@ async function loadServer(){
   }
 }
 
-// async function loadHistoryList(){
-//   try{
-//     try{
-//       const r = await fetch(`${BASE}/assets/js/data/arxiv-history.json`, {cache:'no-store'});
-//       if (r.ok){
-//         const files = await r.json();
-//         if (Array.isArray(files)){
-//           files.forEach(fn => {
-//             const d = fn.replace(/\.json$/,'');
-//             const opt = document.createElement('option');
-//             opt.value = d; opt.textContent = d;
-//             dateSel.appendChild(opt);
-//           });
-//           return;
-//         }
-//       }
-//     }catch{ /* ignore */ }
-//     const r2 = await fetch(`${API_BASE}/history`, {cache:'no-store', mode:'cors'});
-//     if (!r2.ok) throw new Error('HTTP ' + r2.status);
-//     const files2 = await r2.json();
-//     if (Array.isArray(files2)){
-//       files2.forEach(fn => {
-//         const d = fn.replace(/\.json$/,'');
-//         const opt = document.createElement('option');
-//         opt.value = d; opt.textContent = d;
-//         dateSel.appendChild(opt);
-//       });
-//     }
-//   }catch(e){ console.warn('history list unavailable:', e); }
-// }
 
 async function loadHistoryList() {
   try {
@@ -333,6 +303,17 @@ async function loadHistoryList() {
       }
     } catch(e) {
       console.warn("history list unavailable", e);
+    }
+
+    // ✅ Sort options by date descending (newest on top)
+    if (dateSel.options.length > 1) {
+      const opts = Array.from(dateSel.options);
+      const today = opts[0]; // Keep "Today" first
+      const dateOpts = opts.slice(1); // All date options
+      dateOpts.sort((a, b) => b.value.localeCompare(a.value)); // Newest first
+      // Clear and re-add sorted
+      while (dateSel.options.length > 1) dateSel.remove(1);
+      dateOpts.forEach(opt => dateSel.appendChild(opt));
     }
 
   } catch (e) {
