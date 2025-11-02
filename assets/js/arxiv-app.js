@@ -233,7 +233,7 @@ function buildDataURL(){
   if (query.trim()) qs.set('q', query.trim());
   if (kw.trim()) qs.set('kw', kw.trim());
   if (cat) qs.set('cat', cat);
-  qs.set('limit', String((page+1)*pageSize));
+  // Don't limit results - fetch all and paginate client-side
   const s = qs.toString();
   return s ? `${base}?${s}` : base;
 }
@@ -493,7 +493,7 @@ async function boot(){
   btnCard.onclick = () => { view='card'; btnCard.classList.remove('ax-ghost'); btnList.classList.add('ax-ghost'); reset(); };
   btnList.onclick = () => { view='list'; btnList.classList.remove('ax-ghost'); btnCard.classList.add('ax-ghost'); reset(); };
   favBtn.onclick  = () => { favOnly=!favOnly; favBtn.textContent = favOnly ? '⭐ Favorites: On' : '⭐ Favorites: Off'; reset(); };
-  moreBtn.onclick = () => { page++; render(); refreshDownloadLink(); };
+  moreBtn.onclick = () => { page++; render(); };
   dateSel.onchange= e => { day = e.target.value; resetAndLoad(); };
 
   renderChips();
