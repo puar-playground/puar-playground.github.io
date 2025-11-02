@@ -50,7 +50,7 @@ My research focus on multimodal AI research aimed at enabling immersive digital 
 - Ruiyi Zhang, Yufan Zhou, **Jian Chen**, Jiuxiang Gu, Changyou Chen, Tong Sun, "[LLaVA-Read: Enhancing Reading Ability of Multimodal Language Models](https://arxiv.org/abs/2407.19185)", arXiv 2024
 
 ## Reviewer Service  
-- **2025**: NeurIPS, ICLR ([Notable Reviewer](https://iclr.cc/Conferences/2025/Reviewers)), TMLR, AAAI, ACL, ICCV, ICML, CVPR, IJCAI
+- **2025**: NeurIPS, ICLR ([Notable Reviewer](https://iclr.cc/Conferences/2025/Reviewers)), ICML, AAAI, ACL, ICCV, CVPR, [Genome Biology](https://puar-playground.github.io/download/Reviewer_Certificate_02_November_2025.pdf), TMLR, IJCAI
 - **2024**: NeurIPS, ICLR, ICML, TMLR, TETCI, PLOS ONE
 
 ## Awards:
