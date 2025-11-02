@@ -1,10 +1,10 @@
 ---
-title: OceanHeart cmap
+title: 🌊💗 OceanHeart cmap
 date: 2024-07-03 16:20:00 +500
 categories: [Code, plot]
 tags: [plot]
 ---
-Here is a customized color map for python plot, I name it "OceanHeart".<br />
+Here is a customized color map for python plot, I name it "OceanHeart" 🌊💗.<br />
 The color map is inspried by the animation of a Squirtle holding hearts.
 <br /> 
 <img src="{{ site.url }}/assets/img/2024-07-03/Squirtle.gif" class="looping-gif" alt="Squirtle" width="250"/>
