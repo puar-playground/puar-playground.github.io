@@ -4,7 +4,8 @@ head:
   custom: |
      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
      <script type="module" src="{{ '/assets/js/life-ticker-bar.js' | relative_url }}"></script>
-     <meta name="keywords" content="呼噜屋, Holoo, Jian Chen, Puar, Moonshine">
+     <meta name="keywords" content="Jian Chen, Puar, Moonshine">
+     <meta name="content-language" content="en, zh-Hans">
 
  
 # Import the theme
@@ -14,9 +15,12 @@ plugins:
   - jekyll-seo-tag
   - jekyll-sitemap
 
+google_site_verification: 20b77e910e811bc3
+
 # Change the following value to '/PROJECT_NAME' ONLY IF your site type is GitHub Pages Project sites
 # and doesn't have a custom domain.
 baseurl: ""
+
 
 # The language of the webpage › http://www.lingoes.net/en/translator/langcode.htm
 # If it has the same name as one of the files in folder `_data/locales`, the layout language will also be changed,
@@ -29,12 +33,12 @@ timezone: America/New_York
 # jekyll-seo-tag settings › https://github.com/jekyll/jekyll-seo-tag/blob/master/docs/usage.md
 # ↓ --------------------------
 
-title: 呼噜屋 | Holoo # the main title
+title: Jian Chen # the main title
 
 tagline: Research, Music, Cat. # it will display as the sub-title
 
 description: >- # used by seo meta and the atom feed
-  Jian's home page.
+  Jian's personal site
 
 # fill in the protocol & hostname for your site, e.g., 'https://username.github.io'
 url: "https://puar-playground.github.io"
@@ -53,12 +57,13 @@ social:
     # - https://twitter.com/aaronl1u # change to your twitter homepage
     - https://github.com/puar-playground # change to your github homepage
     # Uncomment below to add more social links
-    # - https://www.facebook.com/username
+    - https://www.facebook.com/cobalt.cj
     - https://huggingface.co/puar-playground
     - https://www.linkedin.com/in/jian-chen-1a0b9a11b/
     - https://scholar.google.com/citations?user=uBGjz-EAAAAJ
     - https://www.youtube.com/@jianchen2550
     - https://openreview.net/profile?id=~Jian_Chen9
+
 
 
 # ↑ --------------------------

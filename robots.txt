@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://puar-playground.github.io/sitemap.xml
