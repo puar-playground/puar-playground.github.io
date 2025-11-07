@@ -4,10 +4,15 @@ head:
   custom: |
      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
      <script type="module" src="{{ '/assets/js/life-ticker-bar.js' | relative_url }}"></script>
-     
+     <meta name="keywords" content="呼噜屋, Holoo, Jian Chen, Puar, Moonshine">
+
  
 # Import the theme
 theme: jekyll-theme-chirpy
+
+plugins:
+  - jekyll-seo-tag
+  - jekyll-sitemap
 
 # Change the following value to '/PROJECT_NAME' ONLY IF your site type is GitHub Pages Project sites
 # and doesn't have a custom domain.
@@ -41,7 +46,7 @@ github:
 social:
   # Change to your full name.
   # It will be displayed as the default author of the posts and the copyright owner in the Footer
-  name: Jian Chen & puar
+  name: Jian Chen
   email: jian.chen@dolby.com # change to your email address
   links:
     # The first element serves as the copyright owner's link
@@ -55,7 +60,6 @@ social:
     - https://www.youtube.com/@jianchen2550
     - https://openreview.net/profile?id=~Jian_Chen9
 
-google_site_verification: google-site-verification=6EVwDyS5tBENO9x3nyP6XcHucDruHZuZ1BLxKc2yuJI
 
 # ↑ --------------------------
 # The end of `jekyll-seo-tag` settings
