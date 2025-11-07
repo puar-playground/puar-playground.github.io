@@ -1,5 +1,5 @@
 ---
-title: Auto email script
+title: 📧 Auto email script
 date: 2024-02-08 00:00:01 +500
 categories: [Code, tool]
 tags: [tool]
