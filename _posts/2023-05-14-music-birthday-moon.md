@@ -25,5 +25,12 @@ This is a short mix of two songs the "happy birthday to you" & "fly me to the mo
     />
 </figure>
 
-The Tabs:
-![moon1]({{ site.url }}/assets/music_sheet/birthday/moon.png)<br /> 
+### The Guitar Tabs:
+
+
+<iframe
+  src="https://puar-playground.github.io/assets/music_sheet/birthday_moon.pdf"
+  width="100%"
+  height="800px"
+  style="border:none;">
+</iframe>
