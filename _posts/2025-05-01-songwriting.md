@@ -11,6 +11,6 @@ I’ve earned my [Songwriting certificate](https://www.coursera.org/account/acco
 <iframe
   src="https://puar-playground.github.io/download/Berklee Songwriting.pdf"
   width="100%"
-  height="590px"
+  height="600px"
   style="border:none;">
 </iframe>
