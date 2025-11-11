@@ -247,21 +247,26 @@ function refreshDownloadLink(){
   qs.set('filter','1');
   dl.href = (qs.toString() ? `${url}?${qs}` : url);
 }
-async function loadServer(){
-  skeleton();
+async function loadServer(opts = {}){
+  const keepExisting = !!opts.keepExisting;
+  if (!keepExisting) skeleton();
   try{
     const url = buildDataURL();
     let data = await fetchWithFallback(url);
     if (!Array.isArray(data)) throw new Error('Response is not an array');
     // ✅ 去重并保留最新版本
     ALL = dedupeKeepLatest(data);
-    render(true);
+    render(!keepExisting);
   }catch(e){
     console.error('Failed to load data:', e);
-    grid.innerHTML = `<div class="ax-card ax-empty" style="padding:2rem;text-align:center;">
-      <p><strong>Failed to load arXiv feed.</strong></p>
-      <p style="font-size:.85rem;opacity:.7;margin-top:.5rem;">Error: ${escapeHTML(e.message||String(e))}</p>
-    </div>`;
+    if (keepExisting) {
+      toast('Failed to load more items');
+    } else {
+      grid.innerHTML = `<div class="ax-card ax-empty" style="padding:2rem;text-align:center;">
+        <p><strong>Failed to load arXiv feed.</strong></p>
+        <p style="font-size:.85rem;opacity:.7;margin-top:.5rem;">Error: ${escapeHTML(e.message||String(e))}</p>
+      </div>`;
+    }
   }finally{
     refreshDownloadLink();
   }
@@ -493,7 +498,7 @@ async function boot(){
   btnCard.onclick = () => { view='card'; btnCard.classList.remove('ax-ghost'); btnList.classList.add('ax-ghost'); reset(); };
   btnList.onclick = () => { view='list'; btnList.classList.remove('ax-ghost'); btnCard.classList.add('ax-ghost'); reset(); };
   favBtn.onclick  = () => { favOnly=!favOnly; favBtn.textContent = favOnly ? '⭐ Favorites: On' : '⭐ Favorites: Off'; reset(); };
-  moreBtn.onclick = () => { page++; loadServer(true); };
+  moreBtn.onclick = () => { page++; loadServer({ keepExisting: true }); };
   dateSel.onchange= e => { day = e.target.value; resetAndLoad(); };
 
   renderChips();
