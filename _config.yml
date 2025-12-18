@@ -2,17 +2,19 @@
 
 head:
   custom: |
-     <link
-        rel="stylesheet"
-        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
-        crossorigin="anonymous"
-        referrerpolicy="no-referrer"
-      />
+     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
      <script type="module" src="{{ '/assets/js/life-ticker-bar.js' | relative_url }}"></script>
      <meta name="keywords" content="Jian Chen, Puar, Moonshine">
      <meta name="content-language" content="en, zh-Hans">
 
- # <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+
+
+#  <link
+#         rel="stylesheet"
+#         href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
+#         crossorigin="anonymous"
+#         referrerpolicy="no-referrer"
+#       />
 
 # Import the theme
 theme: jekyll-theme-chirpy
