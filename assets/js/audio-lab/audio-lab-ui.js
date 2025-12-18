@@ -8,8 +8,20 @@ const AudioLabUI = (function() {
   function generateHTML(allowUpload) {
     return `
     <style>
-      .ab-wrap { display: grid; gap: 12px; }
-      .ab-card { border: 1px solid rgba(0,0,0,.15); border-radius: 12px; padding: 12px; }
+      .ab-wrap { 
+        display: grid; 
+        gap: 12px; 
+        width: 100%;
+        max-width: 100%;
+        box-sizing: border-box;
+      }
+      .ab-card { 
+        border: 1px solid rgba(0,0,0,.15); 
+        border-radius: 12px; 
+        padding: 12px;
+        width: 100%;
+        box-sizing: border-box;
+      }
       .ab-row { display: flex; gap: 12px; align-items: center; flex-wrap: wrap; }
       .file-input-group {
         display: flex;
@@ -116,6 +128,99 @@ const AudioLabUI = (function() {
         pointer-events: none;
         z-index: 10;
         transition: left 0.05s linear;
+      }
+
+      /* Mobile responsive styles */
+      @media (max-width: 768px) {
+        .ab-wrap {
+          width: 100%;
+          max-width: 100%;
+          box-sizing: border-box;
+        }
+        .ab-card {
+          padding: 8px;
+          width: 100%;
+          box-sizing: border-box;
+        }
+        .ab-row {
+          gap: 6px;
+          flex-wrap: wrap;
+        }
+        .file-input-group {
+          flex-wrap: wrap;
+          gap: 4px;
+        }
+        .file-input-item {
+          flex-direction: column;
+          gap: 4px;
+          align-items: flex-start;
+        }
+        .file-input-button {
+          padding: 6px 8px;
+          font-size: 0.8em;
+        }
+        .fileLabel {
+          font-size: 0.75em;
+          max-width: 120px;
+          overflow: hidden;
+          text-overflow: ellipsis;
+        }
+        .iconbtn {
+          width: 40px;
+          height: 40px;
+          font-size: 16px;
+        }
+        .waveforms-column {
+          gap: 8px;
+          margin-top: 12px;
+        }
+        .waveform-container {
+          padding: 6px;
+        }
+        .waveform-canvas {
+          height: 45px;
+        }
+        .horizontal-slider-wrapper {
+          gap: 8px;
+          margin-top: 12px;
+          flex-wrap: wrap;
+        }
+        .horizontal-slider-wrapper .mix-label {
+          font-size: 0.75em;
+          min-width: 50px;
+        }
+        .horizontal-slider-wrapper input[type="range"] {
+          min-width: 100px;
+          flex: 1 1 auto;
+        }
+      }
+
+      @media (max-width: 480px) {
+        .ab-card {
+          padding: 6px;
+        }
+        .ab-row {
+          gap: 4px;
+        }
+        .file-input-button {
+          padding: 5px 6px;
+          font-size: 0.75em;
+        }
+        .iconbtn {
+          width: 36px;
+          height: 36px;
+          font-size: 14px;
+        }
+        .horizontal-slider-wrapper {
+          gap: 6px;
+        }
+        .horizontal-slider-wrapper .mix-label {
+          font-size: 0.7em;
+          min-width: 45px;
+        }
+        .waveform-canvas {
+          height: 40px;
+        }
       }
     </style>
 
