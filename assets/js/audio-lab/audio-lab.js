@@ -87,6 +87,19 @@ function initAudioLab(config = {}) {
     return ctx;
   };
 
+  // iOS audio unlock: resume context on user interaction
+  const unlockAudio = async () => {
+    ensureCtx();
+    if (ctx.state === 'suspended') {
+      try {
+        await ctx.resume();
+        console.log('Audio context resumed');
+      } catch (e) {
+        console.warn('Failed to resume audio context:', e);
+      }
+    }
+  };
+
   const makeGraphIfNeeded = () => {
     ensureCtx();
     if (!gainA || !gainB) {
@@ -171,7 +184,8 @@ function initAudioLab(config = {}) {
   };
 
   // ---------- Playback Control ----------
-  const seekTo = (timeSec) => {
+  const seekTo = async (timeSec) => {
+    await unlockAudio(); // Unlock audio on waveform interaction (iOS)
     const wasPlaying = isPlaying;
     if (isPlaying) {
       pause();
@@ -251,15 +265,15 @@ function initAudioLab(config = {}) {
   };
 
   const play = async () => {
-    ensureCtx();
-    await ctx.resume();
+    await unlockAudio();
     if (!bufA || !bufB) return;
     if (isPlaying) return;
     startBothAt(startOffset);
     setStatus("Playing.");
   };
 
-  const restart = () => {
+  const restart = async () => {
+    await unlockAudio();
     startOffset = 0;
     if (isPlaying) {
       startBothAt(0);
@@ -435,6 +449,7 @@ function initAudioLab(config = {}) {
 
   btnPlay.onclick = async () => {
     try {
+      await unlockAudio();
       if (isPlaying) pause();
       else await play();
     } catch (e) {
@@ -442,11 +457,31 @@ function initAudioLab(config = {}) {
     }
   };
 
-  btnRestart.onclick = () => restart();
+  btnRestart.onclick = async () => {
+    await unlockAudio();
+    await restart();
+  };
 
   mix.addEventListener("input", () => {
     setMix(parseInt(mix.value, 10));
   });
+
+  // iOS audio unlock: one-time unlock on first user interaction
+  let audioUnlocked = false;
+  const unlockAudioOnce = async (e) => {
+    if (!audioUnlocked) {
+      await unlockAudio();
+      audioUnlocked = true;
+      // Remove listeners after first unlock
+      document.removeEventListener('touchstart', unlockAudioOnce);
+      document.removeEventListener('touchend', unlockAudioOnce);
+      document.removeEventListener('click', unlockAudioOnce);
+    }
+  };
+  // Add listeners for iOS audio unlock
+  document.addEventListener('touchstart', unlockAudioOnce, { once: true, passive: true });
+  document.addEventListener('touchend', unlockAudioOnce, { once: true, passive: true });
+  document.addEventListener('click', unlockAudioOnce, { once: true });
 
   window.addEventListener("keydown", (e) => {
     if (e.target && ["INPUT", "TEXTAREA"].includes(e.target.tagName)) return;
