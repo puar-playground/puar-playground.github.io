@@ -17,8 +17,28 @@ button:disabled { opacity: 0.5; cursor: not-allowed; }
 </style>
 
 <!-- ✅ JS 会在这里注入所有 UI -->
-<div id="abRoot"></div>
+<div id="abRoot" data-initialized="false"></div>
 
 <!-- ✅ 关键：用 defer，保证 DOM 在 JS 前就绪 -->
-<script src="{{ '/assets/js/audio-lab.js' | relative_url }}" defer></script>
+<!-- Load dependencies in order -->
+<script src="{{ '/assets/js/audio-lab/audio-lab-alignment.js' | relative_url }}" defer></script>
+<script src="{{ '/assets/js/audio-lab/audio-lab-waveforms.js' | relative_url }}" defer></script>
+<script src="{{ '/assets/js/audio-lab/audio-lab-ui.js' | relative_url }}" defer></script>
+<script src="{{ '/assets/js/audio-lab/audio-lab.js' | relative_url }}" defer></script>
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+  const root = document.getElementById('abRoot');
+  if (root) {
+    root.dataset.initialized = 'true';
+    initAudioLab({
+      rootId: 'abRoot',
+      defaultAudioA: '/assets/audio/Hello.mp3',
+      defaultAudioB: '/assets/audio/Hello_enhanced.mp3',
+      allowUpload: true,
+      waveformColorA: '#FF2600',
+      waveformColorB: '#659BC8'
+    });
+  }
+});
+</script>
 
