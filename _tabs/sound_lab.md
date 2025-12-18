@@ -39,6 +39,6 @@ document.addEventListener("DOMContentLoaded", () => {
       waveformColorB: '#659BC8'
     });
   }
-});
+}); 
 </script>
 
