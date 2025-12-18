@@ -1,7 +1,7 @@
 ---
 title: Sound Lab
 layout: page
-permalink: /ab/
+permalink: /sound_lab/
 icon: fas fa-headphones
 order: 3
 ---
