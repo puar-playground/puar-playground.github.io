@@ -23,7 +23,7 @@ To generate a [sitemap](https://www.xml-sitemaps.com)
 
 
 ### 4 change icon
-[cheat sheet](https://www.w3schools.com/icons/fontawesome5_icons_brands.asp) for icon
+Cheat sheet for icon: [fontawesome 5](https://www.w3schools.com/icons/fontawesome5_icons_brands.asp), [fontawesome 6](https://fontawesome.com)
 
 
 ### 5 Backend
