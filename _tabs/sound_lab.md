@@ -21,16 +21,16 @@ button:disabled { opacity: 0.5; cursor: not-allowed; }
 
 <!-- ✅ 关键：用 defer，保证 DOM 在 JS 前就绪 -->
 <!-- Load dependencies in order -->
-<script src="{{ '/assets/js/audio-lab/audio-lab-alignment.js' | relative_url }}" defer></script>
-<script src="{{ '/assets/js/audio-lab/audio-lab-waveforms.js' | relative_url }}" defer></script>
-<script src="{{ '/assets/js/audio-lab/audio-lab-ui.js' | relative_url }}" defer></script>
-<script src="{{ '/assets/js/audio-lab/audio-lab.js' | relative_url }}" defer></script>
+<script src="{{ '/assets/js/ab-test/ab-test-alignment.js' | relative_url }}" defer></script>
+<script src="{{ '/assets/js/ab-test/ab-test-waveforms.js' | relative_url }}" defer></script>
+<script src="{{ '/assets/js/ab-test/ab-test-ui.js' | relative_url }}" defer></script>
+<script src="{{ '/assets/js/ab-test/ab-test.js' | relative_url }}" defer></script>
 <script>
 document.addEventListener("DOMContentLoaded", () => {
   const root = document.getElementById('abRoot');
   if (root) {
     root.dataset.initialized = 'true';
-    initAudioLab({
+    initABTest({
       rootId: 'abRoot',
       defaultAudioA: '/assets/audio/Hello.mp3',
       defaultAudioB: '/assets/audio/Hello_enhanced.mp3',

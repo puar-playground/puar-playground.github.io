@@ -1,12 +1,12 @@
-/* audio-lab-waveforms.js
+/* ab-test-waveforms.js
  * Waveform extraction and visualization
  */
 
-const AudioLabWaveforms = (function() {
+const ABTestWaveforms = (function() {
   'use strict';
 
   function extractWaveform(buffer, targetWidth = 800, maxDuration = null) {
-    const mono = AudioLabAlignment.monoFromBuffer(buffer);
+    const mono = ABTestAlignment.monoFromBuffer(buffer);
     const sampleRate = buffer.sampleRate;
     let samples = mono.length;
     

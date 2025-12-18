@@ -1,8 +1,8 @@
-/* assets/js/audio-lab.js
- * Configurable Audio Lab UI for AB Testing
+/* assets/js/ab-test.js
+ * Configurable AB Test UI for Audio Comparison
  * 
  * Usage:
- *   initAudioLab({
+ *   initABTest({
  *     rootId: 'abRoot',
  *     defaultAudioA: '/assets/audio/Hello.mp3',
  *     defaultAudioB: '/assets/audio/Hello_enhanced.mp3',
@@ -12,13 +12,13 @@
  *   });
  * 
  * Dependencies (load in order):
- *   1. audio-lab-alignment.js
- *   2. audio-lab-waveforms.js
- *   3. audio-lab-ui.js
- *   4. audio-lab.js (this file)
+ *   1. ab-test-alignment.js
+ *   2. ab-test-waveforms.js
+ *   3. ab-test-ui.js
+ *   4. ab-test.js (this file)
  */
 
-function initAudioLab(config = {}) {
+function initABTest(config = {}) {
   // Default configuration
   const {
     rootId = 'abRoot',
@@ -38,11 +38,11 @@ function initAudioLab(config = {}) {
   // ---------- UI Setup ----------
   const root = document.getElementById(rootId);
   if (!root) {
-    console.error(`AudioLab: #${rootId} not found. Add <div id='${rootId}'></div> to the page.`);
+    console.error(`ABTest: #${rootId} not found. Add <div id='${rootId}'></div> to the page.`);
     return;
   }
 
-  root.innerHTML = AudioLabUI.generateHTML(allowUpload);
+  root.innerHTML = ABTestUI.generateHTML(allowUpload);
 
   const $ = (id) => document.getElementById(id);
   const fileA = allowUpload ? $("fileA") : null;
@@ -178,8 +178,8 @@ function initAudioLab(config = {}) {
 
     // Update waveform opacity based on mix ratio
     if (waveformDataA && waveformDataB) {
-      AudioLabWaveforms.drawWaveform(canvasA, waveformDataA, WAVEFORM_COLOR_A, WAVEFORM_BACKGROUND, aRatio);
-      AudioLabWaveforms.drawWaveform(canvasB, waveformDataB, WAVEFORM_COLOR_B, WAVEFORM_BACKGROUND, bRatio);
+      ABTestWaveforms.drawWaveform(canvasA, waveformDataA, WAVEFORM_COLOR_A, WAVEFORM_BACKGROUND, aRatio);
+      ABTestWaveforms.drawWaveform(canvasB, waveformDataB, WAVEFORM_COLOR_B, WAVEFORM_BACKGROUND, bRatio);
     }
   };
 
@@ -317,7 +317,7 @@ function initAudioLab(config = {}) {
     bufA = da; bufB = db;
 
     setStatus("Aligning ...");
-    const est = AudioLabAlignment.estimateAlignment(bufA, bufB);
+    const est = ABTestAlignment.estimateAlignment(bufA, bufB);
     lagSec = est.lagSec;
 
     // Calculate common duration (trimmed to shorter file)
@@ -330,21 +330,21 @@ function initAudioLab(config = {}) {
     requestAnimationFrame(() => {
       requestAnimationFrame(() => {
         const targetWidth = Math.max(canvasA.offsetWidth || 800, 400);
-        waveformDataA = AudioLabWaveforms.extractWaveform(bufA, targetWidth, commonDuration);
-        waveformDataB = AudioLabWaveforms.extractWaveform(bufB, targetWidth, commonDuration);
+        waveformDataA = ABTestWaveforms.extractWaveform(bufA, targetWidth, commonDuration);
+        waveformDataB = ABTestWaveforms.extractWaveform(bufB, targetWidth, commonDuration);
         const currentMix = parseInt(mix.value, 10);
         const aRatio = 1 - (currentMix / 100);
         const bRatio = currentMix / 100;
-        AudioLabWaveforms.drawWaveform(canvasA, waveformDataA, WAVEFORM_COLOR_A, WAVEFORM_BACKGROUND, aRatio);
-        AudioLabWaveforms.drawWaveform(canvasB, waveformDataB, WAVEFORM_COLOR_B, WAVEFORM_BACKGROUND, bRatio);
+        ABTestWaveforms.drawWaveform(canvasA, waveformDataA, WAVEFORM_COLOR_A, WAVEFORM_BACKGROUND, aRatio);
+        ABTestWaveforms.drawWaveform(canvasB, waveformDataB, WAVEFORM_COLOR_B, WAVEFORM_BACKGROUND, bRatio);
         setStatus("Ready.");
       });
     });
     
     // Setup scrubbing (use common duration for both)
     const commonBuffer = { duration: commonDuration };
-    AudioLabWaveforms.setupWaveformScrubbing(canvasA, commonBuffer, playheadA, seekTo);
-    AudioLabWaveforms.setupWaveformScrubbing(canvasB, commonBuffer, playheadB, seekTo);
+    ABTestWaveforms.setupWaveformScrubbing(canvasA, commonBuffer, playheadA, seekTo);
+    ABTestWaveforms.setupWaveformScrubbing(canvasB, commonBuffer, playheadB, seekTo);
 
     btnPlay.disabled = false;
     btnRestart.disabled = false;
@@ -360,9 +360,9 @@ function initAudioLab(config = {}) {
       return;
     }
 
-    const scriptTag = document.querySelector('script[src*="audio-lab.js"]');
-    const scriptSrc = scriptTag ? scriptTag.getAttribute('src') : '/assets/js/audio-lab/audio-lab.js';
-    const basePath = scriptSrc.replace(/\/audio-lab\/audio-lab\.js$/, '').replace(/\/audio-lab\.js$/, '');
+    const scriptTag = document.querySelector('script[src*="ab-test.js"]');
+    const scriptSrc = scriptTag ? scriptTag.getAttribute('src') : '/assets/js/ab-test/ab-test.js';
+    const basePath = scriptSrc.replace(/\/ab-test\/ab-test\.js$/, '').replace(/\/ab-test\.js$/, '');
     
     const resolvePath = (path) => {
       if (path.startsWith('http://') || path.startsWith('https://')) {
@@ -495,13 +495,13 @@ function initAudioLab(config = {}) {
     resizeTimeout = setTimeout(() => {
       if (waveformDataA && waveformDataB) {
         const targetWidth = Math.max(canvasA.offsetWidth || 800, 400);
-        waveformDataA = AudioLabWaveforms.extractWaveform(bufA, targetWidth, commonDuration);
-        waveformDataB = AudioLabWaveforms.extractWaveform(bufB, targetWidth, commonDuration);
+        waveformDataA = ABTestWaveforms.extractWaveform(bufA, targetWidth, commonDuration);
+        waveformDataB = ABTestWaveforms.extractWaveform(bufB, targetWidth, commonDuration);
         const currentMix = parseInt(mix.value, 10);
         const aRatio = 1 - (currentMix / 100);
         const bRatio = currentMix / 100;
-        AudioLabWaveforms.drawWaveform(canvasA, waveformDataA, WAVEFORM_COLOR_A, WAVEFORM_BACKGROUND, aRatio);
-        AudioLabWaveforms.drawWaveform(canvasB, waveformDataB, WAVEFORM_COLOR_B, WAVEFORM_BACKGROUND, bRatio);
+        ABTestWaveforms.drawWaveform(canvasA, waveformDataA, WAVEFORM_COLOR_A, WAVEFORM_BACKGROUND, aRatio);
+        ABTestWaveforms.drawWaveform(canvasB, waveformDataB, WAVEFORM_COLOR_B, WAVEFORM_BACKGROUND, bRatio);
       }
     }, 250);
   });
@@ -529,7 +529,7 @@ function initAudioLab(config = {}) {
 document.addEventListener("DOMContentLoaded", () => {
   const root = document.getElementById('abRoot');
   if (root && !root.dataset.initialized) {
-    initAudioLab({
+    initABTest({
       rootId: 'abRoot',
       defaultAudioA: '/assets/audio/Hello.mp3',
       defaultAudioB: '/assets/audio/Hello_enhanced.mp3',
@@ -538,3 +538,4 @@ document.addEventListener("DOMContentLoaded", () => {
     root.dataset.initialized = 'true';
   }
 });
+

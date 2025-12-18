@@ -1,8 +1,8 @@
-/* audio-lab-alignment.js
+/* ab-test-alignment.js
  * Audio alignment functions using energy envelope cross-correlation
  */
 
-const AudioLabAlignment = (function() {
+const ABTestAlignment = (function() {
   'use strict';
 
   function monoFromBuffer(buf) {
