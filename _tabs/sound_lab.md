@@ -16,6 +16,11 @@ button { padding: 8px 12px; border-radius: 10px; border: 1px solid rgba(0,0,0,.2
 button:disabled { opacity: 0.5; cursor: not-allowed; }
 </style>
 
+**Sound Lab** is an experimental space for exploring sound through the web. It hosts interactive tools for audio visualization, comparison, and critical listening, designed to make sound structures, transformations, and perceptual differences easier to see and hear. This lab serves both as a technical playground and a listening desk—where signal processing ideas, audio models, and sound design concepts can be inspected, tested, and experienced directly in the browser.
+
+---
+The **A/B Test** module supports precise, interactive playback control. Users can click directly on the progress bar to jump to any position in the audio, enabling fast navigation and focused listening. The progress bar also visualizes signal magnitude over time, providing a compact view of loudness structure while listening. Combined with smooth crossfading between two time-aligned audio tracks via a continuous slider, the tool is designed for careful, repeatable audio evaluation.
+
 <!-- ✅ JS 会在这里注入所有 UI -->
 <div id="abRoot" data-initialized="false"></div>
 
