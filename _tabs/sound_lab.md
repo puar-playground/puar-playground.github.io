@@ -21,3 +21,4 @@ button:disabled { opacity: 0.5; cursor: not-allowed; }
 
 <!-- ✅ 关键：用 defer，保证 DOM 在 JS 前就绪 -->
 <script src="{{ '/assets/js/audio-lab.js' | relative_url }}" defer></script>
+

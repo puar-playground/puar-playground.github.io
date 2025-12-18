@@ -9,7 +9,8 @@
   url: https://scholar.google.com/citations?user=uBGjz-EAAAAJ
 
 - type: openreview
-  icon: "fas fa-upload"
+  icon: "fa-solid fa-book-open-reader"
+  # "fas fa-upload"
   url: "https://openreview.net/profile?id=~Jian_Chen9"
 
 - type: github
