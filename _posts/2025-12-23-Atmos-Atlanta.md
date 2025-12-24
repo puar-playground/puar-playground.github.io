@@ -5,9 +5,11 @@ categories: [News, Features]
 tags: [feature, music]
 ---
 
-### Ambisonic Viewer
+This song, [“Atmos Night”](https://suno.com/s/GoYJcm5TnUual65I), was created through a joint effort between myself, GPT, and SUNO, written for personal reflection and as a small birthday project.
 
-The **Ambisonic Viewer** displays a 3D sphere with an equiangular grid that responds to audio in real-time. You can upload or specify up to 3 audio tracks, each with its own spatial position (defined by spherical coordinates theta and phi). As each track plays, the sphere creates Gaussian-distributed bulges at the track's position, with the bulge height proportional to the track's audio volume. Multiple tracks play simultaneously and mix together, creating a spatial audio visualization where each sound source is represented as a "mountain peak" on the sphere. The sphere's center remains fixed while you can drag with your mouse (or touch on mobile) to rotate the camera around it in any direction. When idle, the camera automatically returns to the front view and the sphere slowly auto-rotates.
+Over the past half year at Dolby, I’ve had the opportunity to learn extensively about audio—sound, space, mixing, and critical listening—well beyond specific tools or workflows. I’ve also worked with generous and thoughtful colleagues, whose openness and patience made this period both productive and rewarding.
+
+The song reflects many late nights similar to those described in the lyrics, though not always focused on music itself. Glowing screens, AI-assisted coding, guitars resting in the room, and getting through the night with a can of Monster. It’s less a narrative than a snapshot: a brief record of learning and quiet focus.
 
 ---
 <div id="ambisonicViewer"></div>
@@ -19,3 +21,46 @@ The **Ambisonic Viewer** displays a 3D sphere with an equiangular grid that resp
   src="{{ '/assets/js/sound-lab-init.js' | relative_url }}"></script>
 
 <br>
+
+
+Below is the lyrics:
+```
+[Verse 1]
+A can of Monster, cold and still  
+On a desk in Midtown Atlanta  
+Windows glowing soft against the sky  
+Spherical harmonics spin on the screen  
+Pulling sound into the monitors  
+He talks to the cursor  
+Line by line
+
+[Verse 2]
+He’s mixing dreams in Atmos  
+Rhythm drifts, the melody dances  
+Reverb echoes reaching in from afar  
+Every note takes its own track to open up the space
+
+[Chorus]
+Starlight overhead, lakalaka, slow and bright  
+Drumbeats flooding the ground, boom boom alive
+The Les Paul soaring at nine o’clock in the sky  
+While the Taylor on the right gently weeps
+Humming close, soft and slow  
+whisper the secret only he knows
+
+[Guitar solo]
+
+[Outro]
+The night weighs heavy on his eyes  
+Every dream he never named  
+Still flickers inside the sound he made  
+
+Whisper a secret only he knows  
+…only he knows
+
+```
+
+---
+### Ambisonic Viewer
+
+The Ambisonic Viewer has been added to the Sound Lab collection. It is a browser-first, real-time visualization for spatial audio on the sphere, designed to run entirely on the client without backend computation. To achieve interactive performance in the browser, the viewer uses Gaussian density kernels as a lightweight perceptual approximation of spherical harmonic bases, providing an intuitive, non-exact representation of Atmos-to-Ambisonic spatial mapping. The focus is on clarity and spatial intuition rather than physically exact HOA reconstruction, making it suitable for inspection, exploration, and demonstration of spatial audio behavior in real time.

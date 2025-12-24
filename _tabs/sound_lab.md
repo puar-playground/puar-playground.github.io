@@ -34,7 +34,15 @@ button:disabled { opacity: 0.5; cursor: not-allowed; }
 <div id="ambisonicViewer"></div>
 
 <br>
-The **Ambisonic Viewer** displays a 3D sphere with an equiangular grid that responds to audio in real-time. You can upload or specify up to 3 audio tracks, each with its own spatial position (defined by spherical coordinates theta and phi). As each track plays, the sphere creates Gaussian-distributed bulges at the track's position, with the bulge height proportional to the track's audio volume. Multiple tracks play simultaneously and mix together, creating a spatial audio visualization where each sound source is represented as a "mountain peak" on the sphere. The sphere's center remains fixed while you can drag with your mouse (or touch on mobile) to rotate the camera around it in any direction. When idle, the camera automatically returns to the front view and the sphere slowly auto-rotates.
+Ambisonic Viewer (Browser-first Approximation)
+
+The Ambisonic Viewer is a browser-first, real-time visualization for spatial audio on the sphere. It is designed to run entirely on the client side—no backend rendering, no server-side DSP—so the interaction stays responsive and portable.
+
+To make this feasible in the browser, the current implementation uses a Gaussian density kernel as a lightweight perceptual surrogate for spherical harmonic basis functions. This provides an intuitive “energy-on-the-sphere” view of object-based spatial audio (conceptually related to Atmos-to-Ambisonic mapping), while avoiding the computational cost of evaluating and rendering true spherical-harmonic fields at interactive frame rates.
+
+As a result, the visualization is not a physically exact HOA reconstruction and is not intended to recover Ambisonic coefficients. Instead, it prioritizes clarity and real-time feedback: sound sources appear as smooth, localized peaks whose height follows the relative audio energy, mixing naturally when multiple sources play together.
+
+The sphere remains fixed at the center while you can rotate the camera via mouse or touch; when idle, the view recenters and the sphere slowly auto-rotates to preserve spatial context.
 
 ---
 ### A/B Test
