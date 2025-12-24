@@ -8,7 +8,7 @@
   
   // Get configuration from script data attributes (set by Jekyll template)
   // Note: HTML data attributes like data-vocals-url become dataset.vocalsUrl in JavaScript
-  const initScript = document.querySelector('script[data-vocals-url], script[src*="sound-lab-init.js"]');
+  const initScript = document.querySelector('script[data-vocals-url], script[data-audio-a-url], script[src*="sound-lab-init.js"]');
   const getDataAttr = (attr, fallback) => {
     if (!initScript) return fallback;
     // Convert camelCase to kebab-case for dataset access
