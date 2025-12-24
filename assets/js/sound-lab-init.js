@@ -179,7 +179,7 @@
       loadNextABTestScript();
     }
   }
-  
+
   // Start initialization when DOM is ready
   if (document.readyState === 'loading') {
     document.addEventListener('DOMContentLoaded', init);
