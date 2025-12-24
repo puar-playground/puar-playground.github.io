@@ -52,7 +52,7 @@
       rootId: 'abRoot',
       defaultAudioA: getDataAttr('audioAUrl', '/assets/audio/Hello.mp3'),
       defaultAudioB: getDataAttr('audioBUrl', '/assets/audio/Hello_enhanced.mp3'),
-      allowUpload: true,
+      allowUpload: getDataAttr('allowUpload') !== 'false', // Default true, set to 'false' to disable
       waveformColorA: '#FF2600',
       waveformColorB: '#659BC8'
     }
