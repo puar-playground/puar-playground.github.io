@@ -78,10 +78,11 @@ function initABTest(config = {}) {
   let bufB = null;
   let gainA = null;
   let gainB = null;
-  let srcA = null;
-  let srcB = null;
+  let audioA = null; // HTMLAudioElement for track A
+  let audioB = null; // HTMLAudioElement for track B
+  let sourceA = null; // MediaElementSource for track A
+  let sourceB = null; // MediaElementSource for track B
   let isPlaying = false;
-  let startCtxTime = 0;
   let startOffset = 0;
   let raf = null;
   let waveformDataA = null;
@@ -171,9 +172,10 @@ function initABTest(config = {}) {
   };
 
   const teardownSources = () => {
-    try { if (srcA) srcA.stop(); } catch {}
-    try { if (srcB) srcB.stop(); } catch {}
-    srcA = null; srcB = null;
+    // Pause audio elements instead of stopping BufferSource
+    try { if (audioA) audioA.pause(); } catch {}
+    try { if (audioB) audioB.pause(); } catch {}
+    // Note: MediaElementSource persists, we just pause the audio elements
   };
 
   const stopTicker = () => { if (raf) cancelAnimationFrame(raf); raf = null; };
@@ -182,7 +184,13 @@ function initABTest(config = {}) {
     stopTicker();
     const loop = () => {
       let t = startOffset;
-      if (ctx && isPlaying) t = (ctx.currentTime - startCtxTime + startOffset);
+      // Use audio element currentTime instead of AudioContext time
+      if (isPlaying && audioA && audioB) {
+        // Use the earlier of the two audio times (accounting for lag)
+        const timeA = audioA.currentTime - (lagSec < 0 ? -lagSec : 0);
+        const timeB = audioB.currentTime - (lagSec > 0 ? lagSec : 0);
+        t = Math.max(0, Math.min(timeA, timeB));
+      }
       
       // Update playhead position on waveforms (both use common duration)
       if (commonDuration > 0) {
@@ -251,6 +259,14 @@ function initABTest(config = {}) {
     const maxSeek = commonDuration > 0 ? commonDuration : Math.min(bufA.duration, bufB.duration);
     startOffset = Math.max(0, Math.min(timeSec, maxSeek));
     
+    // Update audio element positions
+    if (audioA && audioB) {
+      const offA = startOffset + (lagSec < 0 ? -lagSec : 0);
+      const offB = startOffset + (lagSec > 0 ? lagSec : 0);
+      audioA.currentTime = clamp(offA, 0, Math.max(0, bufA.duration - 0.001));
+      audioB.currentTime = clamp(offB, 0, Math.max(0, bufB.duration - 0.001));
+    }
+    
     if (commonDuration > 0) {
       const progress = Math.min(1, startOffset / commonDuration);
       playheadA.style.left = `${progress * 100}%`;
@@ -265,16 +281,14 @@ function initABTest(config = {}) {
     }
   };
 
-  const startBothAt = (commonOffsetSec) => {
+  const startBothAt = async (commonOffsetSec) => {
+    if (!audioA || !audioB) {
+      console.error('Audio elements not initialized');
+      return;
+    }
+    
     teardownSources();
     makeGraphIfNeeded();
-
-    srcA = ctx.createBufferSource();
-    srcB = ctx.createBufferSource();
-    srcA.buffer = bufA;
-    srcB.buffer = bufB;
-    srcA.connect(gainA);
-    srcB.connect(gainB);
 
     const offA = commonOffsetSec + (lagSec < 0 ? -lagSec : 0);
     const offB = commonOffsetSec + (lagSec > 0 ?  lagSec : 0);
@@ -282,39 +296,73 @@ function initABTest(config = {}) {
     const offA2 = clamp(offA, 0, Math.max(0, bufA.duration - 0.001));
     const offB2 = clamp(offB, 0, Math.max(0, bufB.duration - 0.001));
 
-    const START_IN = 0.08;
-    startCtxTime = ctx.currentTime + START_IN;
     startOffset = commonOffsetSec;
-
-    srcA.start(startCtxTime, offA2);
-    srcB.start(startCtxTime, offB2);
-
-    isPlaying = true;
-    setPlayIcon(true);
-    setMix(parseInt(mix.value, 10));
-    startTicker();
-
-    const durCommon = Math.min(
-      bufA.duration - (lagSec < 0 ? -lagSec : 0),
-      bufB.duration - (lagSec > 0 ?  lagSec : 0)
-    );
-    const endAt = startCtxTime + Math.max(0, durCommon - commonOffsetSec);
-
-    const markEnded = () => {
-      if (ctx.currentTime >= endAt - 0.05) {
-        isPlaying = false;
-        setPlayIcon(false);
-        setStatus("Ended.");
-      }
-    };
-    srcA.onended = markEnded;
-    srcB.onended = markEnded;
+    
+    // Set currentTime and play HTMLAudioElements (works in iOS silent mode)
+    audioA.currentTime = offA2;
+    audioB.currentTime = offB2;
+    
+    try {
+      const playPromises = [audioA.play(), audioB.play()];
+      await Promise.all(playPromises);
+      
+      isPlaying = true;
+      setPlayIcon(true);
+      setMix(parseInt(mix.value, 10));
+      startTicker();
+      
+      // Set up end detection
+      const durCommon = Math.min(
+        bufA.duration - (lagSec < 0 ? -lagSec : 0),
+        bufB.duration - (lagSec > 0 ? lagSec : 0)
+      );
+      
+      const checkEnded = () => {
+        if (!isPlaying) return;
+        const timeA = audioA.currentTime - (lagSec < 0 ? -lagSec : 0);
+        const timeB = audioB.currentTime - (lagSec > 0 ? lagSec : 0);
+        const currentTime = Math.max(0, Math.min(timeA, timeB));
+        
+        if (currentTime >= durCommon - 0.05 || audioA.ended || audioB.ended) {
+          isPlaying = false;
+          setPlayIcon(false);
+          setStatus("Ended.");
+        } else {
+          setTimeout(checkEnded, 100);
+        }
+      };
+      
+      audioA.addEventListener('ended', () => {
+        if (isPlaying) {
+          isPlaying = false;
+          setPlayIcon(false);
+          setStatus("Ended.");
+        }
+      });
+      audioB.addEventListener('ended', () => {
+        if (isPlaying) {
+          isPlaying = false;
+          setPlayIcon(false);
+          setStatus("Ended.");
+        }
+      });
+      
+    } catch (e) {
+      console.error('Failed to play audio:', e);
+      isPlaying = false;
+      setPlayIcon(false);
+      setStatus("Play error.");
+    }
   };
 
   const pause = () => {
     if (!isPlaying) return;
-    const cur = (ctx.currentTime - startCtxTime + startOffset);
-    startOffset = Math.max(0, cur);
+    // Get current time from audio elements
+    if (audioA && audioB) {
+      const timeA = audioA.currentTime - (lagSec < 0 ? -lagSec : 0);
+      const timeB = audioB.currentTime - (lagSec > 0 ? lagSec : 0);
+      startOffset = Math.max(0, Math.min(timeA, timeB));
+    }
     teardownSources();
     isPlaying = false;
     setPlayIcon(false);
@@ -324,9 +372,9 @@ function initABTest(config = {}) {
 
   const play = async () => {
     await unlockAudio();
-    if (!bufA || !bufB) return;
+    if (!bufA || !bufB || !audioA || !audioB) return;
     if (isPlaying) return;
-    startBothAt(startOffset);
+    await startBothAt(startOffset);
     setStatus("Playing.");
   };
 
@@ -367,12 +415,64 @@ function initABTest(config = {}) {
     setPlayIcon(false);
     startOffset = 0;
 
+    // Get URLs for audio files
+    let urlA, urlB;
+    if (fileA instanceof File) {
+      urlA = URL.createObjectURL(fileA);
+    } else {
+      urlA = fileA;
+    }
+    if (fileB instanceof File) {
+      urlB = URL.createObjectURL(fileB);
+    } else {
+      urlB = fileB;
+    }
+
     setStatus("Decoding ...");
     const [da, db] = await Promise.all([
       decodeAudioFile(fileA),
       decodeAudioFile(fileB)
     ]);
     bufA = da; bufB = db;
+
+    // Create HTMLAudioElement for iOS silent mode support
+    ensureCtx();
+    makeGraphIfNeeded();
+    
+    // Create or reuse audio elements
+    if (!audioA) {
+      audioA = document.createElement('audio');
+      audioA.style.display = 'none';
+      audioA.preload = 'auto';
+      document.body.appendChild(audioA);
+    }
+    if (!audioB) {
+      audioB = document.createElement('audio');
+      audioB.style.display = 'none';
+      audioB.preload = 'auto';
+      document.body.appendChild(audioB);
+    }
+    
+    audioA.src = urlA;
+    audioB.src = urlB;
+    
+    // Create MediaElementSource if not exists
+    if (!sourceA) {
+      try {
+        sourceA = ctx.createMediaElementSource(audioA);
+        sourceA.connect(gainA);
+      } catch (e) {
+        console.warn('MediaElementSource A may already exist:', e);
+      }
+    }
+    if (!sourceB) {
+      try {
+        sourceB = ctx.createMediaElementSource(audioB);
+        sourceB.connect(gainB);
+      } catch (e) {
+        console.warn('MediaElementSource B may already exist:', e);
+      }
+    }
 
     setStatus("Aligning ...");
     const est = ABTestAlignment.estimateAlignment(bufA, bufB);
