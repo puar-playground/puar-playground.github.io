@@ -93,9 +93,22 @@ function initABTest(config = {}) {
     if (ctx.state === 'suspended') {
       try {
         await ctx.resume();
-        console.log('Audio context resumed');
+        console.log('Audio context resumed, state:', ctx.state);
       } catch (e) {
         console.warn('Failed to resume audio context:', e);
+      }
+    }
+    // Wait for context to be running (iOS may need a moment)
+    if (ctx.state !== 'running') {
+      // Try one more time after a short delay
+      await new Promise(resolve => setTimeout(resolve, 50));
+      if (ctx.state === 'suspended') {
+        try {
+          await ctx.resume();
+          console.log('Audio context resumed (retry), state:', ctx.state);
+        } catch (e) {
+          console.warn('Failed to resume audio context (retry):', e);
+        }
       }
     }
     // Ensure audio graph is created after context is resumed (iOS requirement)
@@ -213,6 +226,12 @@ function initABTest(config = {}) {
   };
 
   const startBothAt = (commonOffsetSec) => {
+    // Ensure context is running before starting playback (iOS requirement)
+    if (!ctx || ctx.state !== 'running') {
+      console.warn('AudioContext not running, cannot start playback. State:', ctx?.state);
+      return;
+    }
+    
     teardownSources();
     makeGraphIfNeeded();
 
@@ -233,8 +252,15 @@ function initABTest(config = {}) {
     startCtxTime = ctx.currentTime + START_IN;
     startOffset = commonOffsetSec;
 
-    srcA.start(startCtxTime, offA2);
-    srcB.start(startCtxTime, offB2);
+    try {
+      srcA.start(startCtxTime, offA2);
+      srcB.start(startCtxTime, offB2);
+    } catch (e) {
+      console.error('Failed to start audio sources:', e);
+      isPlaying = false;
+      setPlayIcon(false);
+      return;
+    }
 
     isPlaying = true;
     setPlayIcon(true);
@@ -271,8 +297,35 @@ function initABTest(config = {}) {
 
   const play = async () => {
     await unlockAudio();
-    if (!bufA || !bufB) return;
+    if (!bufA || !bufB) {
+      setStatus("No audio loaded.");
+      return;
+    }
     if (isPlaying) return;
+    
+    // Double-check context is running before starting
+    if (!ctx || ctx.state !== 'running') {
+      console.warn('AudioContext not running after unlock, retrying...');
+      await unlockAudio();
+      if (ctx.state !== 'running') {
+        setStatus("Audio not ready. Please try again.");
+        console.error('AudioContext state:', ctx?.state);
+        return;
+      }
+    }
+    
+    // Ensure gain nodes exist and have correct values before playing
+    makeGraphIfNeeded();
+    const currentMix = parseInt(mix.value, 10);
+    setMix(currentMix);
+    
+    console.log('Starting playback:', {
+      ctxState: ctx.state,
+      gainA: gainA?.gain.value,
+      gainB: gainB?.gain.value,
+      mix: currentMix
+    });
+    
     startBothAt(startOffset);
     setStatus("Playing.");
   };
@@ -292,7 +345,8 @@ function initABTest(config = {}) {
 
   // ---------- Audio Loading ----------
   const decodeAudioFile = async (fileOrUrl) => {
-    ensureCtx();
+    // Don't create AudioContext here - wait for user interaction (iOS requirement)
+    // AudioContext will be created when needed (on first unlockAudio call)
     let arrayBuffer;
     
     if (fileOrUrl instanceof File) {
@@ -303,6 +357,8 @@ function initABTest(config = {}) {
       arrayBuffer = await res.arrayBuffer();
     }
     
+    // Create AudioContext only when decoding (after user interaction)
+    ensureCtx();
     return await new Promise((resolve, reject) => {
       ctx.decodeAudioData(arrayBuffer, resolve, reject);
     });
@@ -315,11 +371,23 @@ function initABTest(config = {}) {
     startOffset = 0;
 
     setStatus("Decoding ...");
+    // Ensure AudioContext exists before decoding (will be created if needed)
+    ensureCtx();
     const [da, db] = await Promise.all([
       decodeAudioFile(fileA),
       decodeAudioFile(fileB)
     ]);
     bufA = da; bufB = db;
+    
+    // If AudioContext was created during decoding, try to resume it (iOS)
+    // Note: It may still be suspended until user interaction, but this helps
+    if (ctx && ctx.state === 'suspended') {
+      try {
+        await ctx.resume();
+      } catch (e) {
+        // Ignore - will be resumed on user interaction
+      }
+    }
 
     setStatus("Aligning ...");
     const est = ABTestAlignment.estimateAlignment(bufA, bufB);
