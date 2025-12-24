@@ -7,9 +7,18 @@
   'use strict';
   
   // Get configuration from script data attributes (set by Jekyll template)
-  const initScript = document.querySelector('script[data-vocals-url]');
+  // Note: HTML data attributes like data-vocals-url become dataset.vocalsUrl in JavaScript
+  const initScript = document.querySelector('script[data-vocals-url], script[src*="sound-lab-init.js"]');
   const getDataAttr = (attr, fallback) => {
-    return initScript?.dataset[attr] || fallback;
+    if (!initScript) return fallback;
+    // Convert camelCase to kebab-case for dataset access
+    // e.g., 'vocalsUrl' -> 'vocals-url' -> dataset.vocalsUrl
+    const value = initScript.dataset[attr];
+    if (value) {
+      console.log(`Loaded ${attr}:`, value);
+      return value;
+    }
+    return fallback;
   };
   
   // Configuration
@@ -118,48 +127,57 @@
   
   // Main initialization
   function init() {
+    // Only initialize Ambisonic Viewer if container exists
+    const hasAmbisonicViewer = document.getElementById(config.ambisonicViewer.containerId);
+    // Only initialize AB Test if container exists
+    const hasABTest = document.getElementById(config.abTest.rootId);
+    
     // Load Three.js first (required for Ambisonic Viewer)
-    if (typeof THREE === 'undefined') {
-      loadScript('https://cdn.jsdelivr.net/npm/three@0.159.0/build/three.min.js', function() {
-        // After Three.js loads, load ambisonic-viewer.js
-        loadScript('/assets/js/audio-lab/ambisonic-viewer.js', function() {
-          tryInit(initAmbisonicViewer);
-        });
-      });
-    } else {
-      // Three.js already loaded
-      if (typeof window.initAmbisonicViewer === 'undefined') {
-        loadScript('/assets/js/audio-lab/ambisonic-viewer.js', function() {
-          tryInit(initAmbisonicViewer);
+    if (hasAmbisonicViewer) {
+      if (typeof THREE === 'undefined') {
+        loadScript('https://cdn.jsdelivr.net/npm/three@0.159.0/build/three.min.js', function() {
+          // After Three.js loads, load ambisonic-viewer.js
+          loadScript('/assets/js/audio-lab/ambisonic-viewer.js', function() {
+            tryInit(initAmbisonicViewer);
+          });
         });
       } else {
-        tryInit(initAmbisonicViewer);
+        // Three.js already loaded
+        if (typeof window.initAmbisonicViewer === 'undefined') {
+          loadScript('/assets/js/audio-lab/ambisonic-viewer.js', function() {
+            tryInit(initAmbisonicViewer);
+          });
+        } else {
+          tryInit(initAmbisonicViewer);
+        }
       }
     }
     
-    // Load AB Test dependencies in order
-    const abTestScripts = [
-      '/assets/js/ab-test/ab-test-alignment.js',
-      '/assets/js/ab-test/ab-test-waveforms.js',
-      '/assets/js/ab-test/ab-test-ui.js',
-      '/assets/js/ab-test/ab-test.js'
-    ];
-    
-    let currentScript = 0;
-    function loadNextABTestScript() {
-      if (currentScript >= abTestScripts.length) {
-        // All scripts loaded, initialize AB Test
-        tryInit(initABTestModule);
-        return;
+    // Load AB Test dependencies in order (only if container exists)
+    if (hasABTest) {
+      const abTestScripts = [
+        '/assets/js/ab-test/ab-test-alignment.js',
+        '/assets/js/ab-test/ab-test-waveforms.js',
+        '/assets/js/ab-test/ab-test-ui.js',
+        '/assets/js/ab-test/ab-test.js'
+      ];
+      
+      let currentScript = 0;
+      function loadNextABTestScript() {
+        if (currentScript >= abTestScripts.length) {
+          // All scripts loaded, initialize AB Test
+          tryInit(initABTestModule);
+          return;
+        }
+        
+        loadScript(abTestScripts[currentScript], function() {
+          currentScript++;
+          loadNextABTestScript();
+        });
       }
       
-      loadScript(abTestScripts[currentScript], function() {
-        currentScript++;
-        loadNextABTestScript();
-      });
+      loadNextABTestScript();
     }
-    
-    loadNextABTestScript();
   }
   
   // Start initialization when DOM is ready

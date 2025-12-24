@@ -530,7 +530,8 @@
         leftTrack: { thetaInput: null, phiInput: null }, // Positions from config only
         rightTrack: { thetaInput: null, phiInput: null },
         leftTrackIndex: i * 2,     // Track indices: 0,1 for file 0, 2,3 for file 1
-        rightTrackIndex: i * 2 + 1
+        rightTrackIndex: i * 2 + 1,
+        mediaElementSource: null  // Store MediaElementSource to avoid recreating
       });
     }
     
@@ -886,8 +887,21 @@
         rightTrack.source = null;
       }
       
-      // Create source from audio element
-      const source = audioContext.createMediaElementSource(audioFile.audioElement);
+      // Check if audio element already has a source node
+      // A MediaElementSource can only be created once per audio element
+      let source = audioFile.mediaElementSource;
+      if (!source) {
+        try {
+          source = audioContext.createMediaElementSource(audioFile.audioElement);
+          audioFile.mediaElementSource = source; // Store for reuse
+        } catch (error) {
+          // If source already exists, try to get it from the audio element
+          // Note: There's no direct way to retrieve an existing source, so we need to track it
+          console.warn('MediaElementSource may already exist for this audio element:', error);
+          // If we can't create a new source, we can't proceed
+          return;
+        }
+      }
       
       if (audioFile.splitCheckbox.checked) {
         // Split stereo into left and right channels
@@ -966,9 +980,9 @@
       
       updateMinDuration();
       
-      // Connect all audio files first
+      // Connect all audio files first (only if not already connected)
       audioFiles.forEach((audioFile, fileIndex) => {
-        if (audioFile.audioElement.src) {
+        if (audioFile.audioElement.src && !audioFile.mediaElementSource) {
           handleAudioFileChange(fileIndex);
         }
       });
