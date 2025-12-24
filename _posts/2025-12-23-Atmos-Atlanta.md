@@ -1,9 +1,10 @@
 ---
-title: 🪩 Ambisonic Viewer 
+title: 🪩 Atmos Night in spherical harmonics
 date: 2025-12-23 00:00:00 +500
-categories: [News, Features]
+categories: [Music, AI]
 tags: [feature, music]
 ---
+![demo]({{ '/assets/img/2025-12-23/studio.jpg' | relative_url }})
 
 This song, [“Atmos Night”](https://suno.com/s/GoYJcm5TnUual65I), was created through a joint effort between myself, GPT, and SUNO, written for personal reflection and as a small birthday project.
 
