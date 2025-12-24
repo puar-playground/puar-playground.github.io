@@ -98,6 +98,8 @@ function initABTest(config = {}) {
         console.warn('Failed to resume audio context:', e);
       }
     }
+    // Ensure audio graph is created after context is resumed (iOS requirement)
+    makeGraphIfNeeded();
   };
 
   const makeGraphIfNeeded = () => {
@@ -150,25 +152,10 @@ function initABTest(config = {}) {
 
   // ---------- Mix Control ----------
   const setMix = (sliderValue0to100) => {
-    makeGraphIfNeeded();
     // Horizontal slider: left (0) is A 100%, right (100) is B 100%
     const p = clamp(sliderValue0to100, 0, 100);
     const bRatio = p / 100;
     const aRatio = 1 - bRatio;
-
-    const theta = bRatio * Math.PI * 0.5;
-    const gA = Math.cos(theta);
-    const gB = Math.sin(theta);
-
-    const t = ctx.currentTime;
-    const RAMP = 0.01;
-
-    gainA.gain.cancelScheduledValues(t);
-    gainB.gain.cancelScheduledValues(t);
-    gainA.gain.setValueAtTime(gainA.gain.value, t);
-    gainB.gain.setValueAtTime(gainB.gain.value, t);
-    gainA.gain.linearRampToValueAtTime(gA, t + RAMP);
-    gainB.gain.linearRampToValueAtTime(gB, t + RAMP);
 
     const aPct = Math.round(aRatio * 100);
     const bPct = 100 - aPct;
@@ -180,6 +167,24 @@ function initABTest(config = {}) {
     if (waveformDataA && waveformDataB) {
       ABTestWaveforms.drawWaveform(canvasA, waveformDataA, WAVEFORM_COLOR_A, WAVEFORM_BACKGROUND, aRatio);
       ABTestWaveforms.drawWaveform(canvasB, waveformDataB, WAVEFORM_COLOR_B, WAVEFORM_BACKGROUND, bRatio);
+    }
+
+    // Only update audio gains if context exists (iOS: context created on user interaction)
+    if (ctx) {
+      makeGraphIfNeeded();
+      const theta = bRatio * Math.PI * 0.5;
+      const gA = Math.cos(theta);
+      const gB = Math.sin(theta);
+
+      const t = ctx.currentTime;
+      const RAMP = 0.01;
+
+      gainA.gain.cancelScheduledValues(t);
+      gainB.gain.cancelScheduledValues(t);
+      gainA.gain.setValueAtTime(gainA.gain.value, t);
+      gainB.gain.setValueAtTime(gainB.gain.value, t);
+      gainA.gain.linearRampToValueAtTime(gA, t + RAMP);
+      gainB.gain.linearRampToValueAtTime(gB, t + RAMP);
     }
   };
 
@@ -462,15 +467,21 @@ function initABTest(config = {}) {
     await restart();
   };
 
-  mix.addEventListener("input", () => {
+  mix.addEventListener("input", async () => {
+    // Ensure audio context is created on slider interaction (iOS)
+    await unlockAudio();
     setMix(parseInt(mix.value, 10));
   });
 
   // iOS audio unlock: one-time unlock on first user interaction
+  // This is critical for iOS - AudioContext must be created in user interaction event
   let audioUnlocked = false;
   const unlockAudioOnce = async (e) => {
     if (!audioUnlocked) {
+      // Create AudioContext and resume it on first user interaction
       await unlockAudio();
+      // Initialize mix after context is ready
+      setMix(parseInt(mix.value, 10));
       audioUnlocked = true;
       // Remove listeners after first unlock
       document.removeEventListener('touchstart', unlockAudioOnce);
@@ -478,7 +489,7 @@ function initABTest(config = {}) {
       document.removeEventListener('click', unlockAudioOnce);
     }
   };
-  // Add listeners for iOS audio unlock
+  // Add listeners for iOS audio unlock (must be before any other interactions)
   document.addEventListener('touchstart', unlockAudioOnce, { once: true, passive: true });
   document.addEventListener('touchend', unlockAudioOnce, { once: true, passive: true });
   document.addEventListener('click', unlockAudioOnce, { once: true });
@@ -508,7 +519,8 @@ function initABTest(config = {}) {
 
   // ---------- Initialization ----------
   mix.value = "0";
-  makeGraphIfNeeded();
+  // Don't create AudioContext on init for iOS compatibility
+  // It will be created on first user interaction via unlockAudio()
   setMix(0);
   setPlayIcon(false);
 
