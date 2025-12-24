@@ -8,8 +8,6 @@ tags: [feature, music]
 
 This song, [“Atmos Night”](https://suno.com/s/GoYJcm5TnUual65I), was created through a joint effort between myself, GPT, and SUNO, written for personal reflection and as a small birthday project.
 
-Over the past half year at Dolby, I’ve had the opportunity to learn extensively about audio—sound, space, mixing, and critical listening—well beyond specific tools or workflows. I’ve also worked with generous and thoughtful colleagues, whose openness and patience made this period both productive and rewarding.
-
 The song reflects many late nights similar to those described in the lyrics, though not always focused on music itself. Glowing screens, AI-assisted coding, guitars resting in the room, and getting through the night with a can of Monster. It’s less a narrative than a snapshot: a brief record of learning and quiet focus.
 
 ---
