@@ -49,10 +49,8 @@ button:disabled { opacity: 0.5; cursor: not-allowed; }
       root.dataset.initialized = 'true';
       initABTest({
         rootId: 'abRoot',
-        // defaultAudioA: '/assets/audio/Hello.mp3',
-        // defaultAudioB: '/assets/audio/Hello_enhanced.mp3',
-        defaultAudioA: "{{ '/assets/audio/Hello.mp3' | relative_url }}",
-        defaultAudioB: "{{ '/assets/audio/Hello_enhanced.mp3' | relative_url }}",
+        defaultAudioA: '/assets/audio/Hello.mp3',
+        defaultAudioB: '/assets/audio/Hello_enhanced.mp3',
         allowUpload: true,
         waveformColorA: '#FF2600',
         waveformColorB: '#659BC8'
