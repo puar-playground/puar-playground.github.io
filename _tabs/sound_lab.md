@@ -52,13 +52,13 @@ button:disabled { opacity: 0.5; cursor: not-allowed; }
       //   - left_position_az_el / right_position_az_el: separate positions for stereo channels
       defaultTracks: [
         {
-          url: '/assets/audio/Atmos_Night/vocals.mp3',
+          url: "{{ '/assets/audio/Atmos_Night/vocals.mp3' | relative_url }}",,
           // If stereo split is enabled, use left/right positions:
           left_position_az_el: '(-90.0, 10.0)',   // Left channel position
           right_position_az_el: '(90.0, -10.0)'     // Right channel position
         },
         {
-          url: '/assets/audio/Atmos_Night/instrumental.mp3',
+          url: "{{ '/assets/audio/Atmos_Night/instrumental.mp3' | relative_url }}",
           left_position_az_el: '(45.0, -20.0)',
           right_position_az_el: '(-45.0, 20.0)'
         }
@@ -109,8 +109,10 @@ document.addEventListener("DOMContentLoaded", () => {
     root.dataset.initialized = 'true';
     initABTest({
       rootId: 'abRoot',
-      defaultAudioA: '/assets/audio/Hello.mp3',
-      defaultAudioB: '/assets/audio/Hello_enhanced.mp3',
+      // defaultAudioA: '/assets/audio/Hello.mp3',
+      // defaultAudioB: '/assets/audio/Hello_enhanced.mp3',
+      defaultAudioA: "{{ '/assets/audio/Hello.mp3' | relative_url }}",
+      defaultAudioB: "{{ '/assets/audio/Hello_enhanced.mp3' | relative_url }}",
       allowUpload: true,
       waveformColorA: '#FF2600',
       waveformColorB: '#659BC8'
