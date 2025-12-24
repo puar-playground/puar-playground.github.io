@@ -14,8 +14,8 @@ The **Ambisonic Viewer** displays a 3D sphere with an equiangular grid that resp
 
 <!-- Use unified initialization script -->
 <script 
-  data-vocals-url="assets/audio/atmos_night/vocals.mp3"
-  data-instrumental-url="assets/audio/atmos_night/instrumental.mp3"
+  data-vocals-url="{{ '/assets/audio/atmos_night/vocals.mp3' | relative_url }}"
+  data-instrumental-url="{{ '/assets/audio/atmos_night/instrumental.mp3' | relative_url }}"
   src="{{ '/assets/js/sound-lab-init.js' | relative_url }}"></script>
 
 <br>
