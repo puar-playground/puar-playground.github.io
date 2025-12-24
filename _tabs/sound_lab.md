@@ -116,22 +116,55 @@ The **Ambisonic Viewer** displays a 3D sphere with an equiangular grid that resp
 <script src="{{ '/assets/js/ab-test/ab-test-ui.js' | relative_url }}" defer></script>
 <script src="{{ '/assets/js/ab-test/ab-test.js' | relative_url }}" defer></script>
 <script>
-document.addEventListener("DOMContentLoaded", () => {
-  const root = document.getElementById('abRoot');
-  if (root) {
-    root.dataset.initialized = 'true';
-    initABTest({
-      rootId: 'abRoot',
-      // defaultAudioA: '/assets/audio/Hello.mp3',
-      // defaultAudioB: '/assets/audio/Hello_enhanced.mp3',
-      defaultAudioA: "{{ '/assets/audio/Hello.mp3' | relative_url }}",
-      defaultAudioB: "{{ '/assets/audio/Hello_enhanced.mp3' | relative_url }}",
-      allowUpload: true,
-      waveformColorA: '#FF2600',
-      waveformColorB: '#659BC8'
-    });
+(function() {
+  function initABTestModule() {
+    // Check if initABTest is loaded
+    if (typeof initABTest === 'undefined') {
+      console.error('ABTest: initABTest function not found');
+      return false;
+    }
+    
+    const root = document.getElementById('abRoot');
+    if (!root) {
+      console.error('ABTest: Container element not found');
+      return false;
+    }
+    
+    try {
+      root.dataset.initialized = 'true';
+      initABTest({
+        rootId: 'abRoot',
+        // defaultAudioA: '/assets/audio/Hello.mp3',
+        // defaultAudioB: '/assets/audio/Hello_enhanced.mp3',
+        defaultAudioA: "{{ '/assets/audio/Hello.mp3' | relative_url }}",
+        defaultAudioB: "{{ '/assets/audio/Hello_enhanced.mp3' | relative_url }}",
+        allowUpload: true,
+        waveformColorA: '#FF2600',
+        waveformColorB: '#659BC8'
+      });
+      return true;
+    } catch (error) {
+      console.error('ABTest: Initialization error:', error);
+      return false;
+    }
   }
-}); 
+  
+  // Try to initialize when DOM is ready
+  function tryInitABTest() {
+    if (!initABTestModule()) {
+      // If initialization failed, retry after a short delay
+      // This handles the case where defer scripts are still loading
+      setTimeout(tryInitABTest, 100);
+    }
+  }
+  
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', tryInitABTest);
+  } else {
+    // DOM is already ready, but defer scripts might still be loading
+    setTimeout(tryInitABTest, 50);
+  }
+})();
 </script>
 
 <br>
