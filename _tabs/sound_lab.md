@@ -19,6 +19,55 @@ button:disabled { opacity: 0.5; cursor: not-allowed; }
 **Sound Lab** is an experimental space for exploring sound through the web. It hosts interactive tools for audio visualization, comparison, and critical listening, designed to make sound structures, transformations, and perceptual differences easier to see and hear. This lab serves both as a technical playground and a listening desk—where signal processing ideas, audio models, and sound design concepts can be inspected, tested, and experienced directly in the browser.
 
 ---
+### Ambisonic Viewer
+
+<div id="ambisonicViewer"></div>
+
+<!-- Load Three.js from CDN -->
+<script src="https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.min.js"></script>
+<script src="{{ '/assets/js/audio-lab/ambisonic-viewer.js' | relative_url }}"></script>
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+  const viewer = document.getElementById('ambisonicViewer');
+  if (viewer) {
+    initAmbisonicViewer('ambisonicViewer', {
+      // Support up to 2 audio files, each can be split into left/right channels (4 tracks total)
+      // Position can be specified as:
+      //   - position_az_el: "(-135.0, 10.0)" (azimuth in degrees, elevation in degrees)
+      //   - left_position_az_el / right_position_az_el: separate positions for stereo channels
+      defaultTracks: [
+        {
+          url: '/assets/audio/Atmos_Night/vocals.mp3',
+          // If stereo split is enabled, use left/right positions:
+          left_position_az_el: '(-90.0, 10.0)',   // Left channel position
+          right_position_az_el: '(90.0, -10.0)'     // Right channel position
+        },
+        {
+          url: '/assets/audio/Atmos_Night/instrumental.mp3',
+          left_position_az_el: '(45.0, -20.0)',
+          right_position_az_el: '(-45.0, 20.0)'
+        }
+      ],
+      sphereColor: 0xcccccc,
+      track1BulgeColor: 0xff6b9d, // 杰尼蓝
+      track2BulgeColor: 0xb9cce2,  // 桃红色
+      gridColor: 0xcccccc, // Light gray, semi-transparent
+      baseRadius: 1.0,
+      maxRadiusMultiplier: 1.2, // Max 20% radius increase = 20% diameter increase
+      gaussianSigma: 0.3, // Controls bulge width (default: 0.3)
+      gridSegments: 32, // Number of segments for sphere grid (default: 64, higher = finer grid)
+      initialAzimuth: 0.0,      // 水平角度（默认：0.0度）
+      initialElevation: -30.0,
+    });
+  }
+});
+</script>
+
+<br>
+The **Ambisonic Viewer** displays a 3D sphere with an equiangular grid that responds to audio in real-time. You can upload or specify up to 3 audio tracks, each with its own spatial position (defined by spherical coordinates theta and phi). As each track plays, the sphere creates Gaussian-distributed bulges at the track's position, with the bulge height proportional to the track's audio volume. Multiple tracks play simultaneously and mix together, creating a spatial audio visualization where each sound source is represented as a "mountain peak" on the sphere. The sphere's center remains fixed while you can drag with your mouse (or touch on mobile) to rotate the camera around it in any direction. When idle, the camera automatically returns to the front view and the sphere slowly auto-rotates.
+
+
+---
 ### A/B Test
 
 <!-- ✅ JS 会在这里注入所有 UI -->
@@ -47,6 +96,5 @@ document.addEventListener("DOMContentLoaded", () => {
 }); 
 </script>
 
+<br>
 The **A/B Test** module supports precise, interactive playback control. Users can click directly on the progress bar to jump to any position in the audio, enabling fast navigation and focused listening. The progress bar also visualizes signal magnitude over time, providing a compact view of loudness structure while listening. Combined with smooth crossfading between two time-aligned audio tracks via a continuous slider, the tool is designed for careful, repeatable audio evaluation.
-
----
