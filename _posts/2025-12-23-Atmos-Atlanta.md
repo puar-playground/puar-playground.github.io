@@ -1,5 +1,5 @@
 ---
-title: 🪩 Atmos Atlanta in spherical harmonics
+title: 🪩 Atmos Atlanta in Spherical Harmonics
 date: 2025-12-23 00:00:00 +500
 categories: [Music, AI]
 tags: [feature, music]
