@@ -59,10 +59,18 @@ function initABTest(config = {}) {
   const playheadA = $("playheadA");
   const playheadB = $("playheadB");
 
-  const PLAY_ICON = "▶︎";
-  const PAUSE_ICON = "⏸";
   const setStatus = (msg) => { /* Status text removed - no-op */ };
-  const setPlayIcon = (playing) => { btnPlay.textContent = playing ? PAUSE_ICON : PLAY_ICON; };
+  const setPlayIcon = (playing) => {
+    const playIcon = document.getElementById('playIcon');
+    const pauseIcon = document.getElementById('pauseIcon');
+    if (playIcon && pauseIcon) {
+      playIcon.style.display = playing ? 'none' : 'block';
+      pauseIcon.style.display = playing ? 'block' : 'none';
+    } else {
+      // Fallback for old text-based icons
+      btnPlay.textContent = playing ? '⏸' : '▶︎';
+    }
+  };
 
   // ---------- WebAudio State ----------
   let ctx = null;
