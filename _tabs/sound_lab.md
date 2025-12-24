@@ -23,8 +23,8 @@ button:disabled { opacity: 0.5; cursor: not-allowed; }
 <script 
   data-vocals-url="https://puar-playground.github.io/assets/audio/atmos_night/vocals.mp3"
   data-instrumental-url="https://puar-playground.github.io/assets/audio/atmos_night/instrumental.mp3"
-  data-audio-a-url="https://puar-playground.github.io/assets/audio/Hello.mp3"
-  data-audio-b-url="https://puar-playground.github.io/assets/audio/Hello_enhanced.mp3"
+  data-audio-a-url="{{ '/assets/audio/Hello.mp3' | relative_url }}"
+  data-audio-b-url="{{ '/assets/audio/Hello_enhanced.mp3' | relative_url }}"
   src="{{ '/assets/js/sound-lab-init.js' | relative_url }}"></script>
 
 
