@@ -22,7 +22,6 @@ The song reflects many late nights similar to those described in the lyrics, tho
 
 <br>
 
-
 #### lyrics:
 ```
 [Verse 1]
