@@ -182,14 +182,29 @@ function initABTest(config = {}) {
 
   const startTicker = () => {
     stopTicker();
+    let lastSyncTime = 0;
     const loop = () => {
       let t = startOffset;
       // Use audio element currentTime instead of AudioContext time
-      if (isPlaying && audioA && audioB) {
+      if (isPlaying && audioA && audioB && !audioA.paused && !audioB.paused) {
         // Use the earlier of the two audio times (accounting for lag)
+        // This ensures we track the common playback position
         const timeA = audioA.currentTime - (lagSec < 0 ? -lagSec : 0);
         const timeB = audioB.currentTime - (lagSec > 0 ? lagSec : 0);
         t = Math.max(0, Math.min(timeA, timeB));
+        
+        // Gentle sync check: only resync if difference is large and enough time has passed
+        const timeDiff = Math.abs(timeA - timeB);
+        const now = Date.now();
+        if (timeDiff > 0.1 && (now - lastSyncTime) > 500) { // More than 100ms difference, max once per 500ms
+          lastSyncTime = now;
+          // Resync by adjusting the lagging audio (subtle adjustment)
+          if (timeA < timeB - 0.05) {
+            audioA.currentTime = audioB.currentTime + (lagSec < 0 ? -lagSec : 0);
+          } else if (timeB < timeA - 0.05) {
+            audioB.currentTime = audioA.currentTime + (lagSec > 0 ? lagSec : 0);
+          }
+        }
       }
       
       // Update playhead position on waveforms (both use common duration)
@@ -298,13 +313,36 @@ function initABTest(config = {}) {
 
     startOffset = commonOffsetSec;
     
-    // Set currentTime and play HTMLAudioElements (works in iOS silent mode)
+    // Ensure audio elements are ready
+    if (audioA.readyState < 2) {
+      await new Promise((resolve) => {
+        audioA.addEventListener('loadedmetadata', resolve, { once: true });
+      });
+    }
+    if (audioB.readyState < 2) {
+      await new Promise((resolve) => {
+        audioB.addEventListener('loadedmetadata', resolve, { once: true });
+      });
+    }
+    
+    // Set currentTime first, then play simultaneously for better sync
     audioA.currentTime = offA2;
     audioB.currentTime = offB2;
     
+    // Small delay to ensure currentTime is set (especially important for iOS)
+    await new Promise(resolve => setTimeout(resolve, 10));
+    
     try {
-      const playPromises = [audioA.play(), audioB.play()];
-      await Promise.all(playPromises);
+      // Start both play() calls as close together as possible
+      const playPromiseA = audioA.play();
+      const playPromiseB = audioB.play();
+      await Promise.all([playPromiseA, playPromiseB]);
+      
+      // Verify they're actually playing and in sync
+      if (audioA.paused || audioB.paused) {
+        console.warn('Audio elements did not start playing');
+        return;
+      }
       
       isPlaying = true;
       setPlayIcon(true);
