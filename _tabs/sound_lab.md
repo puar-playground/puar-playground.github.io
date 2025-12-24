@@ -64,14 +64,14 @@ button:disabled { opacity: 0.5; cursor: not-allowed; }
         }
       ], 
       sphereColor: 0xcccccc,
-      track1BulgeColor: 0xff6b9d, // 杰尼蓝
-      track2BulgeColor: 0xb9cce2,  // 桃红色
+      track1BulgeColor: 0xff6b9d, 
+      track2BulgeColor: 0xb9cce2, 
       gridColor: 0xcccccc, // Light gray, semi-transparent
       baseRadius: 1.0,
       maxRadiusMultiplier: 1.2, // Max 20% radius increase = 20% diameter increase
       gaussianSigma: 0.3, // Controls bulge width (default: 0.3)
       gridSegments: 32, // Number of segments for sphere grid (default: 64, higher = finer grid)
-      initialAzimuth: 0.0,      // 水平角度（默认：0.0度）
+      initialAzimuth: 0.0,    
       initialElevation: -30.0,
     });
   }
