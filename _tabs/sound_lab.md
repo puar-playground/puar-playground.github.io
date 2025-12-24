@@ -27,9 +27,24 @@ button:disabled { opacity: 0.5; cursor: not-allowed; }
 <script src="https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.min.js"></script>
 <script src="{{ '/assets/js/audio-lab/ambisonic-viewer.js' | relative_url }}"></script>
 <script>
-document.addEventListener("DOMContentLoaded", () => {
-  const viewer = document.getElementById('ambisonicViewer');
-  if (viewer) {
+(function() {
+  function initViewer() {
+    // Check if Three.js and initAmbisonicViewer are loaded
+    if (typeof THREE === 'undefined') {
+      console.error('AmbisonicViewer: Three.js not loaded');
+      return;
+    }
+    if (typeof initAmbisonicViewer === 'undefined') {
+      console.error('AmbisonicViewer: initAmbisonicViewer function not found');
+      return;
+    }
+    
+    const viewer = document.getElementById('ambisonicViewer');
+    if (!viewer) {
+      console.error('AmbisonicViewer: Container element not found');
+      return;
+    }
+    
     initAmbisonicViewer('ambisonicViewer', {
       // Support up to 2 audio files, each can be split into left/right channels (4 tracks total)
       // Position can be specified as:
@@ -60,7 +75,15 @@ document.addEventListener("DOMContentLoaded", () => {
       initialElevation: -30.0,
     });
   }
-});
+  
+  // Try to initialize when DOM is ready
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initViewer);
+  } else {
+    // DOM is already ready
+    initViewer();
+  }
+})();
 </script>
 
 <br>
