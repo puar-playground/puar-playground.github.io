@@ -93,26 +93,11 @@ function initABTest(config = {}) {
     if (ctx.state === 'suspended') {
       try {
         await ctx.resume();
-        console.log('Audio context resumed, state:', ctx.state);
+        console.log('Audio context resumed');
       } catch (e) {
         console.warn('Failed to resume audio context:', e);
       }
     }
-    // Wait for context to be running (iOS may need a moment)
-    if (ctx.state !== 'running') {
-      // Try one more time after a short delay
-      await new Promise(resolve => setTimeout(resolve, 50));
-      if (ctx.state === 'suspended') {
-        try {
-          await ctx.resume();
-          console.log('Audio context resumed (retry), state:', ctx.state);
-        } catch (e) {
-          console.warn('Failed to resume audio context (retry):', e);
-        }
-      }
-    }
-    // Ensure audio graph is created after context is resumed (iOS requirement)
-    makeGraphIfNeeded();
   };
 
   const makeGraphIfNeeded = () => {
@@ -120,20 +105,10 @@ function initABTest(config = {}) {
     if (!gainA || !gainB) {
       gainA = ctx.createGain();
       gainB = ctx.createGain();
-      // Initialize with current mix value instead of 0 (iOS fix)
-      const currentMix = parseInt(mix.value, 10);
-      const bRatio = currentMix / 100;
-      const aRatio = 1 - bRatio;
-      const theta = bRatio * Math.PI * 0.5;
-      gainA.gain.value = Math.cos(theta);
-      gainB.gain.value = Math.sin(theta);
+      gainA.gain.value = 0;
+      gainB.gain.value = 0;
       gainA.connect(ctx.destination);
       gainB.connect(ctx.destination);
-      console.log('Gain nodes created:', {
-        gainA: gainA.gain.value,
-        gainB: gainB.gain.value,
-        ctxState: ctx.state
-      });
     }
   };
 
@@ -175,10 +150,25 @@ function initABTest(config = {}) {
 
   // ---------- Mix Control ----------
   const setMix = (sliderValue0to100) => {
+    makeGraphIfNeeded();
     // Horizontal slider: left (0) is A 100%, right (100) is B 100%
     const p = clamp(sliderValue0to100, 0, 100);
     const bRatio = p / 100;
     const aRatio = 1 - bRatio;
+
+    const theta = bRatio * Math.PI * 0.5;
+    const gA = Math.cos(theta);
+    const gB = Math.sin(theta);
+
+    const t = ctx.currentTime;
+    const RAMP = 0.01;
+
+    gainA.gain.cancelScheduledValues(t);
+    gainB.gain.cancelScheduledValues(t);
+    gainA.gain.setValueAtTime(gainA.gain.value, t);
+    gainB.gain.setValueAtTime(gainB.gain.value, t);
+    gainA.gain.linearRampToValueAtTime(gA, t + RAMP);
+    gainB.gain.linearRampToValueAtTime(gB, t + RAMP);
 
     const aPct = Math.round(aRatio * 100);
     const bPct = 100 - aPct;
@@ -190,24 +180,6 @@ function initABTest(config = {}) {
     if (waveformDataA && waveformDataB) {
       ABTestWaveforms.drawWaveform(canvasA, waveformDataA, WAVEFORM_COLOR_A, WAVEFORM_BACKGROUND, aRatio);
       ABTestWaveforms.drawWaveform(canvasB, waveformDataB, WAVEFORM_COLOR_B, WAVEFORM_BACKGROUND, bRatio);
-    }
-
-    // Only update audio gains if context exists (iOS: context created on user interaction)
-    if (ctx) {
-      makeGraphIfNeeded();
-      const theta = bRatio * Math.PI * 0.5;
-      const gA = Math.cos(theta);
-      const gB = Math.sin(theta);
-
-      const t = ctx.currentTime;
-      const RAMP = 0.01;
-
-      gainA.gain.cancelScheduledValues(t);
-      gainB.gain.cancelScheduledValues(t);
-      gainA.gain.setValueAtTime(gainA.gain.value, t);
-      gainB.gain.setValueAtTime(gainB.gain.value, t);
-      gainA.gain.linearRampToValueAtTime(gA, t + RAMP);
-      gainB.gain.linearRampToValueAtTime(gB, t + RAMP);
     }
   };
 
@@ -236,35 +208,8 @@ function initABTest(config = {}) {
   };
 
   const startBothAt = (commonOffsetSec) => {
-    // Ensure context is running before starting playback (iOS requirement)
-    if (!ctx || ctx.state !== 'running') {
-      console.warn('AudioContext not running, cannot start playback. State:', ctx?.state);
-      return;
-    }
-    
     teardownSources();
     makeGraphIfNeeded();
-
-    // Ensure gain values are set BEFORE connecting sources (iOS requirement)
-    const currentMix = parseInt(mix.value, 10);
-    const bRatio = currentMix / 100;
-    const aRatio = 1 - bRatio;
-    const theta = bRatio * Math.PI * 0.5;
-    const gA = Math.cos(theta);
-    const gB = Math.sin(theta);
-    
-    // Set gain values directly (iOS may not respect scheduled values)
-    gainA.gain.value = gA;
-    gainB.gain.value = gB;
-    
-    console.log('Starting playback:', {
-      ctxState: ctx.state,
-      gainA: gainA.gain.value,
-      gainB: gainB.gain.value,
-      mix: currentMix,
-      aRatio,
-      bRatio
-    });
 
     srcA = ctx.createBufferSource();
     srcB = ctx.createBufferSource();
@@ -283,24 +228,12 @@ function initABTest(config = {}) {
     startCtxTime = ctx.currentTime + START_IN;
     startOffset = commonOffsetSec;
 
-    try {
-      srcA.start(startCtxTime, offA2);
-      srcB.start(startCtxTime, offB2);
-      console.log('Audio sources started successfully');
-    } catch (e) {
-      console.error('Failed to start audio sources:', e);
-      isPlaying = false;
-      setPlayIcon(false);
-      return;
-    }
+    srcA.start(startCtxTime, offA2);
+    srcB.start(startCtxTime, offB2);
 
     isPlaying = true;
     setPlayIcon(true);
-    // Update UI labels (gain already set above)
-    const aPct = Math.round(aRatio * 100);
-    const bPct = 100 - aPct;
-    if (mixLabelTop) mixLabelTop.textContent = `A ${aPct}%`;
-    if (mixLabelBottom) mixLabelBottom.textContent = `B ${bPct}%`;
+    setMix(parseInt(mix.value, 10));
     startTicker();
 
     const durCommon = Math.min(
@@ -333,35 +266,8 @@ function initABTest(config = {}) {
 
   const play = async () => {
     await unlockAudio();
-    if (!bufA || !bufB) {
-      setStatus("No audio loaded.");
-      return;
-    }
+    if (!bufA || !bufB) return;
     if (isPlaying) return;
-    
-    // Double-check context is running before starting
-    if (!ctx || ctx.state !== 'running') {
-      console.warn('AudioContext not running after unlock, retrying...');
-      await unlockAudio();
-      if (ctx.state !== 'running') {
-        setStatus("Audio not ready. Please try again.");
-        console.error('AudioContext state:', ctx?.state);
-        return;
-      }
-    }
-    
-    // Ensure gain nodes exist and have correct values before playing
-    makeGraphIfNeeded();
-    const currentMix = parseInt(mix.value, 10);
-    setMix(currentMix);
-    
-    console.log('Starting playback:', {
-      ctxState: ctx.state,
-      gainA: gainA?.gain.value,
-      gainB: gainB?.gain.value,
-      mix: currentMix
-    });
-    
     startBothAt(startOffset);
     setStatus("Playing.");
   };
@@ -381,8 +287,7 @@ function initABTest(config = {}) {
 
   // ---------- Audio Loading ----------
   const decodeAudioFile = async (fileOrUrl) => {
-    // Don't create AudioContext here - wait for user interaction (iOS requirement)
-    // AudioContext will be created when needed (on first unlockAudio call)
+    ensureCtx();
     let arrayBuffer;
     
     if (fileOrUrl instanceof File) {
@@ -393,8 +298,6 @@ function initABTest(config = {}) {
       arrayBuffer = await res.arrayBuffer();
     }
     
-    // Create AudioContext only when decoding (after user interaction)
-    ensureCtx();
     return await new Promise((resolve, reject) => {
       ctx.decodeAudioData(arrayBuffer, resolve, reject);
     });
@@ -407,23 +310,11 @@ function initABTest(config = {}) {
     startOffset = 0;
 
     setStatus("Decoding ...");
-    // Ensure AudioContext exists before decoding (will be created if needed)
-    ensureCtx();
     const [da, db] = await Promise.all([
       decodeAudioFile(fileA),
       decodeAudioFile(fileB)
     ]);
     bufA = da; bufB = db;
-    
-    // If AudioContext was created during decoding, try to resume it (iOS)
-    // Note: It may still be suspended until user interaction, but this helps
-    if (ctx && ctx.state === 'suspended') {
-      try {
-        await ctx.resume();
-      } catch (e) {
-        // Ignore - will be resumed on user interaction
-      }
-    }
 
     setStatus("Aligning ...");
     const est = ABTestAlignment.estimateAlignment(bufA, bufB);
@@ -571,21 +462,15 @@ function initABTest(config = {}) {
     await restart();
   };
 
-  mix.addEventListener("input", async () => {
-    // Ensure audio context is created on slider interaction (iOS)
-    await unlockAudio();
+  mix.addEventListener("input", () => {
     setMix(parseInt(mix.value, 10));
   });
 
   // iOS audio unlock: one-time unlock on first user interaction
-  // This is critical for iOS - AudioContext must be created in user interaction event
   let audioUnlocked = false;
   const unlockAudioOnce = async (e) => {
     if (!audioUnlocked) {
-      // Create AudioContext and resume it on first user interaction
       await unlockAudio();
-      // Initialize mix after context is ready
-      setMix(parseInt(mix.value, 10));
       audioUnlocked = true;
       // Remove listeners after first unlock
       document.removeEventListener('touchstart', unlockAudioOnce);
@@ -593,7 +478,7 @@ function initABTest(config = {}) {
       document.removeEventListener('click', unlockAudioOnce);
     }
   };
-  // Add listeners for iOS audio unlock (must be before any other interactions)
+  // Add listeners for iOS audio unlock
   document.addEventListener('touchstart', unlockAudioOnce, { once: true, passive: true });
   document.addEventListener('touchend', unlockAudioOnce, { once: true, passive: true });
   document.addEventListener('click', unlockAudioOnce, { once: true });
@@ -623,8 +508,7 @@ function initABTest(config = {}) {
 
   // ---------- Initialization ----------
   mix.value = "0";
-  // Don't create AudioContext on init for iOS compatibility
-  // It will be created on first user interaction via unlockAudio()
+  makeGraphIfNeeded();
   setMix(0);
   setPlayIcon(false);
 
