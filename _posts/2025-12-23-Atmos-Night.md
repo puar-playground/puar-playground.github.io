@@ -6,7 +6,7 @@ tags: [feature, music]
 ---
 ![demo]({{ '/assets/img/2025-12-23/studio.jpg' | relative_url }})
 
-### Atmos Night
+### Atmos Night 
 This song, [“Atmos Night”](https://suno.com/s/GoYJcm5TnUual65I), was created through a joint effort between myself, GPT, and SUNO, written for personal reflection and as a small birthday project.
 
 The song reflects many late nights similar to those described in the lyrics, though not always focused on music itself. Glowing screens, AI-assisted coding, guitars resting in the room, and getting through the night with a can of Monster. It’s less a narrative than a snapshot: a brief record of learning and quiet focus.
