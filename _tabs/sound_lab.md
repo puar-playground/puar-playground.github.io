@@ -47,7 +47,7 @@ document.addEventListener("DOMContentLoaded", () => {
           left_position_az_el: '(45.0, -20.0)',
           right_position_az_el: '(-45.0, 20.0)'
         }
-      ],
+      ], 
       sphereColor: 0xcccccc,
       track1BulgeColor: 0xff6b9d, // 杰尼蓝
       track2BulgeColor: 0xb9cce2,  // 桃红色
