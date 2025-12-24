@@ -59,10 +59,18 @@ function initABTest(config = {}) {
   const playheadA = $("playheadA");
   const playheadB = $("playheadB");
 
-  const PLAY_ICON = "▶︎";
-  const PAUSE_ICON = "⏸";
   const setStatus = (msg) => { /* Status text removed - no-op */ };
-  const setPlayIcon = (playing) => { btnPlay.textContent = playing ? PAUSE_ICON : PLAY_ICON; };
+  const setPlayIcon = (playing) => {
+    const playIcon = document.getElementById('playIcon');
+    const pauseIcon = document.getElementById('pauseIcon');
+    if (playIcon && pauseIcon) {
+      playIcon.style.display = playing ? 'none' : 'block';
+      pauseIcon.style.display = playing ? 'block' : 'none';
+    } else {
+      // Fallback for old text-based icons
+      btnPlay.textContent = playing ? '⏸' : '▶︎';
+    }
+  };
 
   // ---------- WebAudio State ----------
   let ctx = null;
@@ -87,7 +95,7 @@ function initABTest(config = {}) {
     return ctx;
   };
 
-  // iOS audio unlock: resume context on user interaction
+  // iOS audio unlock: resume context and unlock silent mode
   const unlockAudio = async () => {
     ensureCtx();
     if (ctx.state === 'suspended') {
@@ -96,6 +104,56 @@ function initABTest(config = {}) {
         console.log('Audio context resumed');
       } catch (e) {
         console.warn('Failed to resume audio context:', e);
+      }
+    }
+    
+    // iOS: Unlock silent mode by playing a very short silent audio via HTMLAudioElement
+    // This allows Web Audio API to play even when device is in silent mode
+    const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent) || 
+                  (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
+    
+    if (isIOS) {
+      // Create a global unlock function that only runs once
+      if (!window._abTestAudioUnlocked) {
+        window._abTestAudioUnlocked = false;
+        
+        try {
+          // Create a very short silent audio buffer (1 sample at 44.1kHz = ~0.000023 seconds)
+          const sampleRate = 44100;
+          const length = 1;
+          const audioBuffer = ctx.createBuffer(1, length, sampleRate);
+          
+          // Create a source and play it immediately to unlock audio
+          const unlockSource = ctx.createBufferSource();
+          unlockSource.buffer = audioBuffer;
+          unlockSource.connect(ctx.destination);
+          unlockSource.start(0);
+          unlockSource.stop(0.001); // Stop immediately
+          
+          // Also try HTMLAudioElement method as backup
+          const silentAudio = new Audio();
+          // Use a data URI for a minimal silent audio (1 sample)
+          silentAudio.src = 'data:audio/wav;base64,UklGRigAAABXQVZFZm10IBAAAAABAAEAQB8AAEAfAAABAAgAZGF0YQAAAAA=';
+          silentAudio.volume = 0.0001; // Very quiet but not zero
+          
+          const playPromise = silentAudio.play();
+          if (playPromise !== undefined) {
+            playPromise.then(() => {
+              silentAudio.pause();
+              silentAudio.currentTime = 0;
+              window._abTestAudioUnlocked = true;
+              console.log('iOS audio unlocked (silent mode bypass)');
+            }).catch(() => {
+              // Ignore errors - Web Audio method may have worked
+              window._abTestAudioUnlocked = true;
+            });
+          } else {
+            window._abTestAudioUnlocked = true;
+          }
+        } catch (e) {
+          console.warn('Error unlocking iOS audio:', e);
+          window._abTestAudioUnlocked = true; // Mark as attempted
+        }
       }
     }
   };
