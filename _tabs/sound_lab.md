@@ -32,27 +32,28 @@ button:disabled { opacity: 0.5; cursor: not-allowed; }
     // Check if Three.js and initAmbisonicViewer are loaded
     if (typeof THREE === 'undefined') {
       console.error('AmbisonicViewer: Three.js not loaded');
-      return;
+      return false;
     }
-    if (typeof initAmbisonicViewer === 'undefined') {
+    if (typeof window.initAmbisonicViewer === 'undefined') {
       console.error('AmbisonicViewer: initAmbisonicViewer function not found');
-      return;
+      return false;
     }
     
     const viewer = document.getElementById('ambisonicViewer');
     if (!viewer) {
       console.error('AmbisonicViewer: Container element not found');
-      return;
+      return false;
     }
     
-    initAmbisonicViewer('ambisonicViewer', {
+    try {
+      window.initAmbisonicViewer('ambisonicViewer', {
       // Support up to 2 audio files, each can be split into left/right channels (4 tracks total)
       // Position can be specified as:
       //   - position_az_el: "(-135.0, 10.0)" (azimuth in degrees, elevation in degrees)
       //   - left_position_az_el / right_position_az_el: separate positions for stereo channels
       defaultTracks: [
         {
-          url: "{{ '/assets/audio/atmos_night/vocals.mp3' | relative_url }}",,
+          url: "{{ '/assets/audio/atmos_night/vocals.mp3' | relative_url }}",
           // If stereo split is enabled, use left/right positions:
           left_position_az_el: '(-90.0, 10.0)',   // Left channel position
           right_position_az_el: '(90.0, -10.0)'     // Right channel position
@@ -73,15 +74,27 @@ button:disabled { opacity: 0.5; cursor: not-allowed; }
       gridSegments: 32, // Number of segments for sphere grid (default: 64, higher = finer grid)
       initialAzimuth: 0.0,    
       initialElevation: -30.0,
-    });
+      });
+      return true;
+    } catch (error) {
+      console.error('AmbisonicViewer: Initialization error:', error);
+      return false;
+    }
   }
   
   // Try to initialize when DOM is ready
+  function tryInit() {
+    if (!initViewer()) {
+      // If initialization failed, retry after a short delay
+      setTimeout(tryInit, 100);
+    }
+  }
+  
   if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', initViewer);
+    document.addEventListener('DOMContentLoaded', tryInit);
   } else {
-    // DOM is already ready
-    initViewer();
+    // DOM is already ready, but scripts might still be loading
+    setTimeout(tryInit, 50);
   }
 })();
 </script>
