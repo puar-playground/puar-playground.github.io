@@ -183,6 +183,7 @@ function initABTest(config = {}) {
   const startTicker = () => {
     stopTicker();
     let lastSyncTime = 0;
+    let syncCheckCounter = 0;
     const loop = () => {
       let t = startOffset;
       // Use audio element currentTime instead of AudioContext time
@@ -193,16 +194,26 @@ function initABTest(config = {}) {
         const timeB = audioB.currentTime - (lagSec > 0 ? lagSec : 0);
         t = Math.max(0, Math.min(timeA, timeB));
         
-        // Gentle sync check: only resync if difference is large and enough time has passed
+        // More frequent but gentle sync check
+        syncCheckCounter++;
         const timeDiff = Math.abs(timeA - timeB);
         const now = Date.now();
-        if (timeDiff > 0.1 && (now - lastSyncTime) > 500) { // More than 100ms difference, max once per 500ms
-          lastSyncTime = now;
-          // Resync by adjusting the lagging audio (subtle adjustment)
-          if (timeA < timeB - 0.05) {
-            audioA.currentTime = audioB.currentTime + (lagSec < 0 ? -lagSec : 0);
-          } else if (timeB < timeA - 0.05) {
-            audioB.currentTime = audioA.currentTime + (lagSec > 0 ? lagSec : 0);
+        
+        // Check sync every 10 frames (~166ms at 60fps) or if difference is significant
+        if (syncCheckCounter % 10 === 0 || timeDiff > 0.05) {
+          if (timeDiff > 0.02 && (now - lastSyncTime) > 100) { // More than 20ms difference, max once per 100ms
+            lastSyncTime = now;
+            // Resync by adjusting the lagging audio
+            // Use a smaller adjustment to avoid jumps
+            if (timeA < timeB - 0.01) {
+              const targetTime = audioB.currentTime + (lagSec < 0 ? -lagSec : 0);
+              // Smooth adjustment: move 50% of the difference
+              audioA.currentTime = audioA.currentTime + (targetTime - audioA.currentTime) * 0.5;
+            } else if (timeB < timeA - 0.01) {
+              const targetTime = audioA.currentTime + (lagSec > 0 ? lagSec : 0);
+              // Smooth adjustment: move 50% of the difference
+              audioB.currentTime = audioB.currentTime + (targetTime - audioB.currentTime) * 0.5;
+            }
           }
         }
       }
@@ -333,15 +344,41 @@ function initABTest(config = {}) {
     await new Promise(resolve => setTimeout(resolve, 10));
     
     try {
-      // Start both play() calls as close together as possible
-      const playPromiseA = audioA.play();
-      const playPromiseB = audioB.play();
-      await Promise.all([playPromiseA, playPromiseB]);
+      // Use requestAnimationFrame to ensure both play() calls happen in the same frame
+      await new Promise((resolve) => {
+        requestAnimationFrame(() => {
+          requestAnimationFrame(() => {
+            // Start both play() calls in the same frame for maximum sync
+            const playPromiseA = audioA.play();
+            const playPromiseB = audioB.play();
+            Promise.all([playPromiseA, playPromiseB]).then(() => {
+              resolve();
+            }).catch((e) => {
+              console.error('Play error:', e);
+              resolve();
+            });
+          });
+        });
+      });
       
-      // Verify they're actually playing and in sync
+      // Verify they're actually playing
       if (audioA.paused || audioB.paused) {
         console.warn('Audio elements did not start playing');
         return;
+      }
+      
+      // Immediate sync check and correction after starting
+      await new Promise(resolve => setTimeout(resolve, 50));
+      const timeA = audioA.currentTime - (lagSec < 0 ? -lagSec : 0);
+      const timeB = audioB.currentTime - (lagSec > 0 ? lagSec : 0);
+      const timeDiff = Math.abs(timeA - timeB);
+      if (timeDiff > 0.02) { // More than 20ms difference
+        // Resync immediately
+        if (timeA < timeB) {
+          audioA.currentTime = audioB.currentTime + (lagSec < 0 ? -lagSec : 0);
+        } else {
+          audioB.currentTime = audioA.currentTime + (lagSec > 0 ? lagSec : 0);
+        }
       }
       
       isPlaying = true;
