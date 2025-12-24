@@ -59,18 +59,10 @@ function initABTest(config = {}) {
   const playheadA = $("playheadA");
   const playheadB = $("playheadB");
 
+  const PLAY_ICON = "▶︎";
+  const PAUSE_ICON = "⏸";
   const setStatus = (msg) => { /* Status text removed - no-op */ };
-  const setPlayIcon = (playing) => {
-    const playIcon = document.getElementById('playIcon');
-    const pauseIcon = document.getElementById('pauseIcon');
-    if (playIcon && pauseIcon) {
-      playIcon.style.display = playing ? 'none' : 'block';
-      pauseIcon.style.display = playing ? 'block' : 'none';
-    } else {
-      // Fallback for old text-based icons
-      btnPlay.textContent = playing ? '⏸' : '▶︎';
-    }
-  };
+  const setPlayIcon = (playing) => { btnPlay.textContent = playing ? PAUSE_ICON : PLAY_ICON; };
 
   // ---------- WebAudio State ----------
   let ctx = null;
@@ -78,11 +70,10 @@ function initABTest(config = {}) {
   let bufB = null;
   let gainA = null;
   let gainB = null;
-  let audioA = null; // HTMLAudioElement for track A
-  let audioB = null; // HTMLAudioElement for track B
-  let sourceA = null; // MediaElementSource for track A
-  let sourceB = null; // MediaElementSource for track B
+  let srcA = null;
+  let srcB = null;
   let isPlaying = false;
+  let startCtxTime = 0;
   let startOffset = 0;
   let raf = null;
   let waveformDataA = null;
@@ -96,7 +87,7 @@ function initABTest(config = {}) {
     return ctx;
   };
 
-  // iOS audio unlock: resume context and unlock silent mode
+  // iOS audio unlock: resume context on user interaction
   const unlockAudio = async () => {
     ensureCtx();
     if (ctx.state === 'suspended') {
@@ -105,56 +96,6 @@ function initABTest(config = {}) {
         console.log('Audio context resumed');
       } catch (e) {
         console.warn('Failed to resume audio context:', e);
-      }
-    }
-    
-    // iOS: Unlock silent mode by playing a very short silent audio via HTMLAudioElement
-    // This allows Web Audio API to play even when device is in silent mode
-    const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent) || 
-                  (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
-    
-    if (isIOS) {
-      // Create a global unlock function that only runs once
-      if (!window._abTestAudioUnlocked) {
-        window._abTestAudioUnlocked = false;
-        
-        try {
-          // Create a very short silent audio buffer (1 sample at 44.1kHz = ~0.000023 seconds)
-          const sampleRate = 44100;
-          const length = 1;
-          const audioBuffer = ctx.createBuffer(1, length, sampleRate);
-          
-          // Create a source and play it immediately to unlock audio
-          const unlockSource = ctx.createBufferSource();
-          unlockSource.buffer = audioBuffer;
-          unlockSource.connect(ctx.destination);
-          unlockSource.start(0);
-          unlockSource.stop(0.001); // Stop immediately
-          
-          // Also try HTMLAudioElement method as backup
-          const silentAudio = new Audio();
-          // Use a data URI for a minimal silent audio (1 sample)
-          silentAudio.src = 'data:audio/wav;base64,UklGRigAAABXQVZFZm10IBAAAAABAAEAQB8AAEAfAAABAAgAZGF0YQAAAAA=';
-          silentAudio.volume = 0.0001; // Very quiet but not zero
-          
-          const playPromise = silentAudio.play();
-          if (playPromise !== undefined) {
-            playPromise.then(() => {
-              silentAudio.pause();
-              silentAudio.currentTime = 0;
-              window._abTestAudioUnlocked = true;
-              console.log('iOS audio unlocked (silent mode bypass)');
-            }).catch(() => {
-              // Ignore errors - Web Audio method may have worked
-              window._abTestAudioUnlocked = true;
-            });
-          } else {
-            window._abTestAudioUnlocked = true;
-          }
-        } catch (e) {
-          console.warn('Error unlocking iOS audio:', e);
-          window._abTestAudioUnlocked = true; // Mark as attempted
-        }
       }
     }
   };
@@ -172,51 +113,18 @@ function initABTest(config = {}) {
   };
 
   const teardownSources = () => {
-    // Pause audio elements instead of stopping BufferSource
-    try { if (audioA) audioA.pause(); } catch {}
-    try { if (audioB) audioB.pause(); } catch {}
-    // Note: MediaElementSource persists, we just pause the audio elements
+    try { if (srcA) srcA.stop(); } catch {}
+    try { if (srcB) srcB.stop(); } catch {}
+    srcA = null; srcB = null;
   };
 
   const stopTicker = () => { if (raf) cancelAnimationFrame(raf); raf = null; };
 
   const startTicker = () => {
     stopTicker();
-    let lastSyncTime = 0;
-    let syncCheckCounter = 0;
     const loop = () => {
       let t = startOffset;
-      // Use audio element currentTime instead of AudioContext time
-      if (isPlaying && audioA && audioB && !audioA.paused && !audioB.paused) {
-        // Use the earlier of the two audio times (accounting for lag)
-        // This ensures we track the common playback position
-        const timeA = audioA.currentTime - (lagSec < 0 ? -lagSec : 0);
-        const timeB = audioB.currentTime - (lagSec > 0 ? lagSec : 0);
-        t = Math.max(0, Math.min(timeA, timeB));
-        
-        // More frequent but gentle sync check
-        syncCheckCounter++;
-        const timeDiff = Math.abs(timeA - timeB);
-        const now = Date.now();
-        
-        // Check sync every 10 frames (~166ms at 60fps) or if difference is significant
-        if (syncCheckCounter % 10 === 0 || timeDiff > 0.05) {
-          if (timeDiff > 0.02 && (now - lastSyncTime) > 100) { // More than 20ms difference, max once per 100ms
-            lastSyncTime = now;
-            // Resync by adjusting the lagging audio
-            // Use a smaller adjustment to avoid jumps
-            if (timeA < timeB - 0.01) {
-              const targetTime = audioB.currentTime + (lagSec < 0 ? -lagSec : 0);
-              // Smooth adjustment: move 50% of the difference
-              audioA.currentTime = audioA.currentTime + (targetTime - audioA.currentTime) * 0.5;
-            } else if (timeB < timeA - 0.01) {
-              const targetTime = audioA.currentTime + (lagSec > 0 ? lagSec : 0);
-              // Smooth adjustment: move 50% of the difference
-              audioB.currentTime = audioB.currentTime + (targetTime - audioB.currentTime) * 0.5;
-            }
-          }
-        }
-      }
+      if (ctx && isPlaying) t = (ctx.currentTime - startCtxTime + startOffset);
       
       // Update playhead position on waveforms (both use common duration)
       if (commonDuration > 0) {
@@ -285,14 +193,6 @@ function initABTest(config = {}) {
     const maxSeek = commonDuration > 0 ? commonDuration : Math.min(bufA.duration, bufB.duration);
     startOffset = Math.max(0, Math.min(timeSec, maxSeek));
     
-    // Update audio element positions
-    if (audioA && audioB) {
-      const offA = startOffset + (lagSec < 0 ? -lagSec : 0);
-      const offB = startOffset + (lagSec > 0 ? lagSec : 0);
-      audioA.currentTime = clamp(offA, 0, Math.max(0, bufA.duration - 0.001));
-      audioB.currentTime = clamp(offB, 0, Math.max(0, bufB.duration - 0.001));
-    }
-    
     if (commonDuration > 0) {
       const progress = Math.min(1, startOffset / commonDuration);
       playheadA.style.left = `${progress * 100}%`;
@@ -307,14 +207,16 @@ function initABTest(config = {}) {
     }
   };
 
-  const startBothAt = async (commonOffsetSec) => {
-    if (!audioA || !audioB) {
-      console.error('Audio elements not initialized');
-      return;
-    }
-    
+  const startBothAt = (commonOffsetSec) => {
     teardownSources();
     makeGraphIfNeeded();
+
+    srcA = ctx.createBufferSource();
+    srcB = ctx.createBufferSource();
+    srcA.buffer = bufA;
+    srcB.buffer = bufB;
+    srcA.connect(gainA);
+    srcB.connect(gainB);
 
     const offA = commonOffsetSec + (lagSec < 0 ? -lagSec : 0);
     const offB = commonOffsetSec + (lagSec > 0 ?  lagSec : 0);
@@ -322,122 +224,39 @@ function initABTest(config = {}) {
     const offA2 = clamp(offA, 0, Math.max(0, bufA.duration - 0.001));
     const offB2 = clamp(offB, 0, Math.max(0, bufB.duration - 0.001));
 
+    const START_IN = 0.08;
+    startCtxTime = ctx.currentTime + START_IN;
     startOffset = commonOffsetSec;
-    
-    // Ensure audio elements are ready
-    if (audioA.readyState < 2) {
-      await new Promise((resolve) => {
-        audioA.addEventListener('loadedmetadata', resolve, { once: true });
-      });
-    }
-    if (audioB.readyState < 2) {
-      await new Promise((resolve) => {
-        audioB.addEventListener('loadedmetadata', resolve, { once: true });
-      });
-    }
-    
-    // Set currentTime first, then play simultaneously for better sync
-    audioA.currentTime = offA2;
-    audioB.currentTime = offB2;
-    
-    // Small delay to ensure currentTime is set (especially important for iOS)
-    await new Promise(resolve => setTimeout(resolve, 10));
-    
-    try {
-      // Use requestAnimationFrame to ensure both play() calls happen in the same frame
-      await new Promise((resolve) => {
-        requestAnimationFrame(() => {
-          requestAnimationFrame(() => {
-            // Start both play() calls in the same frame for maximum sync
-            const playPromiseA = audioA.play();
-            const playPromiseB = audioB.play();
-            Promise.all([playPromiseA, playPromiseB]).then(() => {
-              resolve();
-            }).catch((e) => {
-              console.error('Play error:', e);
-              resolve();
-            });
-          });
-        });
-      });
-      
-      // Verify they're actually playing
-      if (audioA.paused || audioB.paused) {
-        console.warn('Audio elements did not start playing');
-        return;
+
+    srcA.start(startCtxTime, offA2);
+    srcB.start(startCtxTime, offB2);
+
+    isPlaying = true;
+    setPlayIcon(true);
+    setMix(parseInt(mix.value, 10));
+    startTicker();
+
+    const durCommon = Math.min(
+      bufA.duration - (lagSec < 0 ? -lagSec : 0),
+      bufB.duration - (lagSec > 0 ?  lagSec : 0)
+    );
+    const endAt = startCtxTime + Math.max(0, durCommon - commonOffsetSec);
+
+    const markEnded = () => {
+      if (ctx.currentTime >= endAt - 0.05) {
+        isPlaying = false;
+        setPlayIcon(false);
+        setStatus("Ended.");
       }
-      
-      // Immediate sync check and correction after starting
-      await new Promise(resolve => setTimeout(resolve, 50));
-      const timeA = audioA.currentTime - (lagSec < 0 ? -lagSec : 0);
-      const timeB = audioB.currentTime - (lagSec > 0 ? lagSec : 0);
-      const timeDiff = Math.abs(timeA - timeB);
-      if (timeDiff > 0.02) { // More than 20ms difference
-        // Resync immediately
-        if (timeA < timeB) {
-          audioA.currentTime = audioB.currentTime + (lagSec < 0 ? -lagSec : 0);
-        } else {
-          audioB.currentTime = audioA.currentTime + (lagSec > 0 ? lagSec : 0);
-        }
-      }
-      
-      isPlaying = true;
-      setPlayIcon(true);
-      setMix(parseInt(mix.value, 10));
-      startTicker();
-      
-      // Set up end detection
-      const durCommon = Math.min(
-        bufA.duration - (lagSec < 0 ? -lagSec : 0),
-        bufB.duration - (lagSec > 0 ? lagSec : 0)
-      );
-      
-      const checkEnded = () => {
-        if (!isPlaying) return;
-        const timeA = audioA.currentTime - (lagSec < 0 ? -lagSec : 0);
-        const timeB = audioB.currentTime - (lagSec > 0 ? lagSec : 0);
-        const currentTime = Math.max(0, Math.min(timeA, timeB));
-        
-        if (currentTime >= durCommon - 0.05 || audioA.ended || audioB.ended) {
-          isPlaying = false;
-          setPlayIcon(false);
-          setStatus("Ended.");
-        } else {
-          setTimeout(checkEnded, 100);
-        }
-      };
-      
-      audioA.addEventListener('ended', () => {
-        if (isPlaying) {
-          isPlaying = false;
-          setPlayIcon(false);
-          setStatus("Ended.");
-        }
-      });
-      audioB.addEventListener('ended', () => {
-        if (isPlaying) {
-          isPlaying = false;
-          setPlayIcon(false);
-          setStatus("Ended.");
-        }
-      });
-      
-    } catch (e) {
-      console.error('Failed to play audio:', e);
-      isPlaying = false;
-      setPlayIcon(false);
-      setStatus("Play error.");
-    }
+    };
+    srcA.onended = markEnded;
+    srcB.onended = markEnded;
   };
 
   const pause = () => {
     if (!isPlaying) return;
-    // Get current time from audio elements
-    if (audioA && audioB) {
-      const timeA = audioA.currentTime - (lagSec < 0 ? -lagSec : 0);
-      const timeB = audioB.currentTime - (lagSec > 0 ? lagSec : 0);
-      startOffset = Math.max(0, Math.min(timeA, timeB));
-    }
+    const cur = (ctx.currentTime - startCtxTime + startOffset);
+    startOffset = Math.max(0, cur);
     teardownSources();
     isPlaying = false;
     setPlayIcon(false);
@@ -447,9 +266,9 @@ function initABTest(config = {}) {
 
   const play = async () => {
     await unlockAudio();
-    if (!bufA || !bufB || !audioA || !audioB) return;
+    if (!bufA || !bufB) return;
     if (isPlaying) return;
-    await startBothAt(startOffset);
+    startBothAt(startOffset);
     setStatus("Playing.");
   };
 
@@ -490,64 +309,12 @@ function initABTest(config = {}) {
     setPlayIcon(false);
     startOffset = 0;
 
-    // Get URLs for audio files
-    let urlA, urlB;
-    if (fileA instanceof File) {
-      urlA = URL.createObjectURL(fileA);
-    } else {
-      urlA = fileA;
-    }
-    if (fileB instanceof File) {
-      urlB = URL.createObjectURL(fileB);
-    } else {
-      urlB = fileB;
-    }
-
     setStatus("Decoding ...");
     const [da, db] = await Promise.all([
       decodeAudioFile(fileA),
       decodeAudioFile(fileB)
     ]);
     bufA = da; bufB = db;
-
-    // Create HTMLAudioElement for iOS silent mode support
-    ensureCtx();
-    makeGraphIfNeeded();
-    
-    // Create or reuse audio elements
-    if (!audioA) {
-      audioA = document.createElement('audio');
-      audioA.style.display = 'none';
-      audioA.preload = 'auto';
-      document.body.appendChild(audioA);
-    }
-    if (!audioB) {
-      audioB = document.createElement('audio');
-      audioB.style.display = 'none';
-      audioB.preload = 'auto';
-      document.body.appendChild(audioB);
-    }
-    
-    audioA.src = urlA;
-    audioB.src = urlB;
-    
-    // Create MediaElementSource if not exists
-    if (!sourceA) {
-      try {
-        sourceA = ctx.createMediaElementSource(audioA);
-        sourceA.connect(gainA);
-      } catch (e) {
-        console.warn('MediaElementSource A may already exist:', e);
-      }
-    }
-    if (!sourceB) {
-      try {
-        sourceB = ctx.createMediaElementSource(audioB);
-        sourceB.connect(gainB);
-      } catch (e) {
-        console.warn('MediaElementSource B may already exist:', e);
-      }
-    }
 
     setStatus("Aligning ...");
     const est = ABTestAlignment.estimateAlignment(bufA, bufB);

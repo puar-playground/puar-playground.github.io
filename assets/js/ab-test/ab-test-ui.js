@@ -61,34 +61,19 @@ const ABTestUI = (function() {
       button { padding: 8px 12px; border-radius: 10px; border: 1px solid rgba(0,0,0,.2); cursor: pointer; }
       button:disabled { opacity: 0.5; cursor: not-allowed; }
       .iconbtn {
-        width: 40px;
-        height: 40px;
-        border-radius: 50%;
-        border: none;
-        background: var(--btn-bg, #4a90e2);
-        color: var(--btn-color, white);
+        width: 44px; height: 44px;
+        border-radius: 12px;
+        border: 1px solid rgba(0,0,0,.2);
+        background: rgba(0,0,0,.04);
         display: inline-flex;
         align-items: center;
         justify-content: center;
+        font-size: 18px;
+        line-height: 1;
         cursor: pointer;
         user-select: none;
-        padding: 0.5em;
-        flex-shrink: 0;
-        transition: background-color 0.2s;
       }
-      .iconbtn:hover:not(:disabled) {
-        background: var(--btn-bg-hover, #357abd);
-      }
-      .iconbtn:disabled { 
-        opacity: 0.5; 
-        cursor: not-allowed; 
-      }
-      .iconbtn svg {
-        width: 20px;
-        height: 20px;
-        fill: currentColor;
-        display: block;
-      }
+      .iconbtn:disabled { opacity: 0.5; cursor: not-allowed; }
       .label { min-width: 50px; display:inline-block; }
       input[type="range"]{ vertical-align: middle; }
       .fileLabel { margin-top: 6px; }
@@ -279,20 +264,8 @@ const ABTestUI = (function() {
         </div>
 
         <div class="horizontal-slider-wrapper">
-          <button id="btnPlay" class="iconbtn" disabled aria-label="Play/Pause" title="Play/Pause">
-            <svg id="playIcon" viewBox="0 0 24 24" style="display: block;">
-              <path d="M8 5v14l11-7z"/>
-            </svg>
-            <svg id="pauseIcon" viewBox="0 0 24 24" style="display: none;">
-              <rect x="6" y="4" width="4" height="16"/>
-              <rect x="14" y="4" width="4" height="16"/>
-            </svg>
-          </button>
-          <button id="btnRestart" class="iconbtn" disabled aria-label="Restart" title="Restart">
-            <svg viewBox="0 0 24 24">
-              <path d="M17.65 6.35C16.2 4.9 14.21 4 12 4c-4.42 0-7.99 3.58-7.99 8s3.57 8 7.99 8c3.73 0 6.84-2.55 7.73-6h-2.08c-.82 2.33-3.04 4-5.65 4-3.31 0-6-2.69-6-6s2.69-6 6-6c1.66 0 3.14.69 4.22 1.78L13 11h7V4l-2.35 2.35z"/>
-            </svg>
-          </button>
+          <button id="btnPlay" class="iconbtn" disabled aria-label="Play/Pause" title="Play/Pause">▶︎</button>
+          <button id="btnRestart" class="iconbtn" disabled aria-label="Restart" title="Restart">↺</button>
           <div class="small mix-label"><b id="mixLabelTop">A 100%</b></div>
           <input id="mix" type="range" min="0" max="100" value="0" />
           <div class="small mix-label"><b id="mixLabelBottom">B 0%</b></div>
