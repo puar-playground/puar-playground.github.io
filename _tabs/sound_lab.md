@@ -24,7 +24,8 @@ button:disabled { opacity: 0.5; cursor: not-allowed; }
 <div id="ambisonicViewer"></div>
 
 <!-- Load Three.js from CDN -->
-<script src="https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.min.js"></script>
+<!-- Using version 0.159.0 which still has UMD build, or use unpkg for 0.160.0 -->
+<script src="https://cdn.jsdelivr.net/npm/three@0.159.0/build/three.min.js"></script>
 <script src="{{ '/assets/js/audio-lab/ambisonic-viewer.js' | relative_url }}"></script>
 <script>
 (function() {
