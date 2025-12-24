@@ -120,10 +120,20 @@ function initABTest(config = {}) {
     if (!gainA || !gainB) {
       gainA = ctx.createGain();
       gainB = ctx.createGain();
-      gainA.gain.value = 0;
-      gainB.gain.value = 0;
+      // Initialize with current mix value instead of 0 (iOS fix)
+      const currentMix = parseInt(mix.value, 10);
+      const bRatio = currentMix / 100;
+      const aRatio = 1 - bRatio;
+      const theta = bRatio * Math.PI * 0.5;
+      gainA.gain.value = Math.cos(theta);
+      gainB.gain.value = Math.sin(theta);
       gainA.connect(ctx.destination);
       gainB.connect(ctx.destination);
+      console.log('Gain nodes created:', {
+        gainA: gainA.gain.value,
+        gainB: gainB.gain.value,
+        ctxState: ctx.state
+      });
     }
   };
 
@@ -235,6 +245,27 @@ function initABTest(config = {}) {
     teardownSources();
     makeGraphIfNeeded();
 
+    // Ensure gain values are set BEFORE connecting sources (iOS requirement)
+    const currentMix = parseInt(mix.value, 10);
+    const bRatio = currentMix / 100;
+    const aRatio = 1 - bRatio;
+    const theta = bRatio * Math.PI * 0.5;
+    const gA = Math.cos(theta);
+    const gB = Math.sin(theta);
+    
+    // Set gain values directly (iOS may not respect scheduled values)
+    gainA.gain.value = gA;
+    gainB.gain.value = gB;
+    
+    console.log('Starting playback:', {
+      ctxState: ctx.state,
+      gainA: gainA.gain.value,
+      gainB: gainB.gain.value,
+      mix: currentMix,
+      aRatio,
+      bRatio
+    });
+
     srcA = ctx.createBufferSource();
     srcB = ctx.createBufferSource();
     srcA.buffer = bufA;
@@ -255,6 +286,7 @@ function initABTest(config = {}) {
     try {
       srcA.start(startCtxTime, offA2);
       srcB.start(startCtxTime, offB2);
+      console.log('Audio sources started successfully');
     } catch (e) {
       console.error('Failed to start audio sources:', e);
       isPlaying = false;
@@ -264,7 +296,11 @@ function initABTest(config = {}) {
 
     isPlaying = true;
     setPlayIcon(true);
-    setMix(parseInt(mix.value, 10));
+    // Update UI labels (gain already set above)
+    const aPct = Math.round(aRatio * 100);
+    const bPct = 100 - aPct;
+    if (mixLabelTop) mixLabelTop.textContent = `A ${aPct}%`;
+    if (mixLabelBottom) mixLabelBottom.textContent = `B ${bPct}%`;
     startTicker();
 
     const durCommon = Math.min(
