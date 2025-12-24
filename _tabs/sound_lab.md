@@ -21,10 +21,10 @@ button:disabled { opacity: 0.5; cursor: not-allowed; }
 <!-- Unified initialization script - loads all dependencies and initializes modules -->
 <!-- Pass audio URLs via data attributes for Jekyll template processing -->
 <script 
-  data-vocals-url="{{ '/assets/audio/atmos_night/vocals.mp3' | relative_url }}"
-  data-instrumental-url="{{ '/assets/audio/atmos_night/instrumental.mp3' | relative_url }}"
-  data-audio-a-url="{{ '/assets/audio/Hello.mp3' | relative_url }}"
-  data-audio-b-url="{{ '/assets/audio/Hello_enhanced.mp3' | relative_url }}"
+  data-vocals-url="https://puar-playground.github.io/assets/audio/atmos_night/vocals.mp3"
+  data-instrumental-url="https://puar-playground.github.io/assets/audio/atmos_night/instrumental.mp3"
+  data-audio-a-url="https://puar-playground.github.io/assets/audio/Hello.mp3"
+  data-audio-b-url="https://puar-playground.github.io/assets/audio/Hello_enhanced.mp3"
   src="{{ '/assets/js/sound-lab-init.js' | relative_url }}"></script>
 
 
