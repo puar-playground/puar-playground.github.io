@@ -30,7 +30,7 @@
       track1BulgeColor = 0xb9cce2, // Color for track 1 bulge (default: 0xff6b9d peach pink, 桃红色)
       track2BulgeColor = 0xff6b9d, // Color for track 2 bulge (default: 0x4a90e2 sea blue, 海蓝色)
       minBulgeAlpha = 0.01, // Minimum alpha for bulge visibility (default: 0.05, lower = more transparent at low heights)
-      gridLineOpacity = 0.3, // Opacity for grid lines (default: 0.3, range: 0.0 to 1.0)
+      gridLineOpacity = 0.9, // Opacity for grid lines (default: 0.3, range: 0.0 to 1.0)
       initialAzimuth = 0.0, // Initial camera azimuth angle in degrees (default: 0.0)
       initialElevation = -30.0 // Initial camera elevation angle in degrees (default: 45.0, 45度向下俯视)
     } = options;
