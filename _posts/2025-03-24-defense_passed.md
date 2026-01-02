@@ -11,8 +11,9 @@ Thrilled to share that I’ve successfully passed my dissertation defense!
 
 ## Update on 07/02/2025
 I have got my official diploma for 🎓 PhD!!! 
->Here is the official certified PDF: [<i class="fas fa-award"></i>](https://puar-playground.github.io/download/CeD.25HM-0PED-JAN9.pdf) 
+>Here is the official certified PDF: [<i class="fas fa-award"></i>]({{ 
+'/download/CeD.25HM-0PED-JAN9.pdf' | relative_url }}) 
 
 >And perm download [link](https://secure.cecredentialtrust.com/account/mysettings/).
 
-![diploma](https://puar-playground.github.io/assets/img/2025-03-24/diploma.jpg)
+![diploma]({{ '/assets/img/2025-03-24/diploma.jpg' | relative_url }}) 

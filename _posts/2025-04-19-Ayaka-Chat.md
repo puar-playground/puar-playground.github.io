@@ -5,7 +5,7 @@ categories: [News, Features]
 tags: [feature]
 ---
 
-## 🌸 New Feature: [绫华 Assist](https://puar-playground.github.io/ayaka/)
+## 🌸 New Feature: [绫华 Assist]({{ site.url }}/ayaka/)
 我部署了一个模仿游戏《原神》中 神里绫华 人格的聊天机器人。在左侧边栏也可以与绫华聊天。快试试吧。
 
 A chatbot inspired by Kamisato Ayaka’s personality from Genshin Impact is now available below and in the sidebar to the left.
