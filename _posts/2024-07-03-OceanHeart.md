@@ -7,7 +7,7 @@ tags: [plot]
 Here is a customized color map for python plot, I name it "OceanHeart" 🌊💗.<br />
 The color map is inspried by the animation of a Squirtle holding hearts.
 <br /> 
-<img src="{{ site.url }}/assets/img/2024-07-03/Squirtle.gif" class="looping-gif" alt="Squirtle" width="250"/>
+<img src="{{ '/assets/img/2024-07-03/Squirtle.gif' | relative_url }}" class="looping-gif" alt="Squirtle" width="250"/>
 
 Define the color map
 ```
@@ -28,7 +28,7 @@ custom_cmap = LinearSegmentedColormap.from_list('OceanHeart', colors, N=n_bins)
 plt.register_cmap(name='OceanHeart', cmap=custom_cmap)
 ```
 And visualize it:
-![Squirtle]({{ site.url }}/assets/img/2024-07-03/OceanHeart_demo.png)
+![Squirtle]({{ '/assets/img/2024-07-03/OceanHeart_demo.png' | relative_url }})
 
 The code creating the above plot: 
 ```

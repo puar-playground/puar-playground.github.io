@@ -10,8 +10,8 @@ This is a piece from my friend refar. I love it so much that I made a guitar tab
     <figcaption>Listen to the MIDI demo:</figcaption>
     <audio
         controls
-        src="https://puar-playground.github.io/assets/audio/mixdown_B_minor.mp3">
-            <a href="https://puar-playground.github.io/assets/audio/mixdown_B_minor.mp3">
+        src="{{ '/assets/audio/mixdown_B_minor.mp3' | relative_url }}">
+            <a href="{{ '/assets/audio/mixdown_B_minor.mp3' | relative_url }}">
                 audio
             </a>
     </audio>
@@ -21,7 +21,7 @@ This is a piece from my friend refar. I love it so much that I made a guitar tab
 ## The Guitar tab:
 
 <iframe
-  src="https://puar-playground.github.io/assets/music_sheet/mixdown_B_minor.pdf"
+  src="{{ '/assets/music_sheet/mixdown_B_minor.pdf' | relative_url }}"
   width="100%"
   height="800px"
   style="border:none;">

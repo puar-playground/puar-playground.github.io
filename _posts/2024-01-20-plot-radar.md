@@ -7,10 +7,10 @@ tags: [plot]
 Here is a radar plot function. The python script is available here: [radar plot](https://github.com/puar-playground/puar-playground.github.io/blob/main/download/radar_plot.py).<br />
 
 A demo looks like this:
-![demo plot1]({{ site.url }}/assets/img/2024-01-20/bright_radar.png)
+![demo plot1]({{ '/assets/img/2024-01-20/bright_radar.png' | relative_url }}) 
 
 And it could be in dark mode:
-![demo plot1]({{ site.url }}/assets/img/2024-01-20/dark_radar.png)
+![demo plot1]({{ '/assets/img/2024-01-20/dark_radar.png' | relative_url }})
 
 
 check for all the available themes:

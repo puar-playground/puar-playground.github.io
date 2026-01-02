@@ -12,7 +12,7 @@ I recorded this arrangement at: [here](https://www.youtube.com/watch?v=vLg1a1LJW
 
 
 <iframe
-  src="https://puar-playground.github.io/assets/music_sheet/cat_in_sunshine.pdf"
+  src="{{ '/assets/music_sheet/cat_in_sunshine.pdf' | relative_url }}"
   width="100%"
   height="800px"
   style="border:none;">
