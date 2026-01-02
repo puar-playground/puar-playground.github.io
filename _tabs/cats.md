@@ -23,7 +23,7 @@ I adopted her from [Philly PAWS](https://phillypaws.org) on July 22, 2017, when 
 
 Moonshine is a female Russian Blue cat with purebred lineage, known for her elegant posture, green eyes, and silver-blue coat. Her name is a deliberate double entendre—evoking both the quiet beauty of moonlight and the rebellious charm of [moonshine](https://en.wikipedia.org/wiki/Moonshine), a term for high-proof liquor historically distilled in secrecy. In Chinese, she’s called 酒月, blending the poetic stillness of the moon with the warmth and boldness of drink. And Moonshine has her instagram account: [@moonshine.0324](https://www.instagram.com/moonshine.0324). I registered her with [TICA](https://tica.org) to formally record her name and our relationship [<i class="fas fa-award"></i>]({{ '/download/Moonshine.pdf' | relative_url }}).
 
-![puar2]({{ '/assets/img/cats/moonshine.jpg | relative_url }})
+![puar2]({{ '/assets/img/cats/moonshine.jpg' | relative_url }})
 
 
 I met Moonshine shortly after completing my PhD and relocating to Atlanta. 
