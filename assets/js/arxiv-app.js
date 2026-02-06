@@ -353,6 +353,39 @@ function renderChips(){
 }
 function filteredClient(){
   let arr = ALL.slice();
+  
+  // ✅ 类别过滤（与后端逻辑一致：primary 以 cat 开头）
+  if (cat) {
+    const filterCat = cat.trim();
+    arr = arr.filter(p => {
+      const primary = (p.primary || '').trim();
+      return primary && primary.startsWith(filterCat);
+    });
+  }
+  
+  // ✅ 关键词过滤（kw：仅在标题中搜索）
+  if (kw && kw.trim()) {
+    const kwLower = kw.trim().toLowerCase();
+    arr = arr.filter(p => {
+      const title = (p.title || '').toLowerCase();
+      return title.includes(kwLower);
+    });
+  }
+  
+  // ✅ 查询过滤（q：在标题/摘要/作者中搜索）
+  if (query && query.trim()) {
+    const qLower = query.trim().toLowerCase();
+    arr = arr.filter(p => {
+      const title = (p.title || '').toLowerCase();
+      const abstract = (p.abstract || p.summary || '').toLowerCase();
+      const authors = Array.isArray(p.authors) 
+        ? p.authors.join(', ').toLowerCase() 
+        : (p.authors || '').toLowerCase();
+      const text = `${title} ${abstract} ${authors}`;
+      return text.includes(qLower);
+    });
+  }
+  
   // 排序
   arr.sort((a,b) => {
     const ad=a.date||'', bd=b.date||'';
