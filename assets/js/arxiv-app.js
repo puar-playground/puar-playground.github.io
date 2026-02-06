@@ -275,7 +275,7 @@ async function loadServer(opts = {}){
 
 async function loadHistoryList() {
   try {
-    // ✅ 在追加之前清空 “Today” 以外的所有选项 (解决重复)
+    // ✅ 在追加之前清空 "Today" 以外的所有选项 (解决重复)
     while (dateSel.options.length > 1) dateSel.remove(1);
 
     const seen = new Set();   // ✅ Set 去重
@@ -290,24 +290,30 @@ async function loadHistoryList() {
       dateSel.appendChild(opt);
     };
 
-    // 先尝试本地 history.json
-    try {
-      const r = await fetch(`${BASE}/assets/js/data/arxiv-history.json`, { cache:'no-store' });
-      if (r.ok) {
-        const files = await r.json();
-        if (Array.isArray(files)) files.forEach(pushOpt);
-      }
-    } catch {}
-
-    // 再去 API 取（Railway），补全本地缺的
+    // ✅ 优先使用 API（Railway），如果 API 成功则只使用 API 数据
+    let apiSuccess = false;
     try {
       const r2 = await fetch(`${API_BASE}/history`, { cache:'no-store', mode:'cors' });
       if (r2.ok) {
         const files2 = await r2.json();
-        if (Array.isArray(files2)) files2.forEach(pushOpt);
+        if (Array.isArray(files2)) {
+          files2.forEach(pushOpt);
+          apiSuccess = true; // API 成功，不再使用静态文件
+        }
       }
     } catch(e) {
       console.warn("history list unavailable", e);
+    }
+
+    // 只有在 API 失败时才使用本地静态 history.json 作为后备
+    if (!apiSuccess) {
+      try {
+        const r = await fetch(`${BASE}/assets/js/data/arxiv-history.json`, { cache:'no-store' });
+        if (r.ok) {
+          const files = await r.json();
+          if (Array.isArray(files)) files.forEach(pushOpt);
+        }
+      } catch {}
     }
 
     // ✅ Sort options by date descending (newest on top)
