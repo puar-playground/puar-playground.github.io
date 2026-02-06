@@ -182,6 +182,11 @@ const FORCE_LOCAL = new URLSearchParams(location.search).has('force_local');
 const LOCAL_LATEST = `${BASE}/assets/js/data/arxiv-latest.json`;
 
 async function fetchWithFallback(url){
+  // Check if URL has filters (query parameters other than _t)
+  const hasFilters = url.includes('?') && url.split('?')[1].split('&').some(param => 
+    !param.startsWith('_t=') && param.split('=')[0] !== '_t'
+  );
+  
   // —— API 优先（除非强制本地）
   if (!FORCE_LOCAL) {
     try{
@@ -197,20 +202,24 @@ async function fetchWithFallback(url){
     }
   }
 
-  // —— 本地兜底（仅在首页/无过滤时才有意义）
-  try{
-    const localUrl = LOCAL_LATEST + `?_t=${Date.now()}`;
-    const r = await fetch(localUrl, { cache:'no-store' });
-    if (r.ok){
-      const data = await r.json();
-      if (Array.isArray(data) && data.length){
-        console.log('Loaded from local latest.json');
-        return data;
+  // —— 本地兜底（仅在无过滤时才有意义，有过滤时必须用 API）
+  if (!hasFilters) {
+    try{
+      const localUrl = LOCAL_LATEST + `?_t=${Date.now()}`;
+      const r = await fetch(localUrl, { cache:'no-store' });
+      if (r.ok){
+        const data = await r.json();
+        if (Array.isArray(data) && data.length){
+          console.log('Loaded from local latest.json');
+          return data;
+        }
       }
-    }
-  }catch(e){ console.log('Local latest.json not available'); }
+    }catch(e){ console.log('Local latest.json not available'); }
+  } else {
+    console.warn('Filters active, skipping local fallback - must use API');
+  }
 
-  // —— 最后兜底：CORS 代理
+  // —— 最后兜底：CORS 代理（即使有过滤也尝试，因为代理会转发完整 URL）
   try{
     const proxy = `https://api.allorigins.win/get?url=${encodeURIComponent(url)}`;
     const r = await fetch(proxy, { cache:'no-store', mode:'cors' });
@@ -297,9 +306,15 @@ async function loadHistoryList() {
       if (r2.ok) {
         const files2 = await r2.json();
         if (Array.isArray(files2)) {
+          console.log(`[loadHistoryList] API returned ${files2.length} history files`);
           files2.forEach(pushOpt);
           apiSuccess = true; // API 成功，不再使用静态文件
+          console.log(`[loadHistoryList] Added ${dateSel.options.length - 1} dates to dropdown`);
+        } else {
+          console.warn("[loadHistoryList] API response is not an array:", files2);
         }
+      } else {
+        console.warn(`[loadHistoryList] API returned status ${r2.status}`);
       }
     } catch(e) {
       console.warn("history list unavailable", e);
