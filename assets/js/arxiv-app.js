@@ -256,11 +256,19 @@ function buildDataURL(overrideDay = null){
 function refreshDownloadLink(){
   let url = `${API_BASE}/history.zip`;
   const qs = new URLSearchParams();
-  if (day){ qs.set('start', day); qs.set('end', day); }
+  // Only restrict date range if explicitly needed (for now, download all files)
+  // if (day){ qs.set('start', day); qs.set('end', day); }
+  
+  // Only apply filters if they're actually set (don't filter if empty)
   if (query.trim()) qs.set('q', query.trim());
   if (kw.trim()) qs.set('kw', kw.trim());
   if (cat) qs.set('cat', cat);
-  qs.set('filter','1');
+  
+  // Only set filter=1 if there are actual filters to apply
+  if (query.trim() || kw.trim() || cat) {
+    qs.set('filter','1');
+  }
+  
   dl.href = (qs.toString() ? `${url}?${qs}` : url);
 }
 async function loadServer(opts = {}){
