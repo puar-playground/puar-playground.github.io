@@ -62,7 +62,9 @@ async function typesetMath(scope){
 /* ---------------- Config ---------------- */
 const API_BASE = 'https://arxiv-backend-production.up.railway.app/arxiv';
 const CATS = ['cs.CL','cs.LG','cs.AI','cs.SD','eess.AS','cs.CV','cs.MM','cs.IR','cs.NE','stat.ML'];
-const BASE = document.querySelector('meta[name="baseurl"]')?.content || '';
+// Get baseurl from meta tag, ensuring it starts with / if not empty
+const baseMeta = document.querySelector('meta[name="baseurl"]')?.content || '';
+const BASE = baseMeta && !baseMeta.startsWith('/') ? `/${baseMeta}` : baseMeta;
 
 /* ---------------- State & DOM ---------------- */
 let ALL = [];
@@ -179,7 +181,8 @@ const FORCE_LOCAL = new URLSearchParams(location.search).has('force_local');
 
 // 建议把本地路径改成 Jekyll 相对路径（放在 MD 里会被编译）：
 // const LOCAL_LATEST = "{{ '/assets/js/data/arxiv-latest.json' | relative_url }}";
-const LOCAL_LATEST = `${BASE}/assets/js/data/arxiv-latest.json`;
+// Ensure path starts with / for absolute paths
+const LOCAL_LATEST = BASE ? `${BASE}/assets/js/data/arxiv-latest.json` : '/assets/js/data/arxiv-latest.json';
 
 async function fetchWithFallback(url){
   // Check if this is a history date request (not latest.json)
@@ -363,7 +366,8 @@ async function loadHistoryList() {
     // 只有在 API 失败时才使用本地静态 history.json 作为后备
     if (!apiSuccess) {
       try {
-        const r = await fetch(`${BASE}/assets/js/data/arxiv-history.json`, { cache:'no-store' });
+        const historyPath = BASE ? `${BASE}/assets/js/data/arxiv-history.json` : '/assets/js/data/arxiv-history.json';
+        const r = await fetch(historyPath, { cache:'no-store' });
         if (r.ok) {
           const files = await r.json();
           if (Array.isArray(files)) files.forEach(pushOpt);
