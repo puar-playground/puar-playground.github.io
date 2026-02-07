@@ -238,14 +238,18 @@ async function fetchWithFallback(url){
 
 
 function buildDataURL(){
-  const base = day ? `${API_BASE}/history/${day}.json` : `${API_BASE}/latest.json`;
+  // Normalize day: empty string or null means "Today" (use latest.json)
+  const selectedDay = (day && day.trim()) ? day.trim() : '';
+  const base = selectedDay ? `${API_BASE}/history/${selectedDay}.json` : `${API_BASE}/latest.json`;
   const qs = new URLSearchParams();
   if (query.trim()) qs.set('q', query.trim());
   if (kw.trim()) qs.set('kw', kw.trim());
   if (cat) qs.set('cat', cat);
   // Don't limit results - fetch all and paginate client-side
   const s = qs.toString();
-  return s ? `${base}?${s}` : base;
+  const url = s ? `${base}?${s}` : base;
+  console.log(`[buildDataURL] day="${selectedDay}", URL="${url}"`);
+  return url;
 }
 function refreshDownloadLink(){
   let url = `${API_BASE}/history.zip`;
@@ -262,10 +266,13 @@ async function loadServer(opts = {}){
   if (!keepExisting) skeleton();
   try{
     const url = buildDataURL();
+    console.log(`[loadServer] Loading from URL: ${url}, day="${day}"`);
     let data = await fetchWithFallback(url);
     if (!Array.isArray(data)) throw new Error('Response is not an array');
+    console.log(`[loadServer] Loaded ${data.length} papers for day="${day}"`);
     // ✅ 去重并保留最新版本
     ALL = dedupeKeepLatest(data);
+    console.log(`[loadServer] After deduplication: ${ALL.length} papers`);
     render(!keepExisting);
   }catch(e){
     console.error('Failed to load data:', e);
@@ -291,8 +298,20 @@ async function loadHistoryList() {
     const seen = new Set();   // ✅ Set 去重
 
     const pushOpt = (fn) => {
+      if (!fn || typeof fn !== 'string') {
+        console.warn('[loadHistoryList] Invalid filename:', fn);
+        return;
+      }
       const d = fn.replace(/\.json$/,'');
-      if (!d || seen.has(d)) return;
+      if (!d || seen.has(d)) {
+        if (seen.has(d)) console.log(`[loadHistoryList] Skipping duplicate: ${d}`);
+        return;
+      }
+      // Validate date format (YYYY-MM-DD)
+      if (!/^\d{4}-\d{2}-\d{2}$/.test(d)) {
+        console.warn(`[loadHistoryList] Invalid date format, skipping: ${d}`);
+        return;
+      }
       seen.add(d);
       const opt = document.createElement('option');
       opt.value = d;
@@ -303,22 +322,29 @@ async function loadHistoryList() {
     // ✅ 优先使用 API（Railway），如果 API 成功则只使用 API 数据
     let apiSuccess = false;
     try {
-      const r2 = await fetch(`${API_BASE}/history`, { cache:'no-store', mode:'cors' });
+      const apiUrl = `${API_BASE}/history?_t=${Date.now()}`; // Force no cache
+      console.log(`[loadHistoryList] Fetching from: ${apiUrl}`);
+      const r2 = await fetch(apiUrl, { cache:'no-store', mode:'cors' });
       if (r2.ok) {
         const files2 = await r2.json();
+        console.log(`[loadHistoryList] API response:`, files2);
         if (Array.isArray(files2)) {
           console.log(`[loadHistoryList] API returned ${files2.length} history files`);
+          const beforeCount = dateSel.options.length - 1;
           files2.forEach(pushOpt);
+          const afterCount = dateSel.options.length - 1;
           apiSuccess = true; // API 成功，不再使用静态文件
-          console.log(`[loadHistoryList] Added ${dateSel.options.length - 1} dates to dropdown`);
+          console.log(`[loadHistoryList] Added ${afterCount - beforeCount} new dates (total: ${afterCount})`);
         } else {
           console.warn("[loadHistoryList] API response is not an array:", files2);
         }
       } else {
-        console.warn(`[loadHistoryList] API returned status ${r2.status}`);
+        const errorText = await r2.text().catch(() => '');
+        console.warn(`[loadHistoryList] API returned status ${r2.status}:`, errorText);
       }
     } catch(e) {
       console.warn("history list unavailable", e);
+      console.error("Full error:", e);
     }
 
     // 只有在 API 失败时才使用本地静态 history.json 作为后备
@@ -533,7 +559,11 @@ function render(resetLayout=false){
   typesetMath(app());
 }
 function reset(){ page = 0; grid.innerHTML=''; render(true); refreshDownloadLink(); }
-function resetAndLoad(){ page = 0; loadServer(); }
+function resetAndLoad(){ 
+  page = 0; 
+  grid.innerHTML = ''; // Clear existing content
+  loadServer(); 
+}
 
 /* ---------------- Boot ---------------- */
 async function boot(){
@@ -554,7 +584,16 @@ async function boot(){
   btnList.onclick = () => { view='list'; btnList.classList.remove('ax-ghost'); btnCard.classList.add('ax-ghost'); reset(); };
   favBtn.onclick  = () => { favOnly=!favOnly; favBtn.textContent = favOnly ? '⭐ Favorites: On' : '⭐ Favorites: Off'; reset(); };
   moreBtn.onclick = () => { page++; loadServer({ keepExisting: true }); };
-  dateSel.onchange= e => { day = e.target.value; resetAndLoad(); };
+  dateSel.onchange= e => { 
+    const selectedValue = e.target.value;
+    day = selectedValue ? selectedValue.trim() : '';
+    console.log(`[dateSel] Changed to: "${day}" (raw value: "${selectedValue}")`);
+    // Force clear and reload
+    page = 0;
+    grid.innerHTML = '';
+    ALL = []; // Clear existing data
+    loadServer();
+  };
   
   // Refresh date list button
   if (refreshDatesBtn) {
