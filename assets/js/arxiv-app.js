@@ -183,6 +183,9 @@ const FORCE_LOCAL = new URLSearchParams(location.search).has('force_local');
 const LOCAL_LATEST = `${BASE}/assets/js/data/arxiv-latest.json`;
 
 async function fetchWithFallback(url){
+  // Check if this is a history date request (not latest.json)
+  const isHistoryDate = url.includes('/history/') && !url.includes('/latest.json');
+  
   // Check if URL has filters (query parameters other than _t)
   const hasFilters = url.includes('?') && url.split('?')[1].split('&').some(param => 
     !param.startsWith('_t=') && param.split('=')[0] !== '_t'
@@ -191,65 +194,64 @@ async function fetchWithFallback(url){
   // —— API 优先（除非强制本地）
   if (!FORCE_LOCAL) {
     try{
-      const apiUrl = url + (url.includes('?') ? '&' : '?') + `_t=${Date.now()}`; // 防缓存
+      const apiUrl = url + (url.includes('?') ? '&' : '?') + `_t=${Date.now()}`;
       const r = await fetch(apiUrl, { cache:'no-store', mode:'cors' });
-      if (!r.ok) throw new Error('HTTP ' + r.status);
-      const data = await r.json();
-      console.log('Loaded from API');
-      return data;
+      if (!r.ok) {
+        // If it's a specific history date request and returns 404, don't fallback
+        if (isHistoryDate && r.status === 404) {
+          throw new Error('Date not found');
+        }
+        throw new Error('HTTP ' + r.status);
+      }
+      return await r.json();
     }catch(err){
+      // If it's a history date request, don't fallback to latest.json
+      if (isHistoryDate) throw err;
       console.warn('API failed, will try local or proxy:', err.message);
-      // 不中断，继续尝试本地/代理
     }
   }
 
-  // —— 本地兜底（仅在无过滤时才有意义，有过滤时必须用 API）
-  if (!hasFilters) {
+  // —— 本地兜底（仅在无过滤且非历史日期时才有意义）
+  if (!hasFilters && !isHistoryDate) {
     try{
       const localUrl = LOCAL_LATEST + `?_t=${Date.now()}`;
       const r = await fetch(localUrl, { cache:'no-store' });
       if (r.ok){
         const data = await r.json();
-        if (Array.isArray(data) && data.length){
-          console.log('Loaded from local latest.json');
-          return data;
-        }
+        if (Array.isArray(data) && data.length) return data;
       }
-    }catch(e){ console.log('Local latest.json not available'); }
-  } else {
-    console.warn('Filters active, skipping local fallback - must use API');
+    }catch(e){}
   }
 
-  // —— 最后兜底：CORS 代理（即使有过滤也尝试，因为代理会转发完整 URL）
-  try{
-    const proxy = `https://api.allorigins.win/get?url=${encodeURIComponent(url)}`;
-    const r = await fetch(proxy, { cache:'no-store', mode:'cors' });
-    if (!r.ok) throw new Error('HTTP ' + r.status);
-    const o = await r.json();
-    const parsed = typeof o.contents === 'string' ? JSON.parse(o.contents) : o.contents;
-    console.log('Loaded via CORS proxy');
-    return parsed;
-  }catch(e2){
-    console.warn('CORS proxy failed:', e2);
-    throw e2; // 全部失败才抛
+  // —— 最后兜底：CORS 代理（但历史日期请求失败时不使用）
+  if (!isHistoryDate) {
+    try{
+      const proxy = `https://api.allorigins.win/get?url=${encodeURIComponent(url)}`;
+      const r = await fetch(proxy, { cache:'no-store', mode:'cors' });
+      if (!r.ok) throw new Error('HTTP ' + r.status);
+      const o = await r.json();
+      const parsed = typeof o.contents === 'string' ? JSON.parse(o.contents) : o.contents;
+      return parsed;
+    }catch(e2){
+      console.warn('CORS proxy failed:', e2);
+      throw e2;
+    }
   }
+  
+  throw new Error('Date not found');
 }
 
 
 
-function buildDataURL(){
-  // Normalize day: empty string or null means "Today" (use latest.json)
-  const selectedDay = (day && day.trim()) ? day.trim() : '';
+function buildDataURL(overrideDay = null){
+  const selectedDay = overrideDay !== null ? (overrideDay.trim() || '') : ((day && day.trim()) ? day.trim() : '');
   const base = selectedDay ? `${API_BASE}/history/${selectedDay}.json` : `${API_BASE}/latest.json`;
   const qs = new URLSearchParams();
   if (query.trim()) qs.set('q', query.trim());
   if (kw.trim()) qs.set('kw', kw.trim());
   if (cat) qs.set('cat', cat);
-  // Don't limit results - fetch all and paginate client-side
   const s = qs.toString();
-  const url = s ? `${base}?${s}` : base;
-  console.log(`[buildDataURL] day="${selectedDay}", URL="${url}"`);
-  return url;
+  return s ? `${base}?${s}` : base;
 }
 function refreshDownloadLink(){
   let url = `${API_BASE}/history.zip`;
@@ -263,18 +265,34 @@ function refreshDownloadLink(){
 }
 async function loadServer(opts = {}){
   const keepExisting = !!opts.keepExisting;
+  const overrideDay = opts.day !== undefined ? opts.day : null;
   if (!keepExisting) skeleton();
   try{
-    const url = buildDataURL();
-    console.log(`[loadServer] Loading from URL: ${url}, day="${day}"`);
+    const url = buildDataURL(overrideDay);
     let data = await fetchWithFallback(url);
     if (!Array.isArray(data)) throw new Error('Response is not an array');
-    console.log(`[loadServer] Loaded ${data.length} papers for day="${day}"`);
-    // ✅ 去重并保留最新版本
     ALL = dedupeKeepLatest(data);
-    console.log(`[loadServer] After deduplication: ${ALL.length} papers`);
     render(!keepExisting);
   }catch(e){
+    // If a specific date was requested and it failed, try latest.json if it might be today
+    const selectedDay = overrideDay !== null ? overrideDay : day;
+    if (selectedDay && e.message && e.message.includes('not found')) {
+      const today = new Date().toISOString().split('T')[0];
+      if (selectedDay === today) {
+        // Today's date not found, use latest.json instead
+        try {
+          const latestUrl = buildDataURL('');
+          const data = await fetchWithFallback(latestUrl);
+          if (Array.isArray(data)) {
+            ALL = dedupeKeepLatest(data);
+            render(!keepExisting);
+            return;
+          }
+        } catch(e2) {
+          // Fall through to error display
+        }
+      }
+    }
     console.error('Failed to load data:', e);
     if (keepExisting) {
       toast('Failed to load more items');
@@ -298,20 +316,8 @@ async function loadHistoryList() {
     const seen = new Set();   // ✅ Set 去重
 
     const pushOpt = (fn) => {
-      if (!fn || typeof fn !== 'string') {
-        console.warn('[loadHistoryList] Invalid filename:', fn);
-        return;
-      }
       const d = fn.replace(/\.json$/,'');
-      if (!d || seen.has(d)) {
-        if (seen.has(d)) console.log(`[loadHistoryList] Skipping duplicate: ${d}`);
-        return;
-      }
-      // Validate date format (YYYY-MM-DD)
-      if (!/^\d{4}-\d{2}-\d{2}$/.test(d)) {
-        console.warn(`[loadHistoryList] Invalid date format, skipping: ${d}`);
-        return;
-      }
+      if (!d || seen.has(d) || !/^\d{4}-\d{2}-\d{2}$/.test(d)) return;
       seen.add(d);
       const opt = document.createElement('option');
       opt.value = d;
@@ -322,29 +328,16 @@ async function loadHistoryList() {
     // ✅ 优先使用 API（Railway），如果 API 成功则只使用 API 数据
     let apiSuccess = false;
     try {
-      const apiUrl = `${API_BASE}/history?_t=${Date.now()}`; // Force no cache
-      console.log(`[loadHistoryList] Fetching from: ${apiUrl}`);
-      const r2 = await fetch(apiUrl, { cache:'no-store', mode:'cors' });
+      const r2 = await fetch(`${API_BASE}/history?_t=${Date.now()}`, { cache:'no-store', mode:'cors' });
       if (r2.ok) {
         const files2 = await r2.json();
-        console.log(`[loadHistoryList] API response:`, files2);
         if (Array.isArray(files2)) {
-          console.log(`[loadHistoryList] API returned ${files2.length} history files`);
-          const beforeCount = dateSel.options.length - 1;
           files2.forEach(pushOpt);
-          const afterCount = dateSel.options.length - 1;
-          apiSuccess = true; // API 成功，不再使用静态文件
-          console.log(`[loadHistoryList] Added ${afterCount - beforeCount} new dates (total: ${afterCount})`);
-        } else {
-          console.warn("[loadHistoryList] API response is not an array:", files2);
+          apiSuccess = true;
         }
-      } else {
-        const errorText = await r2.text().catch(() => '');
-        console.warn(`[loadHistoryList] API returned status ${r2.status}:`, errorText);
       }
     } catch(e) {
       console.warn("history list unavailable", e);
-      console.error("Full error:", e);
     }
 
     // 只有在 API 失败时才使用本地静态 history.json 作为后备
@@ -585,14 +578,11 @@ async function boot(){
   favBtn.onclick  = () => { favOnly=!favOnly; favBtn.textContent = favOnly ? '⭐ Favorites: On' : '⭐ Favorites: Off'; reset(); };
   moreBtn.onclick = () => { page++; loadServer({ keepExisting: true }); };
   dateSel.onchange= e => { 
-    const selectedValue = e.target.value;
-    day = selectedValue ? selectedValue.trim() : '';
-    console.log(`[dateSel] Changed to: "${day}" (raw value: "${selectedValue}")`);
-    // Force clear and reload
+    day = e.target.value ? e.target.value.trim() : '';
     page = 0;
     grid.innerHTML = '';
-    ALL = []; // Clear existing data
-    loadServer();
+    ALL = [];
+    loadServer({ day });
   };
   
   // Refresh date list button
