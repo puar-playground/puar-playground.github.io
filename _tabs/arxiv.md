@@ -18,6 +18,7 @@ order: 2
 <div class="ax-wrap" id="arxiv-app">
   <div class="ax-toolbar">
     <select id="ax-date" class="ax-select">
+      <option value="">Today</option>
     </select>
 
     <input id="ax-q" class="ax-input" placeholder="Keywords"/>
