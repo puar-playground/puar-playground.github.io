@@ -200,10 +200,17 @@ async function fetchWithFallback(url){
         if (isHistoryDate && r.status === 404) {
           throw new Error('Date not found');
         }
-        throw new Error('HTTP ' + r.status);
+        throw new Error(`HTTP ${r.status}: ${r.statusText}`);
       }
       return await r.json();
     }catch(err){
+      // Improve error message for network failures
+      if (err.message.includes('Failed to fetch') || err.message.includes('NetworkError')) {
+        const betterError = new Error(`Network error: Unable to reach server. The file may not exist or the server may be unavailable.`);
+        if (isHistoryDate) throw betterError;
+        console.warn('API network error, will try local or proxy:', err.message);
+        throw betterError;
+      }
       // If it's a history date request, don't fallback to latest.json
       if (isHistoryDate) throw err;
       console.warn('API failed, will try local or proxy:', err.message);
@@ -302,9 +309,17 @@ async function loadServer(opts = {}){
     } else {
       const selectedDay = overrideDay !== null ? overrideDay : day;
       const dateMsg = selectedDay ? ` for ${selectedDay}` : '';
+      let errorMsg = e.message || String(e);
+      // Provide more helpful error messages
+      if (errorMsg.includes('Network error') || errorMsg.includes('Failed to fetch')) {
+        errorMsg = 'Unable to connect to server. The file may not exist or the server may be unavailable.';
+      } else if (errorMsg.includes('Date not found')) {
+        errorMsg = 'This date does not have any data available.';
+      }
       grid.innerHTML = `<div class="ax-card ax-empty" style="padding:2rem;text-align:center;">
         <p><strong>Failed to load data${dateMsg}.</strong></p>
-        <p style="font-size:.85rem;opacity:.7;margin-top:.5rem;">Error: ${escapeHTML(e.message||String(e))}</p>
+        <p style="font-size:.85rem;opacity:.7;margin-top:.5rem;">${escapeHTML(errorMsg)}</p>
+        ${selectedDay ? `<p style="font-size:.85rem;opacity:.5;margin-top:.5rem;">Try selecting a different date from the dropdown.</p>` : ''}
       </div>`;
     }
   }finally{
