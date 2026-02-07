@@ -18,9 +18,7 @@ order: 2
 <div class="ax-wrap" id="arxiv-app">
   <div class="ax-toolbar">
     <select id="ax-date" class="ax-select">
-      <option value="">Today</option>
     </select>
-    <button id="ax-refresh-dates" class="ax-btn" title="Refresh date list">🔄</button>
 
     <input id="ax-q" class="ax-input" placeholder="Keywords"/>
     <input id="ax-kw" class="ax-input" style="min-width:200px" placeholder="Search title"/>

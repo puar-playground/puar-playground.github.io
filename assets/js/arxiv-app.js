@@ -89,7 +89,6 @@ const btnList = $('#ax-view-list');
 const moreBtn = $('#ax-more');
 const favBtn = $('#ax-fav-only');
 const dateSel = $('#ax-date');
-const refreshDatesBtn = $('#ax-refresh-dates');
 const dl = $('#ax-download');
 
 /* ---------------- Utils ---------------- */
@@ -316,10 +315,10 @@ async function loadServer(opts = {}){
 
 async function loadHistoryList() {
   try {
-    // ✅ 在追加之前清空 "Today" 以外的所有选项 (解决重复)
-    while (dateSel.options.length > 1) dateSel.remove(1);
+    // Clear all options
+    dateSel.innerHTML = '';
 
-    const seen = new Set();   // ✅ Set 去重
+    const seen = new Set();
 
     const pushOpt = (fn) => {
       const d = fn.replace(/\.json$/,'');
@@ -357,15 +356,16 @@ async function loadHistoryList() {
       } catch {}
     }
 
-    // ✅ Sort options by date descending (newest on top)
-    if (dateSel.options.length > 1) {
-      const opts = Array.from(dateSel.options);
-      const today = opts[0]; // Keep "Today" first
-      const dateOpts = opts.slice(1); // All date options
-      dateOpts.sort((a, b) => b.value.localeCompare(a.value)); // Newest first
-      // Clear and re-add sorted
-      while (dateSel.options.length > 1) dateSel.remove(1);
-      dateOpts.forEach(opt => dateSel.appendChild(opt));
+    // Sort options by date descending (newest first)
+    const opts = Array.from(dateSel.options);
+    opts.sort((a, b) => b.value.localeCompare(a.value));
+    dateSel.innerHTML = '';
+    opts.forEach(opt => dateSel.appendChild(opt));
+
+    // Select the newest date by default (first option after sorting)
+    if (dateSel.options.length > 0 && !day) {
+      day = dateSel.options[0].value;
+      dateSel.value = day;
     }
 
   } catch (e) {
@@ -551,7 +551,7 @@ function render(resetLayout=false){
   }
 
   if (countEl) countEl.textContent =
-    `${total} item${total!==1?'s':''}${cat?` · ${cat}`:''}${query?` · "${query}"`:''}${kw?` · kw:${kw}`:''}${favOnly?' · ⭐':''}${day?` · ${day}`:' · Today'}`;
+    `${total} item${total!==1?'s':''}${cat?` · ${cat}`:''}${query?` · "${query}"`:''}${kw?` · kw:${kw}`:''}${favOnly?' · ⭐':''}${day ? ` · ${day}` : ''}`;
 
   if (moreBtn) moreBtn.style.display = (end < total ? 'block' : 'none');
 
@@ -591,22 +591,6 @@ async function boot(){
     loadServer({ day });
   };
   
-  // Refresh date list button
-  if (refreshDatesBtn) {
-    refreshDatesBtn.onclick = async () => {
-      refreshDatesBtn.disabled = true;
-      refreshDatesBtn.textContent = '⏳';
-      await loadHistoryList();
-      refreshDatesBtn.disabled = false;
-      refreshDatesBtn.textContent = '🔄';
-      toast('Date list refreshed');
-    };
-  }
-  
-  // Auto-refresh date list every 60 seconds
-  setInterval(() => {
-    loadHistoryList().catch(e => console.warn('Auto-refresh date list failed:', e));
-  }, 60000);
 
   renderChips();
   await ensureMathJax();
