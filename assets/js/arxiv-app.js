@@ -274,12 +274,10 @@ async function loadServer(opts = {}){
     ALL = dedupeKeepLatest(data);
     render(!keepExisting);
   }catch(e){
-    // If a specific date was requested and it failed, try latest.json if it might be today
     const selectedDay = overrideDay !== null ? overrideDay : day;
     if (selectedDay && e.message && e.message.includes('not found')) {
       const today = new Date().toISOString().split('T')[0];
       if (selectedDay === today) {
-        // Today's date not found, use latest.json instead
         try {
           const latestUrl = buildDataURL('');
           const data = await fetchWithFallback(latestUrl);
@@ -288,17 +286,17 @@ async function loadServer(opts = {}){
             render(!keepExisting);
             return;
           }
-        } catch(e2) {
-          // Fall through to error display
-        }
+        } catch(e2) {}
       }
     }
     console.error('Failed to load data:', e);
     if (keepExisting) {
       toast('Failed to load more items');
     } else {
+      const selectedDay = overrideDay !== null ? overrideDay : day;
+      const dateMsg = selectedDay ? ` for ${selectedDay}` : '';
       grid.innerHTML = `<div class="ax-card ax-empty" style="padding:2rem;text-align:center;">
-        <p><strong>Failed to load arXiv feed.</strong></p>
+        <p><strong>Failed to load data${dateMsg}.</strong></p>
         <p style="font-size:.85rem;opacity:.7;margin-top:.5rem;">Error: ${escapeHTML(e.message||String(e))}</p>
       </div>`;
     }

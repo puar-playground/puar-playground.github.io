@@ -1,1 +1,1712 @@
-[]
+[
+  {
+    "id": "2602.05770",
+    "title": "Zero-Shot TTS With Enhanced Audio Prompts: Bsc Submission For The 2026 Wildspoof Challenge TTS Track",
+    "authors": [
+      "Jose Giraldo",
+      "Alex Peiró-Lilja",
+      "Rodolfo Zevallos",
+      "Cristina España-Bonet"
+    ],
+    "abstract": "We evaluate two non-autoregressive architectures, StyleTTS2 and F5-TTS, to address the spontaneous nature of in-the-wild speech. Our models utilize flexible duration modeling to improve prosodic naturalness. To handle acoustic noise, we implement a multi-stage enhancement pipeline using the Sidon model, which significantly outperforms standard Demucs in signal quality. Experimental results show that finetuning enhanced audios yields superior robustness, achieving up to 4.21 UTMOS and 3.47 DNSMOS. Furthermore, we analyze the impact of reference prompt quality and length on zero-shot synthesis performance, demonstrating the effectiveness of our approach for realistic speech generation.",
+    "primary": "eess.AS",
+    "date": "2026-02-06",
+    "abs": "https://arxiv.org/abs/2602.05770",
+    "pdf": "https://arxiv.org/pdf/2602.05770.pdf"
+  },
+  {
+    "id": "2602.05874",
+    "title": "xList-Hate: A Checklist-Based Framework for Interpretable and Generalizable Hate Speech Detection",
+    "authors": [
+      "Adrián Girón",
+      "Pablo Miralles",
+      "Javier Huertas-Tato",
+      "Sergio D'Antonio",
+      "David Camacho"
+    ],
+    "abstract": "Hate speech detection is commonly framed as a direct binary classification problem despite being a composite concept defined through multiple interacting factors that vary across legal frameworks, platform policies, and annotation guidelines. As a result, supervised models often overfit dataset-specific definitions and exhibit limited robustness under domain shift and annotation noise.\n  We introduce xList-Hate, a diagnostic framework that decomposes hate speech detection into a checklist of explicit, concept-level questions grounded in widely shared normative criteria. Each question is independently answered by a large language model (LLM), producing a binary diagnostic representation that captures hateful content features without directly predicting the final label. These diagnostic signals are then aggregated by a lightweight, fully interpretable decision tree, yielding transparent and auditable predictions.\n  We evaluate it across multiple hate speech benchmarks and model families, comparing it against zero-shot LLM classification and in-domain supervised fine-tuning. While supervised methods typically maximize in-domain performance, we consistently improves cross-dataset robustness and relative performance under domain shift. In addition, qualitative analysis of disagreement cases provides evidence that the framework can be less sensitive to certain forms of annotation inconsistency and contextual ambiguity. Crucially, the approach enables fine-grained interpretability through explicit decision paths and factor-level analysis.\n  Our results suggest that reframing hate speech detection as a diagnostic reasoning task, rather than a monolithic classification problem, provides a robust, explainable, and extensible alternative for content moderation.",
+    "primary": "cs.CL",
+    "date": "2026-02-06",
+    "abs": "https://arxiv.org/abs/2602.05874",
+    "pdf": "https://arxiv.org/pdf/2602.05874.pdf"
+  },
+  {
+    "id": "2602.05496",
+    "title": "XEmoGPT: An Explainable Multimodal Emotion Recognition Framework with Cue-Level Perception and Reasoning",
+    "authors": [
+      "Hanwen Zhang",
+      "Yao Liu",
+      "Peiyuan Jiang",
+      "Lang Junjie",
+      "Xie Jun",
+      "Yihui He",
+      "Yajiao Deng",
+      "Siyu Du",
+      "Qiao Liu"
+    ],
+    "abstract": "Explainable Multimodal Emotion Recognition plays a crucial role in applications such as human-computer interaction and social media analytics. However, current approaches struggle with cue-level perception and reasoning due to two main challenges: 1) general-purpose modality encoders are pretrained to capture global structures and general semantics rather than fine-grained emotional cues, resulting in limited sensitivity to emotional signals; and 2) available datasets usually involve a trade-off between annotation quality and scale, which leads to insufficient supervision for emotional cues and ultimately limits cue-level reasoning. Moreover, existing evaluation metrics are inadequate for assessing cue-level reasoning performance. To address these challenges, we propose eXplainable Emotion GPT (XEmoGPT), a novel EMER framework capable of both perceiving and reasoning over emotional cues. It incorporates two specialized modules: the Video Emotional Cue Bridge (VECB) and the Audio Emotional Cue Bridge (AECB), which enhance the video and audio encoders through carefully designed tasks for fine-grained emotional cue perception. To further support cue-level reasoning, we construct a large-scale dataset, EmoCue, designed to teach XEmoGPT how to reason over multimodal emotional cues. In addition, we introduce EmoCue-360, an automated metric that extracts and matches emotional cues using semantic similarity, and release EmoCue-Eval, a benchmark of 400 expert-annotated samples covering diverse emotional scenarios. Experimental results show that XEmoGPT achieves strong performance in both emotional cue perception and reasoning.",
+    "primary": "cs.MM",
+    "date": "2026-02-06",
+    "abs": "https://arxiv.org/abs/2602.05496",
+    "pdf": "https://arxiv.org/pdf/2602.05496.pdf"
+  },
+  {
+    "id": "2512.10962",
+    "title": "WebSTAR: Scalable Data Synthesis for Computer Use Agents with Step-Level Filtering",
+    "authors": [
+      "Yifei He",
+      "Pranit Chawla",
+      "Yaser Souri",
+      "Subhojit Som",
+      "Xia Song"
+    ],
+    "abstract": "Computer use agents (CUAs) can operate real-world digital interfaces but remain difficult to train due to the high cost of graphical user interface (GUI) interaction and the scarcity of high-quality trajectory data. Existing datasets rely on human demonstrations, limiting scalability. A natural alternative is to synthesize data from strong CUAs, yet their rollouts are highly noisy, with incorrect or suboptimal actions consisting a large proportion of the steps, making naive imitation ineffective. To tackle this challenge, we introduce a scalable data synthesis pipeline that transforms noisy rollouts into reliable supervision without human annotation. The core idea is step-level filtering, which evaluates actions individually to retain only correct steps, complemented by reasoning augmentation for improved planning. Using this pipeline, we construct WebSTAR, a dataset of 13.3K trajectories and 267K graded, reasoning-rich steps synthesized from OpenAI's computer-use-preview model. We train Qwen-2.5-VL-Instruct models (7B and 32B) on WebSTAR. On WebVoyager, our 7B model surpasses SoTA open-source CUA model UI-TARS-1.5-7B by more than 15% with only supervised finetuning. Building on step-level grading, we further create WebSCORE, a dataset of graded step-level actions, and train StepRM, a 7B multimodal process reward model distilled from o4-mini, which matches its grading quality while being far more efficient to deploy at scale. Our results establish step-level filtering as a key principle for scalable CUA training and construct two new datasets (WebSTAR, WebSCORE) and a lightweight process reward model (StepRM) as practical tools to advance robust and efficient CUAs.",
+    "primary": "cs.LG",
+    "date": "2026-02-06",
+    "abs": "https://arxiv.org/abs/2512.10962",
+    "pdf": "https://arxiv.org/pdf/2512.10962.pdf"
+  },
+  {
+    "id": "2602.05829",
+    "title": "Weaver: End-to-End Agentic System Training for Video Interleaved Reasoning",
+    "authors": [
+      "Yudi Shi",
+      "Shangzhe Di",
+      "Qirui Chen",
+      "Qinian Wang",
+      "Jiayin Cai",
+      "Xiaolong Jiang",
+      "Yao Hu",
+      "Weidi Xie"
+    ],
+    "abstract": "Video reasoning constitutes a comprehensive assessment of a model's capabilities, as it demands robust perceptual and interpretive skills, thereby serving as a means to explore the boundaries of model performance. While recent research has leveraged text-centric Chain-of-Thought reasoning to augment these capabilities, such approaches frequently suffer from representational mismatch and restricted by limited perceptual acuity. To address these limitations, we propose Weaver, a novel, end-to-end trainable multimodal reasoning agentic system. Weaver empowers its policy model to dynamically invoke diverse tools throughout the reasoning process, enabling progressive acquisition of crucial visual cues and construction of authentic multimodal reasoning trajectories. Furthermore, we integrate a reinforcement learning algorithm to allow the system to freely explore strategies for employing and combining these tools with trajectory-free data. Extensive experiments demonstrate that our system, Weaver, enhances performance on several complex video reasoning benchmarks, particularly those involving long videos.",
+    "primary": "cs.CV",
+    "date": "2026-02-06",
+    "abs": "https://arxiv.org/abs/2602.05829",
+    "pdf": "https://arxiv.org/pdf/2602.05829.pdf"
+  },
+  {
+    "id": "2602.05443",
+    "title": "Wave-Trainer-Fit: Neural Vocoder with Trainable Prior and Fixed-Point Iteration towards High-Quality Speech Generation from SSL features",
+    "authors": [
+      "Hien Ohnaka",
+      "Yuma Shirahata",
+      "Masaya Kawamura"
+    ],
+    "abstract": "We propose WaveTrainerFit, a neural vocoder that performs high-quality waveform generation from data-driven features such as SSL features. WaveTrainerFit builds upon the WaveFit vocoder, which integrates diffusion model and generative adversarial network. Furthermore, the proposed method incorporates the following key improvements: 1. By introducing trainable priors, the inference process starts from noise close to the target speech instead of Gaussian noise. 2. Reference-aware gain adjustment is performed by imposing constraints on the trainable prior to matching the speech energy. These improvements are expected to reduce the complexity of waveform modeling from data-driven features, enabling high-quality waveform generation with fewer inference steps. Through experiments, we showed that WaveTrainerFit can generate highly natural waveforms with improved speaker similarity from data-driven features, while requiring fewer iterations than WaveFit. Moreover, we showed that the proposed method works robustly with respect to the depth at which SSL features are extracted. Code and pre-trained models are available from https://github.com/line/WaveTrainerFit.",
+    "primary": "eess.AS",
+    "date": "2026-02-06",
+    "abs": "https://arxiv.org/abs/2602.05443",
+    "pdf": "https://arxiv.org/pdf/2602.05443.pdf"
+  },
+  {
+    "id": "2602.05382",
+    "title": "VRIQ: Benchmarking and Analyzing Visual-Reasoning IQ of VLMs",
+    "authors": [
+      "Tina Khezresmaeilzadeh",
+      "Jike Zhong",
+      "Konstantinos Psounis"
+    ],
+    "abstract": "Recent progress in Vision Language Models (VLMs) has raised the question of whether they can reliably perform nonverbal reasoning. To this end, we introduce VRIQ (Visual Reasoning IQ), a novel benchmark designed to assess and analyze the visual reasoning ability of VLMs. We evaluate models on two sets of tasks: abstract puzzle-style and natural-image reasoning tasks. We find that on abstract puzzles, performance remains near random with an average accuracy of around 28%, while natural tasks yield better but still weak results with 45% accuracy. We also find that tool-augmented reasoning demonstrates only modest improvements. To uncover the source of this weakness, we introduce diagnostic probes targeting perception and reasoning. Our analysis demonstrates that around 56% of failures arise from perception alone, 43% from both perception and reasoning, and only a mere 1% from reasoning alone. This motivates us to design fine-grained diagnostic probe questions targeting specific perception categories (e.g., shape, count, position, 3D/depth), revealing that certain categories cause more failures than others. Our benchmark and analysis establish that current VLMs, even with visual reasoning tools, remain unreliable abstract reasoners, mostly due to perception limitations, and offer a principled basis for improving visual reasoning in multimodal systems.",
+    "primary": "cs.CV",
+    "date": "2026-02-06",
+    "abs": "https://arxiv.org/abs/2602.05382",
+    "pdf": "https://arxiv.org/pdf/2602.05382.pdf"
+  },
+  {
+    "id": "2602.05096",
+    "title": "Visual concept ranking uncovers medical shortcuts used by large multimodal models",
+    "authors": [
+      "Joseph D. Janizek",
+      "Sonnet Xu",
+      "Junayd Lateef",
+      "Roxana Daneshjou"
+    ],
+    "abstract": "Ensuring the reliability of machine learning models in safety-critical domains such as healthcare requires auditing methods that can uncover model shortcomings. We introduce a method for identifying important visual concepts within large multimodal models (LMMs) and use it to investigate the behaviors these models exhibit when prompted with medical tasks. We primarily focus on the task of classifying malignant skin lesions from clinical dermatology images, with supplemental experiments including both chest radiographs and natural images. After showing how LMMs display unexpected gaps in performance between different demographic subgroups when prompted with demonstrating examples, we apply our method, Visual Concept Ranking (VCR), to these models and prompts. VCR generates hypotheses related to different visual feature dependencies, which we are then able to validate with manual interventions.",
+    "primary": "cs.CV",
+    "date": "2026-02-06",
+    "abs": "https://arxiv.org/abs/2602.05096",
+    "pdf": "https://arxiv.org/pdf/2602.05096.pdf"
+  },
+  {
+    "id": "2602.05998",
+    "title": "VisRefiner: Learning from Visual Differences for Screenshot-to-Code Generation",
+    "authors": [
+      "Jie Deng",
+      "Kaichun Yao",
+      "Libo Zhang"
+    ],
+    "abstract": "Screenshot-to-code generation aims to translate user interface screenshots into executable frontend code that faithfully reproduces the target layout and style. Existing multimodal large language models perform this mapping directly from screenshots but are trained without observing the visual outcomes of their generated code. In contrast, human developers iteratively render their implementation, compare it with the design, and learn how visual differences relate to code changes. Inspired by this process, we propose VisRefiner, a training framework that enables models to learn from visual differences between rendered predictions and reference designs. We construct difference-aligned supervision that associates visual discrepancies with corresponding code edits, allowing the model to understand how appearance variations arise from implementation changes. Building on this, we introduce a reinforcement learning stage for self-refinement, where the model improves its generated code by observing both the rendered output and the target design, identifying their visual differences, and updating the code accordingly. Experiments show that VisRefiner substantially improves single-step generation quality and layout fidelity, while also endowing models with strong self-refinement ability. These results demonstrate the effectiveness of learning from visual differences for advancing screenshot-to-code generation.",
+    "primary": "cs.CV",
+    "date": "2026-02-06",
+    "abs": "https://arxiv.org/abs/2602.05998",
+    "pdf": "https://arxiv.org/pdf/2602.05998.pdf"
+  },
+  {
+    "id": "2503.06749",
+    "title": "Vision-R1: Incentivizing Reasoning Capability in Multimodal Large Language Models",
+    "authors": [
+      "Wenxuan Huang",
+      "Bohan Jia",
+      "Zijie Zhai",
+      "Shaosheng Cao",
+      "Zheyu Ye",
+      "Fei Zhao",
+      "Zhe Xu",
+      "Yao Hu",
+      "Shaohui Lin"
+    ],
+    "abstract": "DeepSeek-R1-Zero has successfully demonstrated the emergence of reasoning capabilities in LLMs purely through Reinforcement Learning (RL). Inspired by this breakthrough, we explore how RL can be utilized to enhance the reasoning capability of MLLMs. However, direct training with RL struggles to activate complex reasoning capabilities such as questioning and reflection in MLLMs, due to the absence of substantial high-quality multimodal reasoning data. To address this issue, we propose the reasoning MLLM, Vision-R1, to improve multimodal reasoning capability. Specifically, we first construct a high-quality multimodal CoT dataset without human annotations by leveraging an existing MLLM and DeepSeek-R1 through modality bridging and data filtering to obtain a 200K multimodal CoT dataset, Vision-R1-cold dataset. It serves as cold-start initialization data for Vision-R1. To mitigate the optimization challenges caused by overthinking after cold start, we propose Progressive Thinking Suppression Training (PTST) strategy and employ Group Relative Policy Optimization (GRPO) with the hard formatting result reward function to gradually refine the model's ability to learn correct and complex reasoning processes on a 10K multimodal math dataset. Comprehensive experiments show our model achieves an average improvement of $\\sim$6% across various multimodal math reasoning benchmarks. Vision-R1-7B achieves a 73.5% accuracy on the widely used MathVista benchmark, which is only 0.4% lower than the leading reasoning model, OpenAI O1. Scaling up the amount of multimodal math data in the RL training, Vision-R1-32B and Vison-R1-72B achieves 76.4% and 78.2% MathVista benchmark scores, respectively. The datasets and code will be released in: https://github.com/Osilly/Vision-R1 .",
+    "primary": "cs.CV",
+    "date": "2026-02-06",
+    "abs": "https://arxiv.org/abs/2503.06749",
+    "pdf": "https://arxiv.org/pdf/2503.06749.pdf"
+  },
+  {
+    "id": "2502.10154",
+    "title": "Video Soundtrack Generation by Aligning Emotions and Temporal Boundaries",
+    "authors": [
+      "Serkan Sulun",
+      "Paula Viana",
+      "Matthew E. P. Davies"
+    ],
+    "abstract": "Providing soundtracks for videos remains a costly and time-consuming challenge for multimedia content creators. We introduce EMSYNC, an automatic video-based symbolic music generator that creates music aligned with a video's emotional content and temporal boundaries. It follows a two-stage framework, where a pretrained video emotion classifier extracts emotional features, and a conditional music generator produces MIDI sequences guided by both emotional and temporal cues. We introduce boundary offsets, a novel temporal conditioning mechanism that enables the model to anticipate upcoming video scene cuts and align generated musical chords with them. We also propose a mapping scheme that bridges the discrete categorical outputs of the video emotion classifier with the continuous valence-arousal inputs required by the emotion-conditioned MIDI generator, enabling seamless integration of emotion information across different representations. Our method outperforms state-of-the-art models in objective and subjective evaluations across different video datasets, demonstrating its effectiveness in generating music aligned to video both emotionally and temporally. Our demo and output samples are available at https://serkansulun.com/emsync.",
+    "primary": "cs.SD",
+    "date": "2026-02-06",
+    "abs": "https://arxiv.org/abs/2502.10154",
+    "pdf": "https://arxiv.org/pdf/2502.10154.pdf"
+  },
+  {
+    "id": "2602.05774",
+    "title": "Variational Speculative Decoding: Rethinking Draft Training from Token Likelihood to Sequence Acceptance",
+    "authors": [
+      "Xiandong Zou",
+      "Jianshu Li",
+      "Jing Huang",
+      "Pan Zhou"
+    ],
+    "abstract": "Speculative decoding accelerates inference for (M)LLMs, yet a training-decoding discrepancy persists: while existing methods optimize single greedy trajectories, decoding involves verifying and ranking multiple sampled draft paths. We propose Variational Speculative Decoding (VSD), formulating draft training as variational inference over latent proposals (draft paths). VSD maximizes the marginal probability of target-model acceptance, yielding an ELBO that promotes high-quality latent proposals while minimizing divergence from the target distribution. To enhance quality and reduce variance, we incorporate a path-level utility and optimize via an Expectation-Maximization procedure. The E-step draws MCMC samples from an oracle-filtered posterior, while the M-step maximizes weighted likelihood using Adaptive Rejection Weighting (ARW) and Confidence-Aware Regularization (CAR). Theoretical analysis confirms that VSD increases expected acceptance length and speedup. Extensive experiments across LLMs and MLLMs show that VSD achieves up to a 9.6% speedup over EAGLE-3 and 7.9% over ViSpec, significantly improving decoding efficiency.",
+    "primary": "cs.LG",
+    "date": "2026-02-06",
+    "abs": "https://arxiv.org/abs/2602.05774",
+    "pdf": "https://arxiv.org/pdf/2602.05774.pdf"
+  },
+  {
+    "id": "2602.06034",
+    "title": "V-Retrver: Evidence-Driven Agentic Reasoning for Universal Multimodal Retrieval",
+    "authors": [
+      "Dongyang Chen",
+      "Chaoyang Wang",
+      "Dezhao SU",
+      "Xi Xiao",
+      "Zeyu Zhang",
+      "Jing Xiong",
+      "Qing Li",
+      "Yuzhang Shang",
+      "Shichao Ka"
+    ],
+    "abstract": "Multimodal Large Language Models (MLLMs) have recently been applied to universal multimodal retrieval, where Chain-of-Thought (CoT) reasoning improves candidate reranking. However, existing approaches remain largely language-driven, relying on static visual encodings and lacking the ability to actively verify fine-grained visual evidence, which often leads to speculative reasoning in visually ambiguous cases. We propose V-Retrver, an evidence-driven retrieval framework that reformulates multimodal retrieval as an agentic reasoning process grounded in visual inspection. V-Retrver enables an MLLM to selectively acquire visual evidence during reasoning via external visual tools, performing a multimodal interleaved reasoning process that alternates between hypothesis generation and targeted visual verification.To train such an evidence-gathering retrieval agent, we adopt a curriculum-based learning strategy combining supervised reasoning activation, rejection-based refinement, and reinforcement learning with an evidence-aligned objective. Experiments across multiple multimodal retrieval benchmarks demonstrate consistent improvements in retrieval accuracy (with 23.0% improvements on average), perception-driven reasoning reliability, and generalization.",
+    "primary": "cs.CV",
+    "date": "2026-02-06",
+    "abs": "https://arxiv.org/abs/2602.06034",
+    "pdf": "https://arxiv.org/pdf/2602.06034.pdf"
+  },
+  {
+    "id": "2407.18879",
+    "title": "Utilizing TTS Synthesized Data for Efficient Development of Keyword Spotting Model",
+    "authors": [
+      "Hyun Jin Park",
+      "Dhruuv Agarwal",
+      "Neng Chen",
+      "Rentao Sun",
+      "Kurt Partridge",
+      "Justin Chen",
+      "Harry Zhang",
+      "Pai Zhu",
+      "Jacob Bartel",
+      "Kyle Kastner",
+      "Gary Wang",
+      "Andrew Rosenberg",
+      "Quan Wang"
+    ],
+    "abstract": "This paper explores the use of TTS synthesized training data for KWS (keyword spotting) task while minimizing development cost and time. Keyword spotting models require a huge amount of training data to be accurate, and obtaining such training data can be costly. In the current state of the art, TTS models can generate large amounts of natural-sounding data, which can help reducing cost and time for KWS model development. Still, TTS generated data can be lacking diversity compared to real data. To pursue maximizing KWS model accuracy under the constraint of limited resources and current TTS capability, we explored various strategies to mix TTS data and real human speech data, with a focus on minimizing real data use and maximizing diversity of TTS output. Our experimental results indicate that relatively small amounts of real audio data with speaker diversity (100 speakers, 2k utterances) and large amounts of TTS synthesized data can achieve reasonably high accuracy (within 3x error rate of baseline), compared to the baseline (trained with 3.8M real positive utterances).",
+    "primary": "cs.SD",
+    "date": "2026-02-06",
+    "abs": "https://arxiv.org/abs/2407.18879",
+    "pdf": "https://arxiv.org/pdf/2407.18879.pdf"
+  },
+  {
+    "id": "2602.05548",
+    "title": "Unveiling Implicit Advantage Symmetry: Why GRPO Struggles with Exploration and Difficulty Adaptation",
+    "authors": [
+      "Zhiqi Yu",
+      "Zhangquan Chen",
+      "Mengting Liu",
+      "Heye Zhang",
+      "Liangqiong Qu"
+    ],
+    "abstract": "Reinforcement Learning with Verifiable Rewards (RLVR), particularly GRPO, has become the standard for eliciting LLM reasoning. However, its efficiency in exploration and difficulty adaptation remains an open challenge. In this work, we argue that these bottlenecks stem from an implicit advantage symmetry inherent in Group Relative Advantage Estimation (GRAE). This symmetry induces two critical limitations: (i) at the group level, strict symmetry in weights between correct and incorrect trajectories leaves unsampled action logits unchanged, thereby hindering exploration of novel correct solution. (ii) at the sample level, the algorithm implicitly prioritizes medium-difficulty samples, remaining agnostic to the non-stationary demands of difficulty focus. Through controlled experiments, we reveal that this symmetric property is sub-optimal, yielding two pivotal insights: (i) asymmetrically suppressing the advantages of correct trajectories encourages essential exploration. (ii) learning efficiency is maximized by a curriculum-like transition-prioritizing simpler samples initially before gradually shifting to complex ones. Motivated by these findings, we propose Asymmetric GRAE (A-GRAE), which dynamically modulates exploration incentives and sample-difficulty focus. Experiments across seven benchmarks demonstrate that A-GRAE consistently improves GRPO and its variants across both LLMs and MLLMs.",
+    "primary": "cs.LG",
+    "date": "2026-02-06",
+    "abs": "https://arxiv.org/abs/2602.05548",
+    "pdf": "https://arxiv.org/pdf/2602.05548.pdf"
+  },
+  {
+    "id": "2510.00771",
+    "title": "UniverSR: Unified and Versatile Audio Super-Resolution via Vocoder-Free Flow Matching",
+    "authors": [
+      "Woongjib Choi",
+      "Sangmin Lee",
+      "Hyungseob Lim",
+      "Hong-Goo Kang"
+    ],
+    "abstract": "In this paper, we present a vocoder-free framework for audio super-resolution that employs a flow matching generative model to capture the conditional distribution of complex-valued spectral coefficients. Unlike conventional two-stage diffusion-based approaches that predict a mel-spectrogram and then rely on a pre-trained neural vocoder to synthesize waveforms, our method directly reconstructs waveforms via the inverse Short-Time Fourier Transform (iSTFT), thereby eliminating the dependence on a separate vocoder. This design not only simplifies end-to-end optimization but also overcomes a critical bottleneck of two-stage pipelines, where the final audio quality is fundamentally constrained by vocoder performance. Experiments show that our model consistently produces high-fidelity 48 kHz audio across diverse upsampling factors, achieving state-of-the-art performance on both speech and general audio datasets.",
+    "primary": "eess.AS",
+    "date": "2026-02-06",
+    "abs": "https://arxiv.org/abs/2510.00771",
+    "pdf": "https://arxiv.org/pdf/2510.00771.pdf"
+  },
+  {
+    "id": "2602.04683",
+    "title": "UniAudio 2.0: A Unified Audio Language Model with Text-Aligned Factorized Audio Tokenization",
+    "authors": [
+      "Dongchao Yang",
+      "Yuanyuan Wang",
+      "Dading Chong",
+      "Songxiang Liu",
+      "Xixin Wu",
+      "Helen Meng"
+    ],
+    "abstract": "We study two foundational problems in audio language models: (1) how to design an audio tokenizer that can serve as an intermediate representation for both understanding and generation; and (2) how to build an audio foundation model that generalizes in few-shot and zero-shot settings, analogous to large language models. To this end, we make the following two contributions. First, we propose ReasoningCodec, a discrete audio codec that factorizes audio into (i) reasoning tokens, which encode text-aligned, high-level analysis and planning representations for audio understanding and hierarchical generation, and (ii) reconstruction tokens, which encode semantic-rich acoustic cues for high-fidelity waveform reconstruction. This design achieves understanding performance comparable to strong continuous representations while improving generation quality and reconstruction fidelity over prior discrete tokenizers. Second, we introduce a unified autoregressive architecture for text and audio, together with multi-stage training and multi-task data construction. Using this framework, we train UniAudio 2.0 on 100B text tokens and 60B audio tokens. Across a wide range of speech, sound, and music tasks, UniAudio 2.0 performs competitively on in-domain evaluations and demonstrates strong few-shot and zero-shot generalization to unseen tasks. Demo, code, and checkpoints will be available at \\href{https://dongchaoyang.top/UniAudio2Demo/}{https://dongchaoyang.top/UniAudio2Demo/}.",
+    "primary": "cs.SD",
+    "date": "2026-02-06",
+    "abs": "https://arxiv.org/abs/2602.04683",
+    "pdf": "https://arxiv.org/pdf/2602.04683.pdf"
+  },
+  {
+    "id": "2511.17355",
+    "title": "UAM: A Unified Attention-Mamba Backbone of Multimodal Framework for Tumor Cell Classification",
+    "authors": [
+      "Taixi Chen",
+      "Jingyun Chen",
+      "Nancy Guo"
+    ],
+    "abstract": "Inspired by the recent success of the Mamba architecture in vision and language domains, we introduce a Unified Attention-Mamba (UAM) backbone. Unlike previous hybrid approaches that integrate Attention and Mamba modules in fixed proportions, our unified design flexibly combines their capabilities within a single cohesive architecture, eliminating the need for manual ratio tuning and improving encode capability. We develop two UAM variants to comprehensively evaluate the benefits of this unified structure. Building on this backbone, we further propose a multimodal UAM framework that jointly performs cell-level classification and image segmentation. Experimental results demonstrate that UAM achieves state-of-the-art performance across both tasks on public benchmarks, surpassing leading image-based foundation models. It improves cell classification accuracy from 74\\% to 78\\% ($n$=349,882 cells), and tumor segmentation precision from 75\\% to 80\\% ($n$=406 patches).",
+    "primary": "cs.CV",
+    "date": "2026-02-06",
+    "abs": "https://arxiv.org/abs/2511.17355",
+    "pdf": "https://arxiv.org/pdf/2511.17355.pdf"
+  },
+  {
+    "id": "2602.04145",
+    "title": "Training Data Efficiency in Multimodal Process Reward Models",
+    "authors": [
+      "Jinyuan Li",
+      "Chengsong Huang",
+      "Langlin Huang",
+      "Shaoyang Xu",
+      "Haolin Liu",
+      "Wenxuan Zhang",
+      "Jiaxin Huang"
+    ],
+    "abstract": "Multimodal Process Reward Models (MPRMs) are central to step-level supervision for visual reasoning in MLLMs. Training MPRMs typically requires large-scale Monte Carlo (MC)-annotated corpora, incurring substantial training cost. This paper studies the data efficiency for MPRM training. Our preliminary experiments reveal that MPRM training quickly saturates under random subsampling of the training data, indicating substantial redundancy within existing MC-annotated corpora. To explain this, we formalize a theoretical framework and reveal that informative gradient updates depend on two factors: label mixtures of positive/negative steps and label reliability (average MC scores of positive steps). Guided by these insights, we propose the Balanced-Information Score (BIS), which prioritizes both mixture and reliability based on existing MC signals at the rollout level, without incurring any additional cost. Across two backbones (InternVL2.5-8B and Qwen2.5-VL-7B) on VisualProcessBench, BIS-selected subsets consistently match and even surpass the full-data performance at small fractions. Notably, the BIS subset reaches full-data performance using only 10% of the training data, improving over random subsampling by a relative 4.1%.",
+    "primary": "cs.LG",
+    "date": "2026-02-06",
+    "abs": "https://arxiv.org/abs/2602.04145",
+    "pdf": "https://arxiv.org/pdf/2602.04145.pdf"
+  },
+  {
+    "id": "2602.06037",
+    "title": "Thinking with Geometry: Active Geometry Integration for Spatial Reasoning",
+    "authors": [
+      "Haoyuan Li",
+      "Qihang Cao",
+      "Tao Tang",
+      "Kun Xiang",
+      "Zihan Guo",
+      "Jianhua Han",
+      "Hang Xu",
+      "Xiaodan Liang"
+    ],
+    "abstract": "Recent progress in spatial reasoning with Multimodal Large Language Models (MLLMs) increasingly leverages geometric priors from 3D encoders. However, most existing integration strategies remain passive: geometry is exposed as a global stream and fused in an indiscriminate manner, which often induces semantic-geometry misalignment and redundant signals. We propose GeoThinker, a framework that shifts the paradigm from passive fusion to active perception. Instead of feature mixing, GeoThinker enables the model to selectively retrieve geometric evidence conditioned on its internal reasoning demands. GeoThinker achieves this through Spatial-Grounded Fusion applied at carefully selected VLM layers, where semantic visual priors selectively query and integrate task-relevant geometry via frame-strict cross-attention, further calibrated by Importance Gating that biases per-frame attention toward task-relevant structures. Comprehensive evaluation results show that GeoThinker sets a new state-of-the-art in spatial intelligence, achieving a peak score of 72.6 on the VSI-Bench. Furthermore, GeoThinker demonstrates robust generalization and significantly improved spatial perception across complex downstream scenarios, including embodied referring and autonomous driving. Our results indicate that the ability to actively integrate spatial structures is essential for next-generation spatial intelligence. Code can be found at https://github.com/Li-Hao-yuan/GeoThinker.",
+    "primary": "cs.CV",
+    "date": "2026-02-06",
+    "abs": "https://arxiv.org/abs/2602.06037",
+    "pdf": "https://arxiv.org/pdf/2602.06037.pdf"
+  },
+  {
+    "id": "2601.07163",
+    "title": "Test-time Adaptive Hierarchical Co-enhanced Denoising Network for Reliable Multimodal Classification",
+    "authors": [
+      "Shu Shen",
+      "C. L. Philip Chen",
+      "Tong Zhang"
+    ],
+    "abstract": "Reliable learning of multimodal data (e.g., multi-omics) is a widely concerning issue, especially in safety-critical applications such as medical diagnosis. However, low-quality data induced by multimodal noise poses a major challenge in this domain, causing existing methods to suffer from two key limitations. First, they struggle to handle heterogeneous data noise, hindering robust multimodal representation learning. Second, they exhibit limited adaptability and generalization when encountering previously unseen noise. To address these issues, we propose Test-time Adaptive Hierarchical Co-enhanced Denoising Network (TAHCD). On one hand, TAHCD introduces the Adaptive Stable Subspace Alignment and Sample-Adaptive Confidence Alignment to reliably remove heterogeneous noise. They account for noise at both global and instance levels and enable jointly removal of modality-specific and cross-modality noise, achieving robust learning. On the other hand, TAHCD introduces Test-Time Cooperative Enhancement, which adaptively updates the model in response to input noise in a label-free manner, thus improving generalization. This is achieved by collaboratively enhancing the joint removal process of modality-specific and cross-modality noise across global and instance levels according to sample noise. Experiments on multiple benchmarks demonstrate that the proposed method achieves superior classification performance, robustness, and generalization compared with state-of-the-art reliable multimodal learning approaches.",
+    "primary": "cs.CV",
+    "date": "2026-02-06",
+    "abs": "https://arxiv.org/abs/2601.07163",
+    "pdf": "https://arxiv.org/pdf/2601.07163.pdf"
+  },
+  {
+    "id": "2509.15602",
+    "title": "TennisTV: Do Multimodal Large Language Models Understand Tennis Rallies?",
+    "authors": [
+      "Zhongyuan Bao",
+      "Lejun Zhang"
+    ],
+    "abstract": "Multimodal large language models (MLLMs) excel at general video understanding but struggle with fast, high-frequency sports like tennis, where rally clips are short yet information-dense. To systematically evaluate MLLMs in this challenging domain, we present TennisTV, the first and most comprehensive benchmark for tennis video understanding. TennisTV models each rally as a temporal-ordered sequence of consecutive stroke events, using automated pipelines for filtering and question generation. It covers 8 tasks from the stroke level to the rally level and includes 2527 human-verified questions. Evaluating 17 representative MLLMs, we provide the first systematic assessment of tennis video understanding. Results yield two key insights: (i) frame-sampling density should be tailored and balanced across tasks, and (ii) improving temporal grounding is essential for stronger reasoning.",
+    "primary": "cs.CV",
+    "date": "2026-02-06",
+    "abs": "https://arxiv.org/abs/2509.15602",
+    "pdf": "https://arxiv.org/pdf/2509.15602.pdf"
+  },
+  {
+    "id": "2510.25502",
+    "title": "TempoPFN: Synthetic Pre-training of Linear RNNs for Zero-shot Time Series Forecasting",
+    "authors": [
+      "Vladyslav Moroshan",
+      "Julien Siems",
+      "Arber Zela",
+      "Timur Carstensen",
+      "Frank Hutter"
+    ],
+    "abstract": "Foundation models for zero-shot time series forecasting face challenges in efficient long-horizon prediction and reproducibility, with existing synthetic-only approaches underperforming on challenging benchmarks. This paper presents TempoPFN, a univariate time series foundation model based on linear Recurrent Neural Networks (RNNs) pre-trained exclusively on synthetic data. The model uses a GatedDeltaProduct architecture with state-weaving for fully parallelizable training across sequence lengths, eliminating the need for windowing or summarization techniques while maintaining robust temporal state-tracking. Our comprehensive synthetic data pipeline unifies diverse generators, including stochastic differential equations, Gaussian processes, and audio synthesis, with novel augmentations. In zero-shot evaluations on the Gift-Eval, fev-bench and Chronos-ZS benchmarks, TempoPFN achieves top-tier competitive performance, outperforming all existing synthetic-only approaches and surpassing the majority of models trained on real-world data, while being more efficient than existing baselines by leveraging fully parallelizable training and inference. We open-source our complete data generation pipeline and training code, providing a reproducible foundation for future research.",
+    "primary": "cs.LG",
+    "date": "2026-02-06",
+    "abs": "https://arxiv.org/abs/2510.25502",
+    "pdf": "https://arxiv.org/pdf/2510.25502.pdf"
+  },
+  {
+    "id": "2504.07053",
+    "title": "TASTE: Text-Aligned Speech Tokenization and Embedding for Spoken Language Modeling",
+    "authors": [
+      "Liang-Hsuan Tseng",
+      "Yi-Chang Chen",
+      "Kuan-Yi Lee",
+      "Da-Shan Shiu",
+      "Hung-yi Lee"
+    ],
+    "abstract": "Recent efforts target spoken language models (SLMs) that not only listen but also speak for more natural human-LLM interaction. Joint speech-text modeling is a promising direction to achieve this. However, the effectiveness of recent speech tokens for joint modeling remains underexplored. To address this, we introduce Text-Aligned Speech Tokenization and Embedding (TASTE), a method that directly addresses the modality gap by aligning speech token with the corresponding text transcription during the tokenization stage. We propose a method that can achieve this through a attention-based aggregation mechanism and with speech reconstruction as the training objective. We conduct extensive experiments and show that TASTE can preserve essential paralinguistic information while dramatically reducing the token sequence length. With TASTE, we perform straightforward joint spoken language modeling by using Low-Rank Adaptation on the pre-trained text LLM. Experimental results show that TASTE-based SLMs perform comparable to previous work on SALMON and StoryCloze; while significantly outperform other pre-trained SLMs on speech continuation across subjective and objective evaluations. To our knowledge, TASTE is the first end-to-end approach that utilizes a reconstruction objective to automatically learn a text-aligned speech tokenization and embedding suitable for spoken language modeling. Our demo, code, and model are available at https://mtkresearch.github.io/TASTE-SpokenLM.github.io.",
+    "primary": "cs.CL",
+    "date": "2026-02-06",
+    "abs": "https://arxiv.org/abs/2504.07053",
+    "pdf": "https://arxiv.org/pdf/2504.07053.pdf"
+  },
+  {
+    "id": "2602.05251",
+    "title": "TADS: Task-Aware Data Selection for Multi-Task Multimodal Pre-Training",
+    "authors": [
+      "Guanjie Cheng",
+      "Boyi Li",
+      "Lingyu Sun",
+      "Mengying Zhu",
+      "Yangyang Wu",
+      "Xinkui Zhao",
+      "Shuiguang Deng"
+    ],
+    "abstract": "Large-scale multimodal pre-trained models like CLIP rely heavily on high-quality training data, yet raw web-crawled datasets are often noisy, misaligned, and redundant, leading to inefficient training and suboptimal generalization. Existing data selection methods are either heuristic-based, suffering from bias and limited diversity, or data-driven but task-agnostic, failing to optimize for multi-task scenarios. To address these gaps, we introduce TADS (Task-Aware Data Selection), a novel framework for multi-task multimodal pre-training that integrates Intrinsic Quality, Task Relevance, and Distributional Diversity into a learnable value function. TADS employs a comprehensive quality assessment system with unimodal and cross-modal operators, quantifies task relevance via interpretable similarity vectors, and optimizes diversity through cluster-based weighting. A feedback-driven meta-learning mechanism adaptively refines the selection strategy based on proxy model performance across multiple downstream tasks. Experiments on CC12M demonstrate that TADS achieves superior zero-shot performance on benchmarks like ImageNet, CIFAR-100, MS-COCO, and Flickr30K, using only 36% of the data while outperforming baselines by an average of 1.0%. This highlights that TADS significantly enhances data efficiency by curating a high-utility subset that yields a much higher performance ceiling within the same computational constraints.",
+    "primary": "cs.LG",
+    "date": "2026-02-06",
+    "abs": "https://arxiv.org/abs/2602.05251",
+    "pdf": "https://arxiv.org/pdf/2602.05251.pdf"
+  },
+  {
+    "id": "2407.16840",
+    "title": "Synth4Kws: Synthesized Speech for User Defined Keyword Spotting in Low Resource Environments",
+    "authors": [
+      "Pai Zhu",
+      "Dhruuv Agarwal",
+      "Jacob W. Bartel",
+      "Kurt Partridge",
+      "Hyun Jin Park",
+      "Quan Wang"
+    ],
+    "abstract": "One of the challenges in developing a high quality custom keyword spotting (KWS) model is the lengthy and expensive process of collecting training data covering a wide range of languages, phrases and speaking styles. We introduce Synth4Kws - a framework to leverage Text to Speech (TTS) synthesized data for custom KWS in different resource settings. With no real data, we found increasing TTS phrase diversity and utterance sampling monotonically improves model performance, as evaluated by EER and AUC metrics over 11k utterances of the speech command dataset. In low resource settings, with 50k real utterances as a baseline, we found using optimal amounts of TTS data can improve EER by 30.1% and AUC by 46.7%. Furthermore, we mix TTS data with varying amounts of real data and interpolate the real data needed to achieve various quality targets. Our experiments are based on English and single word utterances but the findings generalize to i18n languages and other keyword types.",
+    "primary": "eess.AS",
+    "date": "2026-02-06",
+    "abs": "https://arxiv.org/abs/2407.16840",
+    "pdf": "https://arxiv.org/pdf/2407.16840.pdf"
+  },
+  {
+    "id": "2602.06040",
+    "title": "SwimBird: Eliciting Switchable Reasoning Mode in Hybrid Autoregressive MLLMs",
+    "authors": [
+      "Jintao Tong",
+      "Shilin Yan",
+      "Hongwei Xue",
+      "Xiaojun Tang",
+      "Kunyu Shi",
+      "Guannan Zhang",
+      "Ruixuan Li",
+      "Yixiong Zou"
+    ],
+    "abstract": "Multimodal Large Language Models (MLLMs) have made remarkable progress in multimodal perception and reasoning by bridging vision and language. However, most existing MLLMs perform reasoning primarily with textual CoT, which limits their effectiveness on vision-intensive tasks. Recent approaches inject a fixed number of continuous hidden states as \"visual thoughts\" into the reasoning process and improve visual performance, but often at the cost of degraded text-based logical reasoning. We argue that the core limitation lies in a rigid, pre-defined reasoning pattern that cannot adaptively choose the most suitable thinking modality for different user queries. We introduce SwimBird, a reasoning-switchable MLLM that dynamically switches among three reasoning modes conditioned on the input: (1) text-only reasoning, (2) vision-only reasoning (continuous hidden states as visual thoughts), and (3) interleaved vision-text reasoning. To enable this capability, we adopt a hybrid autoregressive formulation that unifies next-token prediction for textual thoughts with next-embedding prediction for visual thoughts, and design a systematic reasoning-mode curation strategy to construct SwimBird-SFT-92K, a diverse supervised fine-tuning dataset covering all three reasoning patterns. By enabling flexible, query-adaptive mode selection, SwimBird preserves strong textual logic while substantially improving performance on vision-dense tasks. Experiments across diverse benchmarks covering textual reasoning and challenging visual understanding demonstrate that SwimBird achieves state-of-the-art results and robust gains over prior fixed-pattern multimodal reasoning methods.",
+    "primary": "cs.CV",
+    "date": "2026-02-06",
+    "abs": "https://arxiv.org/abs/2602.06040",
+    "pdf": "https://arxiv.org/pdf/2602.06040.pdf"
+  },
+  {
+    "id": "2601.13948",
+    "title": "Stream-Voice-Anon: Enhancing Utility of Real-Time Speaker Anonymization via Neural Audio Codec and Language Models",
+    "authors": [
+      "Nikita Kuzmin",
+      "Songting Liu",
+      "Kong Aik Lee",
+      "Eng Siong Chng"
+    ],
+    "abstract": "Protecting speaker identity is crucial for online voice applications, yet streaming speaker anonymization (SA) remains underexplored. Recent research has demonstrated that neural audio codec (NAC) provides superior speaker feature disentanglement and linguistic fidelity. NAC can also be used with causal language models (LM) to enhance linguistic fidelity and prompt control for streaming tasks. However, existing NAC-based online LM systems are designed for voice conversion (VC) rather than anonymization, lacking the techniques required for privacy protection. Building on these advances, we present Stream-Voice-Anon, which adapts modern causal LM-based NAC architectures specifically for streaming SA by integrating anonymization techniques. Our anonymization approach incorporates pseudo-speaker representation sampling, a speaker embedding mixing and diverse prompt selection strategies for LM conditioning that leverage the disentanglement properties of quantized content codes to prevent speaker information leakage. Additionally, we compare dynamic and fixed delay configurations to explore latency-privacy trade-offs in real-time scenarios. Under the VoicePrivacy 2024 Challenge protocol, Stream-Voice-Anon achieves substantial improvements in intelligibility (up to 46% relative WER reduction) and emotion preservation (up to 28% UAR relative) compared to the previous state-of-the-art streaming method DarkStream while maintaining comparable latency (180ms vs 200ms) and privacy protection against lazy-informed attackers, though showing 15% relative degradation against semi-informed attackers.",
+    "primary": "eess.AS",
+    "date": "2026-02-06",
+    "abs": "https://arxiv.org/abs/2601.13948",
+    "pdf": "https://arxiv.org/pdf/2601.13948.pdf"
+  },
+  {
+    "id": "2506.24068",
+    "title": "STACK: Adversarial Attacks on LLM Safeguard Pipelines",
+    "authors": [
+      "Ian R. McKenzie",
+      "Oskar J. Hollinsworth",
+      "Tom Tseng",
+      "Xander Davies",
+      "Stephen Casper",
+      "Aaron D. Tucker",
+      "Robert Kirk",
+      "Adam Gleave"
+    ],
+    "abstract": "Frontier AI developers are relying on layers of safeguards to protect against catastrophic misuse of AI systems. Anthropic and OpenAI guard their latest Opus 4 model and GPT-5 models using such defense pipelines, and other frontier developers including Google DeepMind pledge to soon deploy similar defenses. However, the security of such pipelines is unclear, with limited prior work evaluating or attacking these pipelines. We address this gap by developing and red-teaming an open-source defense pipeline. First, we find that a novel few-shot-prompted input and output classifier outperforms state-of-the-art open-weight safeguard model ShieldGemma across three attacks and two datasets, reducing the attack success rate (ASR) to 0% on the catastrophic misuse dataset ClearHarm. Second, we introduce a STaged AttaCK (STACK) procedure that achieves 71% ASR on ClearHarm in a black-box attack against the few-shot-prompted classifier pipeline. Finally, we also evaluate STACK in a transfer setting, achieving 33% ASR, providing initial evidence that it is feasible to design attacks with no access to the target pipeline. We conclude by suggesting specific mitigations that developers could use to thwart staged attacks.",
+    "primary": "cs.CL",
+    "date": "2026-02-06",
+    "abs": "https://arxiv.org/abs/2506.24068",
+    "pdf": "https://arxiv.org/pdf/2506.24068.pdf"
+  },
+  {
+    "id": "2602.05373",
+    "title": "Speech-XL: Towards Long-Form Speech Understanding in Large Speech Language Models",
+    "authors": [
+      "Haoqin Sun",
+      "Chenyang Lyu",
+      "Shiwan Zhao",
+      "Xuanfan Ni",
+      "Xiangyu Kong",
+      "Longyue Wang",
+      "Weihua Luo",
+      "Yong Qin"
+    ],
+    "abstract": "Despite the growing success of Large Speech Language Models (LSLMs) in processing short-term acoustic signals, their extension to long-form audio understanding is severely bottlenecked. This limitation stems from the limited context length and the exorbitant memory footprints required for long-form inference. In this work, we propose Speech-XL, a new model that capitalizes on the intrinsic key-value (KV) sparsification capacity of Large Language Models (LLMs) to achieve high-ratio speech input compression. Specifically, we introduce a novel special token, the Speech Summarization Token (SST), for each speech interval to encapsulate the intra-interval speech information into its associated KV pairs. The SST module is trained via instruction fine-tuning, employing a curriculum learning strategy where the SST learns to compress information in a progressive manner--advancing from low-ratio (simple) to high-ratio (challenging) compression. Despite utilizing significantly less training data than other baselines, our model achieves highly competitive performance on major benchmarks, including LongSpeech and AUDIOMARATHON. By addressing the long-standing bottlenecks in long-form audio modeling, our approach offers a novel perspective on the condensation of extensive acoustic sequences.",
+    "primary": "cs.SD",
+    "date": "2026-02-06",
+    "abs": "https://arxiv.org/abs/2602.05373",
+    "pdf": "https://arxiv.org/pdf/2602.05373.pdf"
+  },
+  {
+    "id": "2602.06000",
+    "title": "Speech Emotion Recognition Leveraging OpenAI's Whisper Representations and Attentive Pooling Methods",
+    "authors": [
+      "Ali Shendabadi",
+      "Parnia Izadirad",
+      "Mostafa Salehi",
+      "Mahmoud Bijankhan"
+    ],
+    "abstract": "Speech Emotion Recognition (SER) research has faced limitations due to the lack of standard and sufficiently large datasets. Recent studies have leveraged pre-trained models to extract features for downstream tasks such as SER. This work explores the capabilities of Whisper, a pre-trained ASR system, in speech emotion recognition by proposing two attention-based pooling methods, Multi-head Attentive Average Pooling and QKV Pooling, designed to efficiently reduce the dimensionality of Whisper representations while preserving emotional features. We experiment on English and Persian, using the IEMOCAP and ShEMO datasets respectively, with Whisper Tiny and Small. Our multi-head QKV architecture achieves state-of-the-art results on the ShEMO dataset, with a 2.47% improvement in unweighted accuracy. We further compare the performance of different Whisper encoder layers and find that intermediate layers often perform better for SER on the Persian dataset, providing a lightweight and efficient alternative to much larger models such as HuBERT X-Large. Our findings highlight the potential of Whisper as a representation extractor for SER and demonstrate the effectiveness of attention-based pooling for dimension reduction.",
+    "primary": "cs.AI",
+    "date": "2026-02-06",
+    "abs": "https://arxiv.org/abs/2602.06000",
+    "pdf": "https://arxiv.org/pdf/2602.06000.pdf"
+  },
+  {
+    "id": "2602.03891",
+    "title": "Sounding Highlights: Dual-Pathway Audio Encoders for Audio-Visual Video Highlight Detection",
+    "authors": [
+      "Seohyun Joo",
+      "Yoori Oh"
+    ],
+    "abstract": "Audio-visual video highlight detection aims to automatically identify the most salient moments in videos by leveraging both visual and auditory cues. However, existing models often underutilize the audio modality, focusing on high-level semantic features while failing to fully leverage the rich, dynamic characteristics of sound. To address this limitation, we propose a novel framework, Dual-Pathway Audio Encoders for Video Highlight Detection (DAViHD). The dual-pathway audio encoder is composed of a semantic pathway for content understanding and a dynamic pathway that captures spectro-temporal dynamics. The semantic pathway extracts high-level information by identifying the content within the audio, such as speech, music, or specific sound events. The dynamic pathway employs a frequency-adaptive mechanism as time evolves to jointly model these dynamics, enabling it to identify transient acoustic events via salient spectral bands and rapid energy changes. We integrate the novel audio encoder into a full audio-visual framework and achieve new state-of-the-art performance on the large-scale MrHiSum benchmark. Our results demonstrate that a sophisticated, dual-faceted audio representation is key to advancing the field of highlight detection.",
+    "primary": "eess.AS",
+    "date": "2026-02-06",
+    "abs": "https://arxiv.org/abs/2602.03891",
+    "pdf": "https://arxiv.org/pdf/2602.03891.pdf"
+  },
+  {
+    "id": "2602.05480",
+    "title": "SOMA-1M: A Large-Scale SAR-Optical Multi-resolution Alignment Dataset for Multi-Task Remote Sensing",
+    "authors": [
+      "Peihao Wu",
+      "Yongxiang Yao",
+      "Yi Wan",
+      "Wenfei Zhang",
+      "Ruipeng Zhao",
+      "Jiayuan Li",
+      "Yongjun Zhang"
+    ],
+    "abstract": "Synthetic Aperture Radar (SAR) and optical imagery provide complementary strengths that constitute the critical foundation for transcending single-modality constraints and facilitating cross-modal collaborative processing and intelligent interpretation. However, existing benchmark datasets often suffer from limitations such as single spatial resolution, insufficient data scale, and low alignment accuracy, making them inadequate for supporting the training and generalization of multi-scale foundation models. To address these challenges, we introduce SOMA-1M (SAR-Optical Multi-resolution Alignment), a pixel-level precisely aligned dataset containing over 1.3 million pairs of georeferenced images with a specification of 512 x 512 pixels. This dataset integrates imagery from Sentinel-1, PIESAT-1, Capella Space, and Google Earth, achieving global multi-scale coverage from 0.5 m to 10 m. It encompasses 12 typical land cover categories, effectively ensuring scene diversity and complexity. To address multimodal projection deformation and massive data registration, we designed a rigorous coarse-to-fine image matching framework ensuring pixel-level alignment. Based on this dataset, we established comprehensive evaluation benchmarks for four hierarchical vision tasks, including image matching, image fusion, SAR-assisted cloud removal, and cross-modal translation, involving over 30 mainstream algorithms. Experimental results demonstrate that supervised training on SOMA-1M significantly enhances performance across all tasks. Notably, multimodal remote sensing image (MRSI) matching performance achieves current state-of-the-art (SOTA) levels. SOMA-1M serves as a foundational resource for robust multimodal algorithms and remote sensing foundation models. The dataset will be released publicly at: https://github.com/PeihaoWu/SOMA-1M.",
+    "primary": "cs.CV",
+    "date": "2026-02-06",
+    "abs": "https://arxiv.org/abs/2602.05480",
+    "pdf": "https://arxiv.org/pdf/2602.05480.pdf"
+  },
+  {
+    "id": "2601.07209",
+    "title": "SIRR-LMM: Single-image Reflection Removal via Large Multimodal Model",
+    "authors": [
+      "Yu Guo",
+      "Zhiqiang Lao",
+      "Xiyun Song",
+      "Yubin Zhou",
+      "Heather Yu"
+    ],
+    "abstract": "Glass surfaces create complex interactions of reflected and transmitted light, making single-image reflection removal (SIRR) challenging. Existing datasets suffer from limited physical realism in synthetic data or insufficient scale in real captures. We introduce a synthetic dataset generation framework that path-traces 3D glass models over real background imagery to create physically accurate reflection scenarios with varied glass properties, camera settings, and post-processing effects. To leverage the capabilities of Large Multimodal Model (LMM), we concatenate the image layers into a single composite input, apply joint captioning, and fine-tune the model using task-specific LoRA rather than full-parameter training. This enables our approach to achieve improved reflection removal and separation performance compared to state-of-the-art methods.",
+    "primary": "cs.CV",
+    "date": "2026-02-06",
+    "abs": "https://arxiv.org/abs/2601.07209",
+    "pdf": "https://arxiv.org/pdf/2601.07209.pdf"
+  },
+  {
+    "id": "2507.16838",
+    "title": "Segmentation-free Goodness of Pronunciation",
+    "authors": [
+      "Xinwei Cao",
+      "Zijian Fan",
+      "Torbjørn Svendsen",
+      "Giampiero Salvi"
+    ],
+    "abstract": "Mispronunciation detection and diagnosis (MDD) is a significant part in modern computer-aided language learning (CALL) systems. Most systems implementing phoneme-level MDD through goodness of pronunciation (GOP), however, rely on pre-segmentation of speech into phonetic units. This limits the accuracy of these methods and the possibility to use modern CTC-based acoustic models for their evaluation. In this study, we first propose self-alignment GOP (GOP-SA) that enables the use of CTC-trained ASR models for MDD. Next, we define a more general segmentation-free method that takes all possible segmentations of the canonical transcription into account (GOP-SF). We give a theoretical account of our definition of GOP-SF, an implementation that solves potential numerical issues as well as a proper normalization which allows the use of acoustic models with different peakiness over time. We provide extensive experimental results on the CMU Kids and speechocean762 datasets comparing the different definitions of our methods, estimating the dependency of GOP-SF on the peakiness of the acoustic models and on the amount of context around the target phoneme. Finally, we compare our methods with recent studies over the speechocean762 data showing that the feature vectors derived from the proposed method achieve state-of-the-art results on phoneme-level pronunciation assessment.",
+    "primary": "eess.AS",
+    "date": "2026-02-06",
+    "abs": "https://arxiv.org/abs/2507.16838",
+    "pdf": "https://arxiv.org/pdf/2507.16838.pdf"
+  },
+  {
+    "id": "2512.22120",
+    "title": "See Less, See Right: Bi-directional Perceptual Shaping For Multimodal Reasoning",
+    "authors": [
+      "Shuoshuo Zhang",
+      "Yizhen Zhang",
+      "Jingjing Fu",
+      "Lei Song",
+      "Jiang Bian",
+      "Yujiu Yang",
+      "Rui Wang"
+    ],
+    "abstract": "Large vision-language models (VLMs) often benefit from intermediate visual cues, either injected via external tools or generated as latent visual tokens during reasoning, but these mechanisms still overlook fine-grained visual evidence (e.g., polylines in charts), generalize poorly across domains, and incur high inference-time cost. In this paper, we propose Bi-directional Perceptual Shaping (BiPS), which transforms question-conditioned masked views into bidirectional where-to-look signals that shape perception during training. BiPS first applies a KL-consistency constraint between the original image and an evidence-preserving view that keeps only question-relevant regions, encouraging coarse but complete coverage of supporting pixels. It then applies a KL-separation constraint between the original and an evidence-ablated view where critical pixels are masked so the image no longer supports the original answer, discouraging text-only shortcuts (i.e., answering from text alone) and enforcing fine-grained visual reliance. Across eight benchmarks, BiPS boosts Qwen2.5-VL-7B by 8.2% on average and shows strong out-of-domain generalization to unseen datasets and image types.",
+    "primary": "cs.CV",
+    "date": "2026-02-06",
+    "abs": "https://arxiv.org/abs/2512.22120",
+    "pdf": "https://arxiv.org/pdf/2512.22120.pdf"
+  },
+  {
+    "id": "2602.04451",
+    "title": "SDR-CIR: Semantic Debias Retrieval Framework for Training-Free Zero-Shot Composed Image Retrieval",
+    "authors": [
+      "Yi Sun",
+      "Jinyu Xu",
+      "Qing Xie",
+      "Jiachen Li",
+      "Yanchun Ma",
+      "Yongjian Liu"
+    ],
+    "abstract": "Composed Image Retrieval (CIR) aims to retrieve a target image from a query composed of a reference image and modification text. Recent training-free zero-shot methods often employ Multimodal Large Language Models (MLLMs) with Chain-of-Thought (CoT) to compose a target image description for retrieval. However, due to the fuzzy matching nature of ZS-CIR, the generated description is prone to semantic bias relative to the target image. We propose SDR-CIR, a training-free Semantic Debias Ranking method based on CoT reasoning. First, Selective CoT guides the MLLM to extract visual content relevant to the modification text during image understanding, thereby reducing visual noise at the source. We then introduce a Semantic Debias Ranking with two steps, Anchor and Debias, to mitigate semantic bias. In the Anchor step, we fuse reference image features with target description features to reinforce useful semantics and supplement omitted cues. In the Debias step, we explicitly model the visual semantic contribution of the reference image to the description and incorporate it into the similarity score as a penalty term. By supplementing omitted cues while suppressing redundancy, SDR-CIR mitigates semantic bias and improves retrieval performance. Experiments on three standard CIR benchmarks show that SDR-CIR achieves state-of-the-art results among one-stage methods while maintaining high efficiency. The code is publicly available at https://github.com/suny105/SDR-CIR.",
+    "primary": "cs.IR",
+    "date": "2026-02-06",
+    "abs": "https://arxiv.org/abs/2602.04451",
+    "pdf": "https://arxiv.org/pdf/2602.04451.pdf"
+  },
+  {
+    "id": "2602.05853",
+    "title": "RRAttention: Dynamic Block Sparse Attention via Per-Head Round-Robin Shifts for Long-Context Inference",
+    "authors": [
+      "Siran Liu",
+      "Guoxia Wang",
+      "Sa Wang",
+      "Jinle Zeng",
+      "HaoYang Xie",
+      "Siyu Lou",
+      "JiaBin Yang",
+      "DianHai Yu",
+      "Haifeng Wang",
+      "Chao Yang"
+    ],
+    "abstract": "The quadratic complexity of attention mechanisms poses a critical bottleneck for large language models processing long contexts. While dynamic sparse attention methods offer input-adaptive efficiency, they face fundamental trade-offs: requiring preprocessing, lacking global evaluation, violating query independence, or incurring high computational overhead. We present RRAttention, a novel dynamic sparse attention method that simultaneously achieves all desirable properties through a head \\underline{r}ound-\\underline{r}obin (RR) sampling strategy. By rotating query sampling positions across attention heads within each stride, RRAttention maintains query independence while enabling efficient global pattern discovery with stride-level aggregation. Our method reduces complexity from $O(L^2)$ to $O(L^2/S^2)$ and employs adaptive Top-$τ$ selection for optimal sparsity. Extensive experiments on natural language understanding (HELMET) and multimodal video comprehension (Video-MME) demonstrate that RRAttention recovers over 99\\% of full attention performance while computing only half of the attention blocks, achieving 2.4$\\times$ speedup at 128K context length and outperforming existing dynamic sparse attention methods.",
+    "primary": "cs.CL",
+    "date": "2026-02-06",
+    "abs": "https://arxiv.org/abs/2602.05853",
+    "pdf": "https://arxiv.org/pdf/2602.05853.pdf"
+  },
+  {
+    "id": "2602.05986",
+    "title": "RISE-Video: Can Video Generators Decode Implicit World Rules?",
+    "authors": [
+      "Mingxin Liu",
+      "Shuran Ma",
+      "Shibei Meng",
+      "Xiangyu Zhao",
+      "Zicheng Zhang",
+      "Shaofeng Zhang",
+      "Zhihang Zhong",
+      "Peixian Chen",
+      "Haoyu Cao",
+      "Xing Sun",
+      "Haodong Duan",
+      "Xue Yang"
+    ],
+    "abstract": "While generative video models have achieved remarkable visual fidelity, their capacity to internalize and reason over implicit world rules remains a critical yet under-explored frontier. To bridge this gap, we present RISE-Video, a pioneering reasoning-oriented benchmark for Text-Image-to-Video (TI2V) synthesis that shifts the evaluative focus from surface-level aesthetics to deep cognitive reasoning. RISE-Video comprises 467 meticulously human-annotated samples spanning eight rigorous categories, providing a structured testbed for probing model intelligence across diverse dimensions, ranging from commonsense and spatial dynamics to specialized subject domains. Our framework introduces a multi-dimensional evaluation protocol consisting of four metrics: \\textit{Reasoning Alignment}, \\textit{Temporal Consistency}, \\textit{Physical Rationality}, and \\textit{Visual Quality}. To further support scalable evaluation, we propose an automated pipeline leveraging Large Multimodal Models (LMMs) to emulate human-centric assessment. Extensive experiments on 11 state-of-the-art TI2V models reveal pervasive deficiencies in simulating complex scenarios under implicit constraints, offering critical insights for the advancement of future world-simulating generative models.",
+    "primary": "cs.CV",
+    "date": "2026-02-06",
+    "abs": "https://arxiv.org/abs/2602.05986",
+    "pdf": "https://arxiv.org/pdf/2602.05986.pdf"
+  },
+  {
+    "id": "2602.05785",
+    "title": "ReText: Text Boosts Generalization in Image-Based Person Re-identification",
+    "authors": [
+      "Timur Mamedov",
+      "Karina Kvanchiani",
+      "Anton Konushin",
+      "Vadim Konushin"
+    ],
+    "abstract": "Generalizable image-based person re-identification (Re-ID) aims to recognize individuals across cameras in unseen domains without retraining. While multiple existing approaches address the domain gap through complex architectures, recent findings indicate that better generalization can be achieved by stylistically diverse single-camera data. Although this data is easy to collect, it lacks complexity due to minimal cross-view variation. We propose ReText, a novel method trained on a mixture of multi-camera Re-ID data and single-camera data, where the latter is complemented by textual descriptions to enrich semantic cues. During training, ReText jointly optimizes three tasks: (1) Re-ID on multi-camera data, (2) image-text matching, and (3) image reconstruction guided by text on single-camera data. Experiments demonstrate that ReText achieves strong generalization and significantly outperforms state-of-the-art methods on cross-domain Re-ID benchmarks. To the best of our knowledge, this is the first work to explore multimodal joint learning on a mixture of multi-camera and single-camera data in image-based person Re-ID.",
+    "primary": "cs.CV",
+    "date": "2026-02-06",
+    "abs": "https://arxiv.org/abs/2602.05785",
+    "pdf": "https://arxiv.org/pdf/2602.05785.pdf"
+  },
+  {
+    "id": "2410.17790",
+    "title": "Regularized autoregressive modeling and its application to audio signal reconstruction",
+    "authors": [
+      "Ondřej Mokrý",
+      "Pavel Rajmic"
+    ],
+    "abstract": "Autoregressive (AR) modeling is invaluable in signal processing, in particular in speech and audio fields. Attempts in the literature can be found that regularize or constrain either the time-domain signal values or the AR coefficients, which is done for various reasons, including the incorporation of prior information or numerical stabilization. Although these attempts are appealing, an encompassing and generic modeling framework is still missing. We propose such a framework and the related optimization problem and algorithm. We discuss the computational demands of the algorithm and explore the effects of various improvements on its convergence speed. In the experimental part, we demonstrate the usefulness of our approach on the audio declipping and dequantization problems. We compare its performance against state-of-the-art methods and demonstrate the competitiveness of the proposed method in declipping musical signals, and its superiority in declipping speech. The evaluation includes a heuristic algorithm of generalized linear prediction (GLP), a strong competitor which has only been presented as a patent and is new in the scientific community.",
+    "primary": "eess.AS",
+    "date": "2026-02-06",
+    "abs": "https://arxiv.org/abs/2410.17790",
+    "pdf": "https://arxiv.org/pdf/2410.17790.pdf"
+  },
+  {
+    "id": "2602.05051",
+    "title": "ReFORM: Reflected Flows for On-support Offline RL via Noise Manipulation",
+    "authors": [
+      "Songyuan Zhang",
+      "Oswin So",
+      "H. M. Sabbir Ahmad",
+      "Eric Yang Yu",
+      "Matthew Cleaveland",
+      "Mitchell Black",
+      "Chuchu Fan"
+    ],
+    "abstract": "Offline reinforcement learning (RL) aims to learn the optimal policy from a fixed dataset generated by behavior policies without additional environment interactions. One common challenge that arises in this setting is the out-of-distribution (OOD) error, which occurs when the policy leaves the training distribution. Prior methods penalize a statistical distance term to keep the policy close to the behavior policy, but this constrains policy improvement and may not completely prevent OOD actions. Another challenge is that the optimal policy distribution can be multimodal and difficult to represent. Recent works apply diffusion or flow policies to address this problem, but it is unclear how to avoid OOD errors while retaining policy expressiveness. We propose ReFORM, an offline RL method based on flow policies that enforces the less restrictive support constraint by construction. ReFORM learns a behavior cloning (BC) flow policy with a bounded source distribution to capture the support of the action distribution, then optimizes a reflected flow that generates bounded noise for the BC flow while keeping the support, to maximize the performance. Across 40 challenging tasks from the OGBench benchmark with datasets of varying quality and using a constant set of hyperparameters for all tasks, ReFORM dominates all baselines with hand-tuned hyperparameters on the performance profile curves.",
+    "primary": "cs.LG",
+    "date": "2026-02-06",
+    "abs": "https://arxiv.org/abs/2602.05051",
+    "pdf": "https://arxiv.org/pdf/2602.05051.pdf"
+  },
+  {
+    "id": "2509.24187",
+    "title": "Reasoning Beyond Majority Vote: An Explainable SpeechLM Framework for Speech Emotion Recognition",
+    "authors": [
+      "Bo-Hao Su",
+      "Hui-Ying Shih",
+      "Jinchuan Tian",
+      "Jiatong Shi",
+      "Chi-Chun Lee",
+      "Carlos Busso",
+      "Shinji Watanabe"
+    ],
+    "abstract": "Speech Emotion Recognition (SER) is typically trained and evaluated on majority-voted labels, which simplifies benchmarking but masks subjectivity and provides little transparency into why predictions are made. This neglects valid minority annotations and limits interpretability. We propose an explainable Speech Language Model (SpeechLM) framework that frames SER as a generative reasoning task. Given an utterance, the model first produces a transcript, then outputs both an emotion label and a concise natural-language rationale grounded in lexical and acoustic cues. Rationales are generated by a reasoning-capable teacher LLM and used as intermediate supervision, combined with majority labels during fine-tuning. Unlike prior work primarily focused on boosting classification accuracy, we aim to enhance explainability while preserving competitive performance. To this end, we complement majority-label metrics with annotator-aware scoring that credits matches with any annotator label. On MSP-Podcast v1.12, our model maintains improvements over zero-shot SpeechLM baselines, and produces rationales that human evaluators find plausible and well grounded. This demonstrates that incorporating rationale supervision offers a practical path toward interpretable SER without sacrificing predictive quality.",
+    "primary": "eess.AS",
+    "date": "2026-02-06",
+    "abs": "https://arxiv.org/abs/2509.24187",
+    "pdf": "https://arxiv.org/pdf/2509.24187.pdf"
+  },
+  {
+    "id": "2602.06041",
+    "title": "Predicting Camera Pose from Perspective Descriptions for Spatial Reasoning",
+    "authors": [
+      "Xuejun Zhang",
+      "Aditi Tiwari",
+      "Zhenhailong Wang",
+      "Heng Ji"
+    ],
+    "abstract": "Multi-image spatial reasoning remains challenging for current multimodal large language models (MLLMs). While single-view perception is inherently 2D, reasoning over multiple views requires building a coherent scene understanding across viewpoints. In particular, we study perspective taking, where a model must build a coherent 3D understanding from multi-view observations and use it to reason from a new, language-specified viewpoint. We introduce CAMCUE, a pose-aware multi-image framework that uses camera pose as an explicit geometric anchor for cross-view fusion and novel-view reasoning. CAMCUE injects per-view pose into visual tokens, grounds natural-language viewpoint descriptions to a target camera pose, and synthesizes a pose-conditioned imagined target view to support answering. To support this setting, we curate CAMCUE-DATA with 27,668 training and 508 test instances pairing multi-view images and poses with diverse target-viewpoint descriptions and perspective-shift questions. We also include human-annotated viewpoint descriptions in the test split to evaluate generalization to human language. CAMCUE improves overall accuracy by 9.06% and predicts target poses from natural-language viewpoint descriptions with over 90% rotation accuracy within 20° and translation accuracy within a 0.5 error threshold. This direct grounding avoids expensive test-time search-and-match, reducing inference time from 256.6s to 1.45s per example and enabling fast, interactive use in real-world scenarios.",
+    "primary": "cs.CV",
+    "date": "2026-02-06",
+    "abs": "https://arxiv.org/abs/2602.06041",
+    "pdf": "https://arxiv.org/pdf/2602.06041.pdf"
+  },
+  {
+    "id": "2510.22936",
+    "title": "PPE: Positional Preservation Embedding for Token Compression in Multimodal Large Language Models",
+    "authors": [
+      "Mouxiao Huang",
+      "Borui Jiang",
+      "Dehua Zheng",
+      "Hailin Hu",
+      "Kai Han",
+      "Xinghao Chen"
+    ],
+    "abstract": "Multimodal large language models (MLLMs) have achieved strong performance on vision-language tasks, yet often suffer from inefficiencies due to redundant visual tokens. Existing token merging methods reduce sequence length but frequently disrupt spatial layouts and temporal continuity by disregarding positional relationships. In this work, we propose a novel encoding operator dubbed as \\textbf{P}ositional \\textbf{P}reservation \\textbf{E}mbedding (\\textbf{PPE}), which has the main hallmark of preservation of spatiotemporal structure during visual token compression. PPE explicitly introduces the disentangled encoding of 3D positions in the token dimension, enabling each compressed token to encapsulate different positions from multiple original tokens. Furthermore, we show that PPE can effectively support cascade clustering -- a progressive token compression strategy that leads to better performance retention. PPE is a parameter-free and generic operator that can be seamlessly integrated into existing token merging methods without any adjustments. Applied to state-of-the-art token merging framework, PPE achieves consistent improvements of $2\\%\\sim5\\%$ across multiple vision-language benchmarks, including MMBench (general vision understanding), TextVQA (layout understanding) and VideoMME (temporal understanding). These results demonstrate that preserving positional cues is critical for efficient and effective MLLM reasoning. Our code is available at https://github.com/MouxiaoHuang/PPE.",
+    "primary": "cs.CV",
+    "date": "2026-02-06",
+    "abs": "https://arxiv.org/abs/2510.22936",
+    "pdf": "https://arxiv.org/pdf/2510.22936.pdf"
+  },
+  {
+    "id": "2505.14410",
+    "title": "Pairwise Evaluation of Accent Similarity in Speech Synthesis",
+    "authors": [
+      "Jinzuomu Zhong",
+      "Suyuan Liu",
+      "Dan Wells",
+      "Korin Richmond"
+    ],
+    "abstract": "Despite growing interest in generating high-fidelity accents, evaluating accent similarity in speech synthesis has been underexplored. We aim to enhance both subjective and objective evaluation methods for accent similarity. Subjectively, we refine the XAB listening test by adding components that achieve higher statistical significance with fewer listeners and lower costs. Our method involves providing listeners with transcriptions, having them highlight perceived accent differences, and implementing meticulous screening for reliability. Objectively, we utilise pronunciation-related metrics, based on distances between vowel formants and phonetic posteriorgrams, to evaluate accent generation. Comparative experiments reveal that these metrics, alongside accent similarity, speaker similarity, and Mel Cepstral Distortion, can be used. Moreover, our findings underscore significant limitations of common metrics like Word Error Rate in assessing underrepresented accents.",
+    "primary": "eess.AS",
+    "date": "2026-02-06",
+    "abs": "https://arxiv.org/abs/2505.14410",
+    "pdf": "https://arxiv.org/pdf/2505.14410.pdf"
+  },
+  {
+    "id": "2602.05576",
+    "title": "OpenMAG: A Comprehensive Benchmark for Multimodal-Attributed Graph",
+    "authors": [
+      "Chenxi Wan",
+      "Xunkai Li",
+      "Yilong Zuo",
+      "Haokun Deng",
+      "Sihan Li",
+      "Bowen Fan",
+      "Hongchao Qin",
+      "Ronghua Li",
+      "Guoren Wang"
+    ],
+    "abstract": "Multimodal-Attributed Graph (MAG) learning has achieved remarkable success in modeling complex real-world systems by integrating graph topology with rich attributes from multiple modalities. With the rapid proliferation of novel MAG models capable of handling intricate cross-modal semantics and structural dependencies, establishing a rigorous and unified evaluation standard has become imperative. Although existing benchmarks have facilitated initial progress, they exhibit critical limitations in domain coverage, encoder flexibility, model diversity, and task scope, presenting significant challenges to fair evaluation. To bridge this gap, we present OpenMAG, a comprehensive benchmark that integrates 19 datasets across 6 domains and incorporates 16 encoders to support both static and trainable feature encoding. OpenMAG further implements a standardized library of 24 state-of-the-art models and supports 8 downstream tasks, enabling fair comparisons within a unified framework. Through systematic assessment of necessity, data quality, effectiveness, robustness, and efficiency, we derive 14 fundamental insights into MAG learning to guide future advancements. Our code is available at https://github.com/YUKI-N810/OpenMAG.",
+    "primary": "cs.LG",
+    "date": "2026-02-06",
+    "abs": "https://arxiv.org/abs/2602.05576",
+    "pdf": "https://arxiv.org/pdf/2602.05576.pdf"
+  },
+  {
+    "id": "2602.05437",
+    "title": "Once Correct, Still Wrong: Counterfactual Hallucination in Multilingual Vision-Language Models",
+    "authors": [
+      "Basel Mousi",
+      "Fahim Dalvi",
+      "Shammur Chowdhury",
+      "Firoj Alam",
+      "Nadir Durrani"
+    ],
+    "abstract": "Vision-language models (VLMs) can achieve high accuracy while still accepting culturally plausible but visually incorrect interpretations. Existing hallucination benchmarks rarely test this failure mode, particularly outside Western contexts and English. We introduce M2CQA, a culturally grounded multimodal benchmark built from images spanning 17 MENA countries, paired with contrastive true and counterfactual statements in English, Arabic, and its dialects. To isolate hallucination beyond raw accuracy, we propose the CounterFactual Hallucination Rate (CFHR), which measures counterfactual acceptance conditioned on correctly answering the true statement. Evaluating state-of-the-art VLMs under multiple prompting strategies, we find that CFHR rises sharply in Arabic, especially in dialects, even when true-statement accuracy remains high. Moreover, reasoning-first prompting consistently increases counterfactual hallucination, while answering before justifying improves robustness. We will make the experimental resources and dataset publicly available for the community.",
+    "primary": "cs.CL",
+    "date": "2026-02-06",
+    "abs": "https://arxiv.org/abs/2602.05437",
+    "pdf": "https://arxiv.org/pdf/2602.05437.pdf"
+  },
+  {
+    "id": "2602.05847",
+    "title": "OmniVideo-R1: Reinforcing Audio-visual Reasoning with Query Intention and Modality Attention",
+    "authors": [
+      "Zhangquan Chen",
+      "Jiale Tao",
+      "Ruihuang Li",
+      "Yihao Hu",
+      "Ruitao Chen",
+      "Zhantao Yang",
+      "Xinlei Yu",
+      "Haodong Jing",
+      "Manyuan Zhang",
+      "Shuai Shao",
+      "Biao Wang",
+      "Qinglin Lu",
+      "Ruqi Huang"
+    ],
+    "abstract": "While humans perceive the world through diverse modalities that operate synergistically to support a holistic understanding of their surroundings, existing omnivideo models still face substantial challenges on audio-visual understanding tasks. In this paper, we propose OmniVideo-R1, a novel reinforced framework that improves mixed-modality reasoning. OmniVideo-R1 empowers models to \"think with omnimodal cues\" by two key strategies: (1) query-intensive grounding based on self-supervised learning paradigms; and (2) modality-attentive fusion built upon contrastive learning paradigms. Extensive experiments on multiple benchmarks demonstrate that OmniVideo-R1 consistently outperforms strong baselines, highlighting its effectiveness and robust generalization capabilities.",
+    "primary": "cs.AI",
+    "date": "2026-02-06",
+    "abs": "https://arxiv.org/abs/2602.05847",
+    "pdf": "https://arxiv.org/pdf/2602.05847.pdf"
+  },
+  {
+    "id": "2602.05711",
+    "title": "OmniMoE: An Efficient MoE by Orchestrating Atomic Experts at Scale",
+    "authors": [
+      "Jingze Shi",
+      "Zhangyang Peng",
+      "Yizhang Zhu",
+      "Yifan Wu",
+      "Guang Liu",
+      "Yuyu Luo"
+    ],
+    "abstract": "Mixture-of-Experts (MoE) architectures are evolving towards finer granularity to improve parameter efficiency. However, existing MoE designs face an inherent trade-off between the granularity of expert specialization and hardware execution efficiency. We propose OmniMoE, a system-algorithm co-designed framework that pushes expert granularity to its logical extreme. OmniMoE introduces vector-level Atomic Experts, enabling scalable routing and execution within a single MoE layer, while retaining a shared dense MLP branch for general-purpose processing. Although this atomic design maximizes capacity, it poses severe challenges for routing complexity and memory access. To address these, OmniMoE adopts a system-algorithm co-design: (i) a Cartesian Product Router that decomposes the massive index space to reduce routing complexity from O(N) to O(sqrt(N)); and (ii) Expert-Centric Scheduling that inverts the execution order to turn scattered, memory-bound lookups into efficient dense matrix operations. Validated on seven benchmarks, OmniMoE (with 1.7B active parameters) achieves 50.9% zero-shot accuracy across seven benchmarks, outperforming coarse-grained (e.g., DeepSeekMoE) and fine-grained (e.g., PEER) baselines. Crucially, OmniMoE reduces inference latency from 73ms to 6.7ms (a 10.9-fold speedup) compared to PEER, demonstrating that massive-scale fine-grained MoE can be fast and accurate. Our code is open-sourced at https://github.com/flash-algo/omni-moe.",
+    "primary": "cs.CL",
+    "date": "2026-02-06",
+    "abs": "https://arxiv.org/abs/2602.05711",
+    "pdf": "https://arxiv.org/pdf/2602.05711.pdf"
+  },
+  {
+    "id": "2602.04989",
+    "title": "Near-Optimal Dynamic Matching via Coarsening with Application to Heart Transplantation",
+    "authors": [
+      "Itai Zilberstein",
+      "Ioannis Anagnostides",
+      "Zachary W. Sollie",
+      "Arman Kilic",
+      "Tuomas Sandholm"
+    ],
+    "abstract": "Online matching has been a mainstay in domains such as Internet advertising and organ allocation, but practical algorithms often lack strong theoretical guarantees. We take an important step toward addressing this by developing new online matching algorithms based on a coarsening approach. Although coarsening typically implies a loss of granularity, we show that, to the contrary, aggregating offline nodes into capacitated clusters can yield near-optimal theoretical guarantees. We apply our methodology to heart transplant allocation to develop theoretically grounded policies based on structural properties of historical data. In realistic simulations, our policy closely matches the performance of the omniscient benchmark. Our work bridges the gap between data-driven heuristics and pessimistic theoretical lower bounds, and provides rigorous justification for prior clustering-based approaches in organ allocation.",
+    "primary": "cs.LG",
+    "date": "2026-02-06",
+    "abs": "https://arxiv.org/abs/2602.04989",
+    "pdf": "https://arxiv.org/pdf/2602.04989.pdf"
+  },
+  {
+    "id": "2602.05359",
+    "title": "Multimodal Latent Reasoning via Hierarchical Visual Cues Injection",
+    "authors": [
+      "Yiming Zhang",
+      "Qiangyu Yan",
+      "Borui Jiang",
+      "Kai Han"
+    ],
+    "abstract": "The advancement of multimodal large language models (MLLMs) has enabled impressive perception capabilities. However, their reasoning process often remains a \"fast thinking\" paradigm, reliant on end-to-end generation or explicit, language-centric chains of thought (CoT), which can be inefficient, verbose, and prone to hallucination. This work posits that robust reasoning should evolve within a latent space, integrating multimodal signals seamlessly. We propose multimodal latent reasoning via HIerarchical Visual cuEs injection (\\emph{HIVE}), a novel framework that instills deliberate, \"slow thinking\" without depending on superficial textual rationales. Our method recursively extends transformer blocks, creating an internal loop for iterative reasoning refinement. Crucially, it injectively grounds this process with hierarchical visual cues from global scene context to fine-grained regional details directly into the model's latent representations. This enables the model to perform grounded, multi-step inference entirely in the aligned latent space. Extensive evaluations demonstrate that test-time scaling is effective when incorporating vision knowledge, and that integrating hierarchical information significantly enhances the model's understanding of complex scenes.",
+    "primary": "cs.CV",
+    "date": "2026-02-06",
+    "abs": "https://arxiv.org/abs/2602.05359",
+    "pdf": "https://arxiv.org/pdf/2602.05359.pdf"
+  },
+  {
+    "id": "2602.05107",
+    "title": "Multilingual Extraction and Recognition of Implicit Discourse Relations in Speech and Text",
+    "authors": [
+      "Ahmed Ruby",
+      "Christian Hardmeier",
+      "Sara Stymne"
+    ],
+    "abstract": "Implicit discourse relation classification is a challenging task, as it requires inferring meaning from context. While contextual cues can be distributed across modalities and vary across languages, they are not always captured by text alone. To address this, we introduce an automatic method for distantly related and unrelated language pairs to construct a multilingual and multimodal dataset for implicit discourse relations in English, French, and Spanish. For classification, we propose a multimodal approach that integrates textual and acoustic information through Qwen2-Audio, allowing joint modeling of text and audio for implicit discourse relation classification across languages. We find that while text-based models outperform audio-based models, integrating both modalities can enhance performance, and cross-lingual transfer can provide substantial improvements for low-resource languages.",
+    "primary": "cs.CL",
+    "date": "2026-02-06",
+    "abs": "https://arxiv.org/abs/2602.05107",
+    "pdf": "https://arxiv.org/pdf/2602.05107.pdf"
+  },
+  {
+    "id": "2602.05275",
+    "title": "Magic-MM-Embedding: Towards Visual-Token-Efficient Universal Multimodal Embedding with MLLMs",
+    "authors": [
+      "Qi Li",
+      "Yanzhe Zhao",
+      "Yongxin Zhou",
+      "Yameng Wang",
+      "Yandong Yang",
+      "Yuanjia Zhou",
+      "Jue Wang",
+      "Zuojian Wang",
+      "Jinxiang Liu"
+    ],
+    "abstract": "Multimodal Large Language Models (MLLMs) have shown immense promise in universal multimodal retrieval, which aims to find relevant items of various modalities for a given query. But their practical application is often hindered by the substantial computational cost incurred from processing a large number of tokens from visual inputs. In this paper, we propose Magic-MM-Embedding, a series of novel models that achieve both high efficiency and state-of-the-art performance in universal multimodal embedding. Our approach is built on two synergistic pillars: (1) a highly efficient MLLM architecture incorporating visual token compression to drastically reduce inference latency and memory footprint, and (2) a multi-stage progressive training strategy designed to not only recover but significantly boost performance. This coarse-to-fine training paradigm begins with extensive continue pretraining to restore multimodal understanding and generation capabilities, progresses to large-scale contrastive pretraining and hard negative mining to enhance discriminative power, and culminates in a task-aware fine-tuning stage guided by an MLLM-as-a-Judge for precise data curation. Comprehensive experiments show that our model outperforms existing methods by a large margin while being more inference-efficient.",
+    "primary": "cs.CV",
+    "date": "2026-02-06",
+    "abs": "https://arxiv.org/abs/2602.05275",
+    "pdf": "https://arxiv.org/pdf/2602.05275.pdf"
+  },
+  {
+    "id": "2602.05474",
+    "title": "LMMRec: LLM-driven Motivation-aware Multimodal Recommendation",
+    "authors": [
+      "Yicheng Di",
+      "Zhanjie Zhang",
+      "Yun Wangc",
+      "Jinren Liue",
+      "Jiaqi Yanf",
+      "Jiyu Wei",
+      "Xiangyu Chend",
+      "Yuan Liu"
+    ],
+    "abstract": "Motivation-based recommendation systems uncover user behavior drivers. Motivation modeling, crucial for decision-making and content preference, explains recommendation generation. Existing methods often treat motivation as latent variables from interaction data, neglecting heterogeneous information like review text. In multimodal motivation fusion, two challenges arise: 1) achieving stable cross-modal alignment amid noise, and 2) identifying features reflecting the same underlying motivation across modalities. To address these, we propose LLM-driven Motivation-aware Multimodal Recommendation (LMMRec), a model-agnostic framework leveraging large language models for deep semantic priors and motivation understanding. LMMRec uses chain-of-thought prompting to extract fine-grained user and item motivations from text. A dual-encoder architecture models textual and interaction-based motivations for cross-modal alignment, while Motivation Coordination Strategy and Interaction-Text Correspondence Method mitigate noise and semantic drift through contrastive learning and momentum updates. Experiments on three datasets show LMMRec achieves up to a 4.98\\% performance improvement.",
+    "primary": "cs.IR",
+    "date": "2026-02-06",
+    "abs": "https://arxiv.org/abs/2602.05474",
+    "pdf": "https://arxiv.org/pdf/2602.05474.pdf"
+  },
+  {
+    "id": "2505.22995",
+    "title": "LLM-Synth4KWS: Scalable Automatic Generation and Synthesis of Confusable Data for Custom Keyword Spotting",
+    "authors": [
+      "Pai Zhu",
+      "Quan Wang",
+      "Dhruuv Agarwal",
+      "Kurt Partridge"
+    ],
+    "abstract": "Custom keyword spotting (KWS) allows detecting user-defined spoken keywords from streaming audio. This is achieved by comparing the embeddings from voice enrollments and input audio. State-of-the-art custom KWS models are typically trained contrastively using utterances whose keywords are randomly sampled from training dataset. These KWS models often struggle with confusing keywords, such as \"blue\" versus \"glue\". This paper introduces an effective way to augment the training with confusable utterances where keywords are generated and grouped from large language models (LLMs), and speech signals are synthesized with diverse speaking styles from text-to-speech (TTS) engines. To better measure user experience on confusable KWS, we define a new northstar metric using the average area under DET curve from confusable groups (c-AUC). Featuring high scalability and zero labor cost, the proposed method improves AUC by 3.7% and c-AUC by 11.3% on the Speech Commands testing set.",
+    "primary": "eess.AS",
+    "date": "2026-02-06",
+    "abs": "https://arxiv.org/abs/2505.22995",
+    "pdf": "https://arxiv.org/pdf/2505.22995.pdf"
+  },
+  {
+    "id": "2602.04937",
+    "title": "Linear Model Merging Unlocks Simple and Scalable Multimodal Data Mixture Optimization",
+    "authors": [
+      "Davide Berasi",
+      "Matteo Farina",
+      "Massimiliano Mancini",
+      "Elisa Ricci"
+    ],
+    "abstract": "Selecting the best data mixture is critical for successful Supervised Fine-Tuning (SFT) of Multimodal Large Language Models. However, determining the optimal mixture weights across multiple domain-specific datasets remains a significant bottleneck due to the combinatorial search space and the high cost associated with even a single training run. This is the so-called Data Mixture Optimization (DMO) problem. On the other hand, model merging unifies domain-specific experts through parameter interpolation. This strategy is efficient, as it only requires a single training run per domain, yet oftentimes leads to suboptimal models. In this work, we take the best of both worlds, studying model merging as an efficient strategy for estimating the performance of different data mixtures. We train domain-specific multimodal experts and evaluate their weighted parameter-space combinations to estimate the efficacy of corresponding data mixtures. We conduct extensive experiments on 14 multimodal benchmarks, and empirically demonstrate that the merged proxy models exhibit a high rank correlation with models trained on actual data mixtures. This decouples the search for optimal mixtures from the resource-intensive training process, thereby providing a scalable and efficient strategy for navigating the complex landscape of mixture weights. Code is publicly available at https://github.com/BerasiDavide/mLLMs_merging_4_DMO.",
+    "primary": "cs.LG",
+    "date": "2026-02-06",
+    "abs": "https://arxiv.org/abs/2602.04937",
+    "pdf": "https://arxiv.org/pdf/2602.04937.pdf"
+  },
+  {
+    "id": "2510.08176",
+    "title": "Leveraging Whisper Embeddings for Audio-based Lyrics Matching",
+    "authors": [
+      "Eleonora Mancini",
+      "Joan Serrà",
+      "Paolo Torroni",
+      "Yuki Mitsufuji"
+    ],
+    "abstract": "Audio-based lyrics matching can be an appealing alternative to other content-based retrieval approaches, but existing methods often suffer from limited reproducibility and inconsistent baselines. In this work, we introduce WEALY, a fully reproducible pipeline that leverages Whisper decoder embeddings for lyrics matching tasks. WEALY establishes robust and transparent baselines, while also exploring multimodal extensions that integrate textual and acoustic features. Through extensive experiments on standard datasets, we demonstrate that WEALY achieves a performance comparable to state-of-the-art methods that lack reproducibility. In addition, we provide ablation studies and analyses on language robustness, loss functions, and embedding strategies. This work contributes a reliable benchmark for future research, and underscores the potential of speech technologies for music information retrieval tasks.",
+    "primary": "cs.SD",
+    "date": "2026-02-06",
+    "abs": "https://arxiv.org/abs/2510.08176",
+    "pdf": "https://arxiv.org/pdf/2510.08176.pdf"
+  },
+  {
+    "id": "2602.05261",
+    "title": "Length-Unbiased Sequence Policy Optimization: Revealing and Controlling Response Length Variation in RLVR",
+    "authors": [
+      "Fanfan Liu",
+      "Youyang Yin",
+      "Peng Shi",
+      "Siqi Yang",
+      "Zhixiong Zeng",
+      "Haibo Qiu"
+    ],
+    "abstract": "Recent applications of Reinforcement Learning with Verifiable Rewards (RLVR) to Large Language Models (LLMs) and Vision-Language Models (VLMs) have demonstrated significant success in enhancing reasoning capabilities for complex tasks. During RLVR training, an increase in response length is often regarded as a key factor contributing to the growth of reasoning ability. However, the patterns of change in response length vary significantly across different RLVR algorithms during the training process. To provide a fundamental explanation for these variations, this paper conducts an in-depth analysis of the components of mainstream RLVR algorithms. We present a theoretical analysis of the factors influencing response length and validate our theory through extensive experimentation. Building upon these theoretical findings, we propose the Length-Unbiased Sequence Policy Optimization (LUSPO) algorithm. Specifically, we rectify the length bias inherent in Group Sequence Policy Optimization (GSPO), rendering its loss function unbiased with respect to response length and thereby resolving the issue of response length collapse. We conduct extensive experiments across mathematical reasoning benchmarks and multimodal reasoning scenarios, where LUSPO consistently achieves superior performance. Empirical results demonstrate that LUSPO represents a novel, state-of-the-art optimization strategy compared to existing methods such as GRPO and GSPO.",
+    "primary": "cs.CL",
+    "date": "2026-02-06",
+    "abs": "https://arxiv.org/abs/2602.05261",
+    "pdf": "https://arxiv.org/pdf/2602.05261.pdf"
+  },
+  {
+    "id": "2602.05988",
+    "title": "Layer-wise LoRA fine-tuning: a similarity metric approach",
+    "authors": [
+      "Keith Ando Ogawa",
+      "Bruno Lopes Yamamoto",
+      "Lucas Lauton de Alcantara",
+      "Lucas Pellicer",
+      "Rosimeire Pereira Costa",
+      "Edson Bollis",
+      "Anna Helena Reali Costa",
+      "Artur Jordao"
+    ],
+    "abstract": "Pre-training Large Language Models (LLMs) on web-scale datasets becomes fundamental for advancing general-purpose AI. In contrast, enhancing their predictive performance on downstream tasks typically involves adapting their knowledge through fine-tuning. Parameter-efficient fine-tuning techniques, such as Low-Rank Adaptation (LoRA), aim to reduce the computational cost of this process by freezing the pre-trained model and updating a smaller number of parameters. In comparison to full fine-tuning, these methods achieve over 99\\% reduction in trainable parameter count, depending on the configuration. Unfortunately, such a reduction may prove insufficient as LLMs continue to grow in scale. In this work, we address the previous problem by systematically selecting only a few layers to fine-tune using LoRA or its variants. We argue that not all layers contribute equally to the model adaptation. Leveraging this, we identify the most relevant layers to fine-tune by measuring their contribution to changes in internal representations. Our method is orthogonal to and readily compatible with existing low-rank adaptation techniques. We reduce the trainable parameters in LoRA-based techniques by up to 50\\%, while maintaining the predictive performance across different models and tasks. Specifically, on encoder-only architectures, this reduction in trainable parameters leads to a negligible predictive performance drop on the GLUE benchmark. On decoder-only architectures, we achieve a small drop or even improvements in the predictive performance on mathematical problem-solving capabilities and coding tasks. Finally, this effectiveness extends to multimodal models, for which we also observe competitive results relative to fine-tuning with LoRA modules in all layers. Code is available at: https://github.com/c2d-usp/Layer-wise-LoRA-with-CKA",
+    "primary": "cs.LG",
+    "date": "2026-02-06",
+    "abs": "https://arxiv.org/abs/2602.05988",
+    "pdf": "https://arxiv.org/pdf/2602.05988.pdf"
+  },
+  {
+    "id": "2602.04924",
+    "title": "Knowing When to Answer: Adaptive Confidence Refinement for Reliable Audio-Visual Question Answering",
+    "authors": [
+      "Dinh Phu Tran",
+      "Jihoon Jeong",
+      "Saad Wazir",
+      "Seongah Kim",
+      "Thao Do",
+      "Cem Subakan",
+      "Daeyoung Kim"
+    ],
+    "abstract": "We present a formal problem formulation for \\textit{Reliable} Audio-Visual Question Answering ($\\mathcal{R}$-AVQA), where we prefer abstention over answering incorrectly. While recent AVQA models have high accuracy, their ability to identify when they are likely wrong and their consequent abstention from answering remain underexplored areas of research. To fill this gap, we explore several approaches and then propose Adaptive Confidence Refinement (ACR), a lightweight method to further enhance the performance of $\\mathcal{R}$-AVQA. Our key insight is that the Maximum Softmax Probability (MSP) is Bayes-optimal only under strong calibration, a condition usually not met in deep neural networks, particularly in multimodal models. Instead of replacing MSP, our ACR maintains it as a primary confidence signal and applies input-adaptive residual corrections when MSP is deemed unreliable. ACR introduces two learned heads: i) a Residual Risk Head that predicts low-magnitude correctness residuals that MSP does not capture, and ii) a Confidence Gating Head to determine MSP trustworthiness. Our experiments and theoretical analysis show that ACR consistently outperforms existing methods on in- and out-of-disrtibution, and data bias settings across three different AVQA architectures, establishing a solid foundation for $\\mathcal{R}$-AVQA task. The code and checkpoints will be available upon acceptance \\href{https://github.com/PhuTran1005/R-AVQA}{at here}",
+    "primary": "cs.LG",
+    "date": "2026-02-06",
+    "abs": "https://arxiv.org/abs/2602.04924",
+    "pdf": "https://arxiv.org/pdf/2602.04924.pdf"
+  },
+  {
+    "id": "2602.06035",
+    "title": "InterPrior: Scaling Generative Control for Physics-Based Human-Object Interactions",
+    "authors": [
+      "Sirui Xu",
+      "Samuel Schulter",
+      "Morteza Ziyadi",
+      "Xialin He",
+      "Xiaohan Fei",
+      "Yu-Xiong Wang",
+      "Liangyan Gui"
+    ],
+    "abstract": "Humans rarely plan whole-body interactions with objects at the level of explicit whole-body movements. High-level intentions, such as affordance, define the goal, while coordinated balance, contact, and manipulation can emerge naturally from underlying physical and motor priors. Scaling such priors is key to enabling humanoids to compose and generalize loco-manipulation skills across diverse contexts while maintaining physically coherent whole-body coordination. To this end, we introduce InterPrior, a scalable framework that learns a unified generative controller through large-scale imitation pretraining and post-training by reinforcement learning. InterPrior first distills a full-reference imitation expert into a versatile, goal-conditioned variational policy that reconstructs motion from multimodal observations and high-level intent. While the distilled policy reconstructs training behaviors, it does not generalize reliably due to the vast configuration space of large-scale human-object interactions. To address this, we apply data augmentation with physical perturbations, and then perform reinforcement learning finetuning to improve competence on unseen goals and initializations. Together, these steps consolidate the reconstructed latent skills into a valid manifold, yielding a motion prior that generalizes beyond the training data, e.g., it can incorporate new behaviors such as interactions with unseen objects. We further demonstrate its effectiveness for user-interactive control and its potential for real robot deployment.",
+    "primary": "cs.CV",
+    "date": "2026-02-06",
+    "abs": "https://arxiv.org/abs/2602.06035",
+    "pdf": "https://arxiv.org/pdf/2602.06035.pdf"
+  },
+  {
+    "id": "2312.00992",
+    "title": "Improving Normative Modeling for Multi-modal Neuroimaging Data using mixture-of-product-of-experts variational autoencoders",
+    "authors": [
+      "Sayantan Kumar",
+      "Philip Payne",
+      "Aristeidis Sotiras"
+    ],
+    "abstract": "Normative models in neuroimaging learn the brain patterns of healthy population distribution and estimate how disease subjects like Alzheimer's Disease (AD) deviate from the norm. Existing variational autoencoder (VAE)-based normative models using multimodal neuroimaging data aggregate information from multiple modalities by estimating product or averaging of unimodal latent posteriors. This can often lead to uninformative joint latent distributions which affects the estimation of subject-level deviations. In this work, we addressed the prior limitations by adopting the Mixture-of-Product-of-Experts (MoPoE) technique which allows better modelling of the joint latent posterior. Our model labelled subjects as outliers by calculating deviations from the multimodal latent space. Further, we identified which latent dimensions and brain regions were associated with abnormal deviations due to AD pathology.",
+    "primary": "cs.LG",
+    "date": "2026-02-06",
+    "abs": "https://arxiv.org/abs/2312.00992",
+    "pdf": "https://arxiv.org/pdf/2312.00992.pdf"
+  },
+  {
+    "id": "2602.05670",
+    "title": "HyperPotter: Spell the Charm of High-Order Interactions in Audio Deepfake Detection",
+    "authors": [
+      "Qing Wen",
+      "Haohao Li",
+      "Zhongjie Ba",
+      "Peng Cheng",
+      "Miao He",
+      "Li Lu",
+      "Kui Ren"
+    ],
+    "abstract": "Advances in AIGC technologies have enabled the synthesis of highly realistic audio deepfakes capable of deceiving human auditory perception. Although numerous audio deepfake detection (ADD) methods have been developed, most rely on local temporal/spectral features or pairwise relations, overlooking high-order interactions (HOIs). HOIs capture discriminative patterns that emerge from multiple feature components beyond their individual contributions. We propose HyperPotter, a hypergraph-based framework that explicitly models these synergistic HOIs through clustering-based hyperedges with class-aware prototype initialization. Extensive experiments demonstrate that HyperPotter surpasses its baseline by an average relative gain of 22.15% across 11 datasets and outperforms state-of-the-art methods by 13.96% on 4 challenging cross-domain datasets, demonstrating superior generalization to diverse attacks and speakers.",
+    "primary": "cs.SD",
+    "date": "2026-02-06",
+    "abs": "https://arxiv.org/abs/2602.05670",
+    "pdf": "https://arxiv.org/pdf/2602.05670.pdf"
+  },
+  {
+    "id": "2404.03208",
+    "title": "HiMAL: A Multimodal Hierarchical Multi-task Auxiliary Learning framework for predicting and explaining Alzheimer disease progression",
+    "authors": [
+      "Sayantan Kumar",
+      "Sean Yu",
+      "Andrew Michelson",
+      "Thomas Kannampallil",
+      "Philip Payne"
+    ],
+    "abstract": "Objective: We aimed to develop and validate a novel multimodal framework HiMAL (Hierarchical, Multi-task Auxiliary Learning) framework, for predicting cognitive composite functions as auxiliary tasks that estimate the longitudinal risk of transition from Mild Cognitive Impairment (MCI) to Alzheimer Disease (AD).\n  Methods: HiMAL utilized multimodal longitudinal visit data including imaging features, cognitive assessment scores, and clinical variables from MCI patients in the Alzheimer Disease Neuroimaging Initiative (ADNI) dataset, to predict at each visit if an MCI patient will progress to AD within the next 6 months. Performance of HiMAL was compared with state-of-the-art single-task and multi-task baselines using area under the receiver operator curve (AUROC) and precision recall curve (AUPRC) metrics. An ablation study was performed to assess the impact of each input modality on model performance. Additionally, longitudinal explanations regarding risk of disease progression were provided to interpret the predicted cognitive decline.\n  Results: Out of 634 MCI patients (mean [IQR] age : 72.8 [67-78], 60% men), 209 (32%) progressed to AD. HiMAL showed better prediction performance compared to all single-modality singe-task baselines (AUROC = 0.923 [0.915-0.937]; AUPRC= 0.623 [0.605-0.644]; all p<0.05). Ablation analysis highlighted that imaging and cognition scores with maximum contribution towards prediction of disease progression.\n  Discussion: Clinically informative model explanations anticipate cognitive decline 6 months in advance, aiding clinicians in future disease progression assessment. HiMAL relies on routinely collected EHR variables for proximal (6 months) prediction of AD onset, indicating its translational potential for point-of-care monitoring and managing of high-risk patients.",
+    "primary": "cs.LG",
+    "date": "2026-02-06",
+    "abs": "https://arxiv.org/abs/2404.03208",
+    "pdf": "https://arxiv.org/pdf/2404.03208.pdf"
+  },
+  {
+    "id": "2505.14814",
+    "title": "GraphemeAug: A Systematic Approach to Synthesized Hard Negative Keyword Spotting Examples",
+    "authors": [
+      "Harry Zhang",
+      "Kurt Partridge",
+      "Pai Zhu",
+      "Neng Chen",
+      "Hyun Jin Park",
+      "Dhruuv Agarwal",
+      "Quan Wang"
+    ],
+    "abstract": "Spoken Keyword Spotting (KWS) is the task of distinguishing between the presence and absence of a keyword in audio. The accuracy of a KWS model hinges on its ability to correctly classify examples close to the keyword and non-keyword boundary. These boundary examples are often scarce in training data, limiting model performance. In this paper, we propose a method to systematically generate adversarial examples close to the decision boundary by making insertion/deletion/substitution edits on the keyword's graphemes. We evaluate this technique on held-out data for a popular keyword and show that the technique improves AUC on a dataset of synthetic hard negatives by 61% while maintaining quality on positives and ambient negative audio data.",
+    "primary": "cs.SD",
+    "date": "2026-02-06",
+    "abs": "https://arxiv.org/abs/2505.14814",
+    "pdf": "https://arxiv.org/pdf/2505.14814.pdf"
+  },
+  {
+    "id": "2506.08194",
+    "title": "GIQ: Benchmarking 3D Geometric Reasoning of Vision Foundation Models with Simulated and Real Polyhedra",
+    "authors": [
+      "Mateusz Michalkiewicz",
+      "Anekha Sokhal",
+      "Tadeusz Michalkiewicz",
+      "Piotr Pawlikowski",
+      "Mahsa Baktashmotlagh",
+      "Varun Jampani",
+      "Guha Balakrishnan"
+    ],
+    "abstract": "Modern monocular 3D reconstruction methods and vision-language models (VLMs) demonstrate impressive results on standard benchmarks, yet recent works cast doubt on their true understanding of geometric properties. We introduce GOQ, a comprehensive benchmark specifically designed to evaluate the geometric reasoning capabilities of vision and vision-language foundation models. GIQ comprises synthetic and real-world images and corresponding 3D meshes of diverse polyhedra covering varying levels of complexity and symmetry, from Platonic, Archimedean, Johnson, and Catalan solids to stellations and compound shapes. Through systematic experiments involving monocular 3D reconstruction, 3D symmetry detection, mental rotation tests, and zero-shot shape classification tasks, we reveal significant shortcomings in current models. State-of-the-art reconstruction algorithms trained on extensive 3D datasets struggle to reconstruct even basic geometric Platonic solids accurately. Next, although foundation models may be shown via linear and non-linear probing to capture specific 3D symmetry elements, they falter significantly in tasks requiring detailed geometric differentiation, such as mental rotation. Moreover, advanced vision-language assistants such as ChatGPT, Gemini and Claud exhibit remarkably low accuracy in interpreting basic shape properties such as face geometry, convexity, and compound structures of complex polyhedra. GIQ is publicly available at toomanymatts.github.io/giq-benchmark/, providing a structured platform to benchmark critical gaps in geometric intelligence and facilitate future progress in robust, geometry-aware representation learning.",
+    "primary": "cs.CV",
+    "date": "2026-02-06",
+    "abs": "https://arxiv.org/abs/2506.08194",
+    "pdf": "https://arxiv.org/pdf/2506.08194.pdf"
+  },
+  {
+    "id": "2602.05636",
+    "title": "Generative Ontology: When Structured Knowledge Learns to Create",
+    "authors": [
+      "Benny Cheung"
+    ],
+    "abstract": "Traditional ontologies excel at describing domain structure but cannot generate novel artifacts. Large language models generate fluently but produce outputs that lack structural validity, hallucinating mechanisms without components, goals without end conditions. We introduce Generative Ontology, a framework that synthesizes these complementary strengths: ontology provides the grammar; the LLM provides the creativity.\n  Generative Ontology encodes domain knowledge as executable Pydantic schemas that constrain LLM generation via DSPy signatures. A multi-agent pipeline assigns specialized roles to different ontology domains: a Mechanics Architect designs game systems, a Theme Weaver integrates narrative, a Balance Critic identifies exploits. Each agent carrying a professional \"anxiety\" that prevents shallow, agreeable outputs. Retrieval-augmented generation grounds novel designs in precedents from existing exemplars, while iterative validation ensures coherence between mechanisms and components.\n  We demonstrate the framework through GameGrammar, a system for generating complete tabletop game designs. Given a thematic prompt (\"bioluminescent fungi competing in a cave ecosystem\"), the pipeline produces structurally complete, playable game specifications with mechanisms, components, victory conditions, and setup instructions. These outputs satisfy ontological constraints while remaining genuinely creative.\n  The pattern generalizes beyond games. Any domain with expert vocabulary, validity constraints, and accumulated exemplars (music composition, software architecture, culinary arts) is a candidate for Generative Ontology. We argue that constraints do not limit creativity but enable it: just as grammar makes poetry possible, ontology makes structured generation possible.",
+    "primary": "cs.AI",
+    "date": "2026-02-06",
+    "abs": "https://arxiv.org/abs/2602.05636",
+    "pdf": "https://arxiv.org/pdf/2602.05636.pdf"
+  },
+  {
+    "id": "2410.16647",
+    "title": "GE2E-KWS: Generalized End-to-End Training and Evaluation for Zero-shot Keyword Spotting",
+    "authors": [
+      "Pai Zhu",
+      "Jacob W. Bartel",
+      "Dhruuv Agarwal",
+      "Kurt Partridge",
+      "Hyun Jin Park",
+      "Quan Wang"
+    ],
+    "abstract": "We propose GE2E-KWS -- a generalized end-to-end training and evaluation framework for customized keyword spotting. Specifically, enrollment utterances are separated and grouped by keywords from the training batch and their embedding centroids are compared to all other test utterance embeddings to compute the loss. This simulates runtime enrollment and verification stages, and improves convergence stability and training speed by optimizing matrix operations compared to SOTA triplet loss approaches. To benchmark different models reliably, we propose an evaluation process that mimics the production environment and compute metrics that directly measure keyword matching accuracy. Trained with GE2E loss, our 419KB quantized conformer model beats a 7.5GB ASR encoder by 23.6% relative AUC, and beats a same size triplet loss model by 60.7% AUC. Our KWS models are natively streamable with low memory footprints, and designed to continuously run on-device with no retraining needed for new keywords (zero-shot).",
+    "primary": "eess.AS",
+    "date": "2026-02-06",
+    "abs": "https://arxiv.org/abs/2410.16647",
+    "pdf": "https://arxiv.org/pdf/2410.16647.pdf"
+  },
+  {
+    "id": "2602.05487",
+    "title": "Feature points evaluation on omnidirectional vision with a photorealistic fisheye sequence -- A report on experiments done in 2014",
+    "authors": [
+      "Julien Moreau",
+      "S. Ambellouis",
+      "Yassine Ruichek"
+    ],
+    "abstract": "What is this report: This is a scientific report, contributing with a detailed bibliography, a dataset which we will call now PFSeq for ''Photorealistic Fisheye Sequence'' and make available at https://doi.org/10. 57745/DYIVVU, and comprehensive experiments. This work should be considered as a draft, and has been done during my PhD thesis ''Construction of 3D models from fisheye video data-Application to the localisation in urban area'' in 2014 [Mor16]. These results have never been published. The aim was to find the best features detector and descriptor for fisheye images, in the context of selfcalibration, with cameras mounted on the top of a car and aiming at the zenith (to proceed then fisheye visual odometry and stereovision in urban scenes). We face a chicken and egg problem, because we can not take advantage of an accurate projection model for an optimal features detection and description, and we rightly need good features to perform the calibration (i.e. to compute the accurate projection model of the camera). What is not this report: It does not contribute with new features algorithm. It does not compare standard features algorithms to algorithms designed for omnidirectional images (unfortunately). It has not been peer-reviewed. Discussions have been translated and enhanced but the experiments have not been run again and the report has not been updated accordingly to the evolution of the state-of-the-art (read this as a 2014 report).",
+    "primary": "cs.CV",
+    "date": "2026-02-06",
+    "abs": "https://arxiv.org/abs/2602.05487",
+    "pdf": "https://arxiv.org/pdf/2602.05487.pdf"
+  },
+  {
+    "id": "2601.07303",
+    "title": "ESDD2: Environment-Aware Speech and Sound Deepfake Detection Challenge Evaluation Plan",
+    "authors": [
+      "Xueping Zhang",
+      "Han Yin",
+      "Yang Xiao",
+      "Lin Zhang",
+      "Ting Dang",
+      "Rohan Kumar Das",
+      "Ming Li"
+    ],
+    "abstract": "Audio recorded in real-world environments often contains a mixture of foreground speech and background environmental sounds. With rapid advances in text-to-speech, voice conversion, and other generation models, either component can now be modified independently. Such component-level manipulations are harder to detect, as the remaining unaltered component can mislead the systems designed for whole deepfake audio, and they often sound more natural to human listeners. To address this gap, we have proposed CompSpoofV2 dataset and a separation-enhanced joint learning framework. CompSpoofV2 is a large-scale curated dataset designed for component-level audio anti-spoofing, which contains over 250k audio samples, with a total duration of approximately 283 hours. Based on the CompSpoofV2 and the separation-enhanced joint learning framework, we launch the Environment-Aware Speech and Sound Deepfake Detection Challenge (ESDD2), focusing on component-level spoofing, where both speech and environmental sounds may be manipulated or synthesized, creating a more challenging and realistic detection scenario. The challenge will be held in conjunction with the IEEE International Conference on Multimedia and Expo 2026 (ICME 2026).",
+    "primary": "cs.SD",
+    "date": "2026-02-06",
+    "abs": "https://arxiv.org/abs/2601.07303",
+    "pdf": "https://arxiv.org/pdf/2601.07303.pdf"
+  },
+  {
+    "id": "2602.05650",
+    "title": "Enhancing Personality Recognition by Comparing the Predictive Power of Traits, Facets, and Nuances",
+    "authors": [
+      "Amir Ansari",
+      "Jana Subirana",
+      "Bruna Silva",
+      "Sergio Escalera",
+      "David Gallardo-Pujol",
+      "Cristina Palmero"
+    ],
+    "abstract": "Personality is a complex, hierarchical construct typically assessed through item-level questionnaires aggregated into broad trait scores. Personality recognition models aim to infer personality traits from different sources of behavioral data. However, reliance on broad trait scores as ground truth, combined with limited training data, poses challenges for generalization, as similar trait scores can manifest through diverse, context dependent behaviors. In this work, we explore the predictive impact of the more granular hierarchical levels of the Big-Five Personality Model, facets and nuances, to enhance personality recognition from audiovisual interaction data. Using the UDIVA v0.5 dataset, we trained a transformer-based model including cross-modal (audiovisual) and cross-subject (dyad-aware) attention mechanisms. Results show that nuance-level models consistently outperform facet and trait-level models, reducing mean squared error by up to 74% across interaction scenarios.",
+    "primary": "cs.CV",
+    "date": "2026-02-06",
+    "abs": "https://arxiv.org/abs/2602.05650",
+    "pdf": "https://arxiv.org/pdf/2602.05650.pdf"
+  },
+  {
+    "id": "2602.05406",
+    "title": "Enabling Automatic Disordered Speech Recognition: An Impaired Speech Dataset in the Akan Language",
+    "authors": [
+      "Isaac Wiafe",
+      "Akon Obu Ekpezu",
+      "Sumaya Ahmed Salihs",
+      "Elikem Doe Atsakpo",
+      "Fiifi Baffoe Payin Winful",
+      "Jamal-Deen Abdulai"
+    ],
+    "abstract": "The lack of impaired speech data hinders advancements in the development of inclusive speech technologies, particularly in low-resource languages such as Akan. To address this gap, this study presents a curated corpus of speech samples from native Akan speakers with speech impairment. The dataset comprises of 50.01 hours of audio recordings cutting across four classes of impaired speech namely stammering, cerebral palsy, cleft palate, and stroke induced speech disorder. Recordings were done in controlled supervised environments were participants described pre-selected images in their own words. The resulting dataset is a collection of audio recordings, transcriptions, and associated metadata on speaker demographics, class of impairment, recording environment and device. The dataset is intended to support research in low-resource automatic disordered speech recognition systems and assistive speech technology.",
+    "primary": "cs.SD",
+    "date": "2026-02-06",
+    "abs": "https://arxiv.org/abs/2602.05406",
+    "pdf": "https://arxiv.org/pdf/2602.05406.pdf"
+  },
+  {
+    "id": "2602.05646",
+    "title": "Empowering Time Series Analysis with Large-Scale Multimodal Pretraining",
+    "authors": [
+      "Peng Chen",
+      "Siyuan Wang",
+      "Shiyan Hu",
+      "Xingjian Wu",
+      "Yang Shu",
+      "Zhongwen Rao",
+      "Meng Wang",
+      "Yijie Li",
+      "Bin Yang",
+      "Chenjuan Guo"
+    ],
+    "abstract": "While existing time series foundation models primarily rely on large-scale unimodal pretraining, they lack complementary modalities to enhance time series understanding. Building multimodal foundation models is a natural next step, but it faces key challenges: 1) lack of a unified multimodal pretraining paradigm and large-scale multimodal corpora for time series analysis; 2) how to effectively integrate heterogeneous modalities and enhance model generalization. To address these challenges, we take an early step toward multimodal foundation models for time series analysis. We first propose a multimodal pretraining paradigm that leverages time series with endogenous modalities (derived images and text) and exogenous knowledge (real-world news), providing a comprehensive multi-view perspective for time series analysis. To support this, we develop an automated data construction pipeline to curate MM-TS, the first large-scale multimodal time series dataset spanning six domains, with up to one billion points. Then we propose HORAI, a frequency-enhanced multimodal foundation model. It integrates two core components: the Frequency-enhanced Cross-Modality Encoder and the Time-Frequency Decoder, designed to effectively fuse multimodal features and enhance model generalization across modalities and domains. After pretraining on MM-TS, HORAI achieves state-of-the-art zero-shot performance on time series forecasting and anomaly detection tasks, demonstrating strong generalization.",
+    "primary": "cs.LG",
+    "date": "2026-02-06",
+    "abs": "https://arxiv.org/abs/2602.05646",
+    "pdf": "https://arxiv.org/pdf/2602.05646.pdf"
+  },
+  {
+    "id": "2601.18266",
+    "title": "Efficient Rehearsal for Continual Learning in ASR via Singular Value Tuning",
+    "authors": [
+      "Steven Vander Eeckt",
+      "Hugo Van hamme"
+    ],
+    "abstract": "Continual Learning (CL) in Automatic Speech Recognition (ASR) suffers from catastrophic forgetting when adapting to new tasks, domains, or speakers. A common strategy to mitigate this is to store a subset of past data in memory for rehearsal. However, rehearsal-based methods face key limitations: storing data is often costly, infeasible with pre-trained models, or restricted by privacy regulations. Running existing rehearsal-based methods with smaller memory sizes to alleviate these issues usually leads to degraded performance.\n  We propose a rehearsal-based CL method that remains effective even with minimal memory. It operates in two stages: first, fine-tuning on the new task; second, applying Singular Value Decomposition (SVD) to the changes in linear layers and, in a parameter-efficient manner, retraining only gating vectors on the singular values, which control to extent to which updates from the first stage are accepted, using rehearsal. We extensively test and analyze our method on two monolingual and two multilingual benchmarks. Our method reduces forgetting and outperforms state-of-the-art CL approaches for ASR, even when limited to a single utterance per previous task.",
+    "primary": "eess.AS",
+    "date": "2026-02-06",
+    "abs": "https://arxiv.org/abs/2601.18266",
+    "pdf": "https://arxiv.org/pdf/2601.18266.pdf"
+  },
+  {
+    "id": "2602.05384",
+    "title": "Dolphin-v2: Universal Document Parsing via Scalable Anchor Prompting",
+    "authors": [
+      "Hao Feng",
+      "Wei Shi",
+      "Ke Zhang",
+      "Xiang Fei",
+      "Lei Liao",
+      "Dingkang Yang",
+      "Yongkun Du",
+      "Xuecheng Wu",
+      "Jingqun Tang",
+      "Yang Liu",
+      "Hong Chen",
+      "Can Huang"
+    ],
+    "abstract": "Document parsing has garnered widespread attention as vision-language models (VLMs) advance OCR capabilities. However, the field remains fragmented across dozens of specialized models with varying strengths, forcing users to navigate complex model selection and limiting system scalability. Moreover, existing two-stage approaches depend on axis-aligned bounding boxes for layout detection, failing to handle distorted or photographed documents effectively. To this end, we present Dolphin-v2, a two-stage document image parsing model that substantially improves upon the original Dolphin. In the first stage, Dolphin-v2 jointly performs document type classification (digital-born versus photographed) alongside layout analysis. For digital-born documents, it conducts finer-grained element detection with reading order prediction. In the second stage, we employ a hybrid parsing strategy: photographed documents are parsed holistically as complete pages to handle geometric distortions, while digital-born documents undergo element-wise parallel parsing guided by the detected layout anchors, enabling efficient content extraction. Compared with the original Dolphin, Dolphin-v2 introduces several crucial enhancements: (1) robust parsing of photographed documents via holistic page-level understanding, (2) finer-grained element detection (21 categories) with semantic attribute extraction such as author information and document metadata, and (3) code block recognition with indentation preservation, which existing systems typically lack. Comprehensive evaluations are conducted on DocPTBench, OmniDocBench, and our self-constructed RealDoc-160 benchmark. The results demonstrate substantial improvements: +14.78 points overall on the challenging OmniDocBench and 91% error reduction on photographed documents, while maintaining efficient inference through parallel processing.",
+    "primary": "cs.CV",
+    "date": "2026-02-06",
+    "abs": "https://arxiv.org/abs/2602.05384",
+    "pdf": "https://arxiv.org/pdf/2602.05384.pdf"
+  },
+  {
+    "id": "2602.05535",
+    "title": "Detecting Misbehaviors of Large Vision-Language Models by Evidential Uncertainty Quantification",
+    "authors": [
+      "Tao Huang",
+      "Rui Wang",
+      "Xiaofei Liu",
+      "Yi Qin",
+      "Li Duan",
+      "Liping Jing"
+    ],
+    "abstract": "Large vision-language models (LVLMs) have shown substantial advances in multimodal understanding and generation. However, when presented with incompetent or adversarial inputs, they frequently produce unreliable or even harmful content, such as fact hallucinations or dangerous instructions. This misalignment with human expectations, referred to as \\emph{misbehaviors} of LVLMs, raises serious concerns for deployment in critical applications. These misbehaviors are found to stem from epistemic uncertainty, specifically either conflicting internal knowledge or the absence of supporting information. However, existing uncertainty quantification methods, which typically capture only overall epistemic uncertainty, have shown limited effectiveness in identifying such issues. To address this gap, we propose Evidential Uncertainty Quantification (EUQ), a fine-grained method that captures both information conflict and ignorance for effective detection of LVLM misbehaviors. In particular, we interpret features from the model output head as either supporting (positive) or opposing (negative) evidence. Leveraging Evidence Theory, we model and aggregate this evidence to quantify internal conflict and knowledge gaps within a single forward pass. We extensively evaluate our method across four categories of misbehavior, including hallucinations, jailbreaks, adversarial vulnerabilities, and out-of-distribution (OOD) failures, using state-of-the-art LVLMs, and find that EUQ consistently outperforms strong baselines, showing that hallucinations correspond to high internal conflict and OOD failures to high ignorance. Furthermore, layer-wise evidential uncertainty dynamics analysis helps interpret the evolution of internal representations from a new perspective. The source code is available at https://github.com/HT86159/EUQ.",
+    "primary": "cs.LG",
+    "date": "2026-02-06",
+    "abs": "https://arxiv.org/abs/2602.05535",
+    "pdf": "https://arxiv.org/pdf/2602.05535.pdf"
+  },
+  {
+    "id": "2602.04886",
+    "title": "Denoising diffusion networks for normative modeling in neuroimaging",
+    "authors": [
+      "Luke Whitbread",
+      "Lyle J. Palmer",
+      "Mark Jenkinson"
+    ],
+    "abstract": "Normative modeling estimates reference distributions of biological measures conditional on covariates, enabling centiles and clinically interpretable deviation scores to be derived. Most neuroimaging pipelines fit one model per imaging-derived phenotype (IDP), which scales well but discards multivariate dependence that may encode coordinated patterns. We propose denoising diffusion probabilistic models (DDPMs) as a unified conditional density estimator for tabular IDPs, from which univariate centiles and deviation scores are derived by sampling. We utilise two denoiser backbones: (i) a feature-wise linear modulation (FiLM) conditioned multilayer perceptron (MLP) and (ii) a tabular transformer with feature self-attention and intersample attention (SAINT), conditioning covariates through learned embeddings. We evaluate on a synthetic benchmark with heteroscedastic and multimodal age effects and on UK Biobank FreeSurfer phenotypes, scaling from dimension of 2 to 200. Our evaluation suite includes centile calibration (absolute centile error, empirical coverage, and the probability integral transform), distributional fidelity (Kolmogorov-Smirnov tests), multivariate dependence diagnostics, and nearest-neighbour memorisation analysis. For low dimensions, diffusion models deliver well-calibrated per-IDP outputs comparable to traditional baselines while jointly modeling realistic dependence structure. At higher dimensions, the transformer backbone remains substantially better calibrated than the MLP and better preserves higher-order dependence, enabling scalable joint normative models that remain compatible with standard per-IDP pipelines. These results support diffusion-based normative modeling as a practical route to calibrated multivariate deviation profiles in neuroimaging.",
+    "primary": "cs.LG",
+    "date": "2026-02-06",
+    "abs": "https://arxiv.org/abs/2602.04886",
+    "pdf": "https://arxiv.org/pdf/2602.04886.pdf"
+  },
+  {
+    "id": "2602.04904",
+    "title": "DCER: Dual-Stage Compression and Energy-Based Reconstruction",
+    "authors": [
+      "Yiwen Wang",
+      "Jiahao Qin"
+    ],
+    "abstract": "Multimodal fusion faces two robustness challenges: noisy inputs degrade representation quality, and missing modalities cause prediction failures. We propose DCER, a\n  unified framework addressing both challenges through dual-stage compression and energy-based reconstruction. The compression stage operates at two levels:\n  within-modality frequency transforms (wavelet for audio, DCT for video) remove noise while preserving task-relevant patterns, and cross-modality bottleneck tokens\n  force genuine integration rather than modality-specific shortcuts. For missing modalities, energy-based reconstruction recovers representations via gradient descent\n  on a learned energy function, with the final energy providing intrinsic uncertainty quantification (\\r{ho} > 0.72 correlation with prediction error). Experiments on\n  CMU-MOSI, CMU-MOSEI, and CH-SIMS demonstrate state-of-the-art performance across all benchmarks, with a U-shaped robustness pattern favoring multimodal fusion at\n  both complete and high-missing conditions. The code will be available on Github.",
+    "primary": "cs.LG",
+    "date": "2026-02-06",
+    "abs": "https://arxiv.org/abs/2602.04904",
+    "pdf": "https://arxiv.org/pdf/2602.04904.pdf"
+  },
+  {
+    "id": "2602.04920",
+    "title": "CyIN: Cyclic Informative Latent Space for Bridging Complete and Incomplete Multimodal Learning",
+    "authors": [
+      "Ronghao Lin",
+      "Qiaolin He",
+      "Sijie Mai",
+      "Ying Zeng",
+      "Aolin Xiong",
+      "Li Huang",
+      "Yap-Peng Tan",
+      "Haifeng Hu"
+    ],
+    "abstract": "Multimodal machine learning, mimicking the human brain's ability to integrate various modalities has seen rapid growth. Most previous multimodal models are trained on perfectly paired multimodal input to reach optimal performance. In real-world deployments, however, the presence of modality is highly variable and unpredictable, causing the pre-trained models in suffering significant performance drops and fail to remain robust with dynamic missing modalities circumstances. In this paper, we present a novel Cyclic INformative Learning framework (CyIN) to bridge the gap between complete and incomplete multimodal learning. Specifically, we firstly build an informative latent space by adopting token- and label-level Information Bottleneck (IB) cyclically among various modalities. Capturing task-related features with variational approximation, the informative bottleneck latents are purified for more efficient cross-modal interaction and multimodal fusion. Moreover, to supplement the missing information caused by incomplete multimodal input, we propose cross-modal cyclic translation by reconstruct the missing modalities with the remained ones through forward and reverse propagation process. With the help of the extracted and reconstructed informative latents, CyIN succeeds in jointly optimizing complete and incomplete multimodal learning in one unified model. Extensive experiments on 4 multimodal datasets demonstrate the superior performance of our method in both complete and diverse incomplete scenarios.",
+    "primary": "cs.LG",
+    "date": "2026-02-06",
+    "abs": "https://arxiv.org/abs/2602.04920",
+    "pdf": "https://arxiv.org/pdf/2602.04920.pdf"
+  },
+  {
+    "id": "2509.21950",
+    "title": "Customizing Visual Emotion Evaluation for MLLMs: An Open-vocabulary, Multifaceted, and Scalable Approach",
+    "authors": [
+      "Daiqing Wu",
+      "Dongbao Yang",
+      "Sicheng Zhao",
+      "Can Ma",
+      "Yu Zhou"
+    ],
+    "abstract": "Recently, Multimodal Large Language Models (MLLMs) have achieved exceptional performance across diverse tasks, continually surpassing previous expectations regarding their capabilities. Nevertheless, their proficiency in perceiving emotions from images remains debated, with studies yielding divergent results in zero-shot scenarios. We argue that this inconsistency stems partly from constraints in existing evaluation methods, including the oversight of plausible responses, limited emotional taxonomies, neglect of contextual factors, and labor-intensive annotations. To facilitate customized visual emotion evaluation for MLLMs, we propose an Emotion Statement Judgment task that overcomes these constraints. Complementing this task, we devise an automated pipeline that efficiently constructs emotion-centric statements with minimal human effort. Through systematically evaluating prevailing MLLMs, our study showcases their stronger performance in emotion interpretation and context-based emotion judgment, while revealing relative limitations in comprehending perception subjectivity. When compared to humans, even top-performing MLLMs like GPT4o demonstrate remarkable performance gaps, underscoring key areas for future improvement. By developing a fundamental evaluation framework and conducting a comprehensive MLLM assessment, we hope this work contributes to advancing emotional intelligence in MLLMs. Project page: https://github.com/wdqqdw/MVEI.",
+    "primary": "cs.CV",
+    "date": "2026-02-06",
+    "abs": "https://arxiv.org/abs/2509.21950",
+    "pdf": "https://arxiv.org/pdf/2509.21950.pdf"
+  },
+  {
+    "id": "2602.05863",
+    "title": "Constrained Group Relative Policy Optimization",
+    "authors": [
+      "Roger Girgis",
+      "Rodrigue de Schaetzen",
+      "Luke Rowe",
+      "Azalée Robitaille",
+      "Christopher Pal",
+      "Liam Paull"
+    ],
+    "abstract": "While Group Relative Policy Optimization (GRPO) has emerged as a scalable framework for critic-free policy learning, extending it to settings with explicit behavioral constraints remains underexplored. We introduce Constrained GRPO, a Lagrangian-based extension of GRPO for constrained policy optimization. Constraints are specified via indicator cost functions, enabling direct optimization of violation rates through a Lagrangian relaxation. We show that a naive multi-component treatment in advantage estimation can break constrained learning: mismatched component-wise standard deviations distort the relative importance of the different objective terms, which in turn corrupts the Lagrangian signal and prevents meaningful constraint enforcement. We formally derive this effect to motivate our scalarized advantage construction that preserves the intended trade-off between reward and constraint terms. Experiments in a toy gridworld confirm the predicted optimization pathology and demonstrate that scalarizing advantages restores stable constraint control. In addition, we evaluate Constrained GRPO on robotics tasks, where it improves constraint satisfaction while increasing task success, establishing a simple and effective recipe for constrained policy optimization in embodied AI domains that increasingly rely on large multimodal foundation models.",
+    "primary": "cs.LG",
+    "date": "2026-02-06",
+    "abs": "https://arxiv.org/abs/2602.05863",
+    "pdf": "https://arxiv.org/pdf/2602.05863.pdf"
+  },
+  {
+    "id": "2602.05339",
+    "title": "Consistency-Preserving Concept Erasure via Unsafe-Safe Pairing and Directional Fisher-weighted Adaptation",
+    "authors": [
+      "Yongwoo Kim",
+      "Sungmin Cha",
+      "Hyunsoo Kim",
+      "Jaewon Lee",
+      "Donghyun Kim"
+    ],
+    "abstract": "With the increasing versatility of text-to-image diffusion models, the ability to selectively erase undesirable concepts (e.g., harmful content) has become indispensable. However, existing concept erasure approaches primarily focus on removing unsafe concepts without providing guidance toward corresponding safe alternatives, which often leads to failure in preserving the structural and semantic consistency between the original and erased generations. In this paper, we propose a novel framework, PAIRed Erasing (PAIR), which reframes concept erasure from simple removal to consistency-preserving semantic realignment using unsafe-safe pairs. We first generate safe counterparts from unsafe inputs while preserving structural and semantic fidelity, forming paired unsafe-safe multimodal data. Leveraging these pairs, we introduce two key components: (1) Paired Semantic Realignment, a guided objective that uses unsafe-safe pairs to explicitly map target concepts to semantically aligned safe anchors; and (2) Fisher-weighted Initialization for DoRA, which initializes parameter-efficient low-rank adaptation matrices using unsafe-safe pairs, encouraging the generation of safe alternatives while selectively suppressing unsafe concepts. Together, these components enable fine-grained erasure that removes only the targeted concepts while maintaining overall semantic consistency. Extensive experiments demonstrate that our approach significantly outperforms state-of-the-art baselines, achieving effective concept erasure while preserving structural integrity, semantic coherence, and generation quality.",
+    "primary": "cs.CV",
+    "date": "2026-02-06",
+    "abs": "https://arxiv.org/abs/2602.05339",
+    "pdf": "https://arxiv.org/pdf/2602.05339.pdf"
+  },
+  {
+    "id": "2503.21843",
+    "title": "CMD-HAR: Cross-Modal Disentanglement for Wearable Human Activity Recognition",
+    "authors": [
+      "Ying Yu",
+      "Siyao Li",
+      "Yixuan Jiang",
+      "Hang Xiao",
+      "Jingxi Long",
+      "Haotian Tang",
+      "Hanyu Liu",
+      "Chao Li"
+    ],
+    "abstract": "Human Activity Recognition (HAR) is a fundamental technology for numerous human - centered intelligent applications. Although deep learning methods have been utilized to accelerate feature extraction, issues such as multimodal data mixing, activity heterogeneity, and complex model deployment remain largely unresolved. The aim of this paper is to address issues such as multimodal data mixing, activity heterogeneity, and complex model deployment in sensor-based human activity recognition. We propose a spatiotemporal attention modal decomposition alignment fusion strategy to tackle the problem of the mixed distribution of sensor data. Key discriminative features of activities are captured through cross-modal spatio-temporal disentangled representation, and gradient modulation is combined to alleviate data heterogeneity. In addition, a wearable deployment simulation system is constructed. We conducted experiments on a large number of public datasets, demonstrating the effectiveness of the model.",
+    "primary": "cs.CV",
+    "date": "2026-02-06",
+    "abs": "https://arxiv.org/abs/2503.21843",
+    "pdf": "https://arxiv.org/pdf/2503.21843.pdf"
+  },
+  {
+    "id": "2508.02276",
+    "title": "CellForge: Agentic Design of Virtual Cell Models",
+    "authors": [
+      "Xiangru Tang",
+      "Zhuoyun Yu",
+      "Jiapeng Chen",
+      "Yan Cui",
+      "Daniel Shao",
+      "Weixu Wang",
+      "Fang Wu",
+      "Yuchen Zhuang",
+      "Wenqi Shi",
+      "Zhi Huang",
+      "Arman Cohan",
+      "Xihong Lin",
+      "Fabian Theis",
+      "Smita Krishnaswamy",
+      "Mark Gerstein"
+    ],
+    "abstract": "Virtual cell modeling aims to predict cellular responses to diverse perturbations but faces challenges from biological complexity, multimodal data heterogeneity, and the need for interdisciplinary expertise. We introduce CellForge, a multi-agent framework that autonomously designs and synthesizes neural network architectures tailored to specific single-cell datasets and perturbation tasks. Given raw multi-omics data and task descriptions, CellForge discovers candidate architectures through collaborative reasoning among specialized agents, then generates executable implementations. Our core contribution is the framework itself: showing that multi-agent collaboration mechanisms - rather than manual human design or single-LLM prompting - can autonomously produce executable, high-quality computational methods. This approach goes beyond conventional hyperparameter tuning by enabling entirely new architectural components such as trajectory-aware encoders and perturbation diffusion modules to emerge from agentic deliberation. We evaluate CellForge on six datasets spanning gene knockouts, drug treatments, and cytokine stimulations across multiple modalities (scRNA-seq, scATAC-seq, CITE-seq). The results demonstrate that the models generated by CellForge are highly competitive with established baselines, while revealing systematic patterns of architectural innovation. CellForge highlights the scientific value of multi-agent frameworks: collaboration among specialized agents enables genuine methodological innovation and executable solutions that single agents or human experts cannot achieve. This represents a paradigm shift toward autonomous scientific method development in computational biology. Code is available at https://github.com/gersteinlab/CellForge.",
+    "primary": "cs.LG",
+    "date": "2026-02-06",
+    "abs": "https://arxiv.org/abs/2508.02276",
+    "pdf": "https://arxiv.org/pdf/2508.02276.pdf"
+  },
+  {
+    "id": "2412.19755",
+    "title": "Can MLLMs generate human-like feedback in grading multimodal short answers?",
+    "authors": [
+      "Pritam Sil",
+      "Pushpak Bhattacharyya",
+      "Pawan Goyal",
+      "Ganesh Ramakrishnan"
+    ],
+    "abstract": "In education, the traditional Automatic Short Answer Grading (ASAG) with feedback problem has focused primarily on evaluating text-only responses. However, real-world assessments often include multimodal responses containing both diagrams and text. To address this limitation, we introduce the Multimodal Short Answer Grading with Feedback (MMSAF) problem, which requires jointly evaluating textual and diagrammatic content while also providing explanatory feedback. Collecting data representative of such multimodal responses is challenging due to both scale and logistical constraints. To mitigate this, we develop an automated data generation framework that leverages LLM hallucinations to mimic common student errors, thereby constructing a dataset of 2,197 instances. We evaluate 4 Multimodal Large Language Models (MLLMs) across 3 STEM subjects, showing that MLLMs achieve accuracies of up to 62.5% in predicting answer correctness (correct/partially correct/incorrect) and up to 80.36% in assessing image relevance. This also includes a human evaluation with 9 annotators across 5 parameters, including a rubric-based approach. The rubrics also serve as a way to evaluate the feedback quality semantically rather than using overlap-based approaches. Our findings highlight which MLLMs are better suited for such tasks while also pointing out to drawbacks of the remaining MLLMs.",
+    "primary": "cs.AI",
+    "date": "2026-02-06",
+    "abs": "https://arxiv.org/abs/2412.19755",
+    "pdf": "https://arxiv.org/pdf/2412.19755.pdf"
+  },
+  {
+    "id": "2601.15397",
+    "title": "Beyond Prompting: Efficient and Robust Contextual Biasing for Speech LLMs via Logit-Space Integration (LOGIC)",
+    "authors": [
+      "Peidong Wang"
+    ],
+    "abstract": "The rapid emergence of new entities -- driven by cultural shifts, evolving trends, and personalized user data -- poses a significant challenge for existing Speech Large Language Models (Speech LLMs). While these models excel at general conversational tasks, their static training knowledge limits their ability to recognize domain-specific terms such as contact names, playlists, or technical jargon. Existing solutions primarily rely on prompting, which suffers from poor scalability: as the entity list grows, prompting encounters context window limitations, increased inference latency, and the \"lost-in-the-middle\" phenomenon. An alternative approach, Generative Error Correction (GEC), attempts to rewrite transcripts via post-processing but frequently suffers from \"over-correction\", introducing hallucinations of entities that were never spoken.\n  In this work, we introduce LOGIC (Logit-Space Integration for Contextual Biasing), an efficient and robust framework that operates directly in the decoding layer. Unlike prompting, LOGIC decouples context injection from input processing, ensuring constant-time complexity relative to prompt length. Extensive experiments using the Phi-4-MM model across 11 multilingual locales demonstrate that LOGIC achieves an average 9% relative reduction in Entity WER with a negligible 0.30% increase in False Alarm Rate.",
+    "primary": "cs.AI",
+    "date": "2026-02-06",
+    "abs": "https://arxiv.org/abs/2601.15397",
+    "pdf": "https://arxiv.org/pdf/2601.15397.pdf"
+  },
+  {
+    "id": "2602.05392",
+    "title": "Beyond Length: Context-Aware Expansion and Independence as Developmentally Sensitive Evaluation in Child Utterances",
+    "authors": [
+      "Jiyun Chun",
+      "Eric Fosler-Lussier",
+      "Michael White",
+      "Andrew Perrault"
+    ],
+    "abstract": "Evaluating the quality of children's utterances in adult-child dialogue remains challenging due to insufficient context-sensitive metrics. Common proxies such as Mean Length of Utterance (MLU), lexical diversity (vocd-D), and readability indices (Flesch-Kincaid Grade Level, Gunning Fog Index) are dominated by length and ignore conversational context, missing aspects of response quality such as reasoning depth, topic maintenance, and discourse planning. We introduce an LLM-as-a-judge framework that first classifies the Previous Adult Utterance Type and then scores the child's response along two axes: Expansion (contextual elaboration and inferential depth) and Independence (the child's contribution to advancing the discourse). These axes reflect fundamental dimensions in child language development, where Expansion captures elaboration, clause combining, and causal and contrastive connectives. Independence captures initiative, topic control, decreasing reliance on adult scaffolding through growing self-regulation, and audience design. We establish developmental validity by showing age-related patterns and demonstrate predictive value by improving age estimation over common baselines. We further confirm semantic sensitivity by detecting differences tied to discourse relations. Our metrics align with human judgments, enabling large-scale evaluation. This shifts child utterance assessment from simply measuring length to evaluating how meaningfully the child's speech contributes to and advances the conversation within its context.",
+    "primary": "cs.CL",
+    "date": "2026-02-06",
+    "abs": "https://arxiv.org/abs/2602.05392",
+    "pdf": "https://arxiv.org/pdf/2602.05392.pdf"
+  },
+  {
+    "id": "2602.05220",
+    "title": "Bagpiper: Solving Open-Ended Audio Tasks via Rich Captions",
+    "authors": [
+      "Jinchuan Tian",
+      "Haoran Wang",
+      "Bo-Hao Su",
+      "Chien-yu Huang",
+      "Qingzheng Wang",
+      "Jiatong Shi",
+      "William Chen",
+      "Xun Gong",
+      "Siddhant Arora",
+      "Chin-Jou Li",
+      "Masao Someki",
+      "Takashi Maekaku",
+      "Yusuke Shinohara",
+      "Jin Sakuma",
+      "Chao-Han Huck Yang",
+      "Shinji Watanabe"
+    ],
+    "abstract": "Current audio foundation models typically rely on rigid, task-specific supervision, addressing isolated factors of audio rather than the whole. In contrast, human intelligence processes audio holistically, seamlessly bridging physical signals with abstract cognitive concepts to execute complex tasks. Grounded in this philosophy, we introduce Bagpiper, an 8B audio foundation model that interprets physical audio via rich captions, i.e., comprehensive natural language descriptions that encapsulate the critical cognitive concepts inherent in the signal (e.g., transcription, audio events). By pre-training on a massive corpus of 600B tokens, the model establishes a robust bidirectional mapping between raw audio and this high-level conceptual space. During fine-tuning, Bagpiper adopts a caption-then-process workflow, simulating an intermediate cognitive reasoning step to solve diverse tasks without task-specific priors. Experimentally, Bagpiper outperforms Qwen-2.5-Omni on MMAU and AIRBench for audio understanding and surpasses CosyVoice3 and TangoFlux in generation quality, capable of synthesizing arbitrary compositions of speech, music, and sound effects. To the best of our knowledge, Bagpiper is among the first works that achieve unified understanding generation for general audio. Model, data, and code are available at Bagpiper Home Page.",
+    "primary": "cs.CL",
+    "date": "2026-02-06",
+    "abs": "https://arxiv.org/abs/2602.05220",
+    "pdf": "https://arxiv.org/pdf/2602.05220.pdf"
+  },
+  {
+    "id": "2510.06528",
+    "title": "BACHI: Boundary-Aware Symbolic Chord Recognition Through Masked Iterative Decoding on Pop and Classical Music",
+    "authors": [
+      "Mingyang Yao",
+      "Ke Chen",
+      "Shlomo Dubnov",
+      "Taylor Berg-Kirkpatrick"
+    ],
+    "abstract": "Automatic chord recognition (ACR) via deep learning models has gradually achieved promising recognition accuracy, yet two key challenges remain. First, prior work has primarily focused on audio-domain ACR, while symbolic music (e.g., score) ACR has received limited attention due to data scarcity. Second, existing methods still overlook strategies that are aligned with human music analytical practices. To address these challenges, we make two contributions: (1) we introduce POP909-CL, an enhanced version of POP909 dataset with tempo-aligned content and human-corrected labels of chords, beats, keys, and time signatures; and (2) We propose BACHI, a symbolic chord recognition model that decomposes the task into different decision steps, namely boundary detection and iterative ranking of chord root, quality, and bass (inversion). This mechanism mirrors the human ear-training practices. Experiments demonstrate that BACHI achieves state-of-the-art chord recognition performance on both classical and pop music benchmarks, with ablation studies validating the effectiveness of each module.",
+    "primary": "cs.SD",
+    "date": "2026-02-06",
+    "abs": "https://arxiv.org/abs/2510.06528",
+    "pdf": "https://arxiv.org/pdf/2510.06528.pdf"
+  },
+  {
+    "id": "2602.05027",
+    "title": "AudioSAE: Towards Understanding of Audio-Processing Models with Sparse AutoEncoders",
+    "authors": [
+      "Georgii Aparin",
+      "Tasnima Sadekova",
+      "Alexey Rukhovich",
+      "Assel Yermekova",
+      "Laida Kushnareva",
+      "Vadim Popov",
+      "Kristian Kuznetsov",
+      "Irina Piontkovskaya"
+    ],
+    "abstract": "Sparse Autoencoders (SAEs) are powerful tools for interpreting neural representations, yet their use in audio remains underexplored. We train SAEs across all encoder layers of Whisper and HuBERT, provide an extensive evaluation of their stability, interpretability, and show their practical utility. Over 50% of the features remain consistent across random seeds, and reconstruction quality is preserved. SAE features capture general acoustic and semantic information as well as specific events, including environmental noises and paralinguistic sounds (e.g. laughter, whispering) and disentangle them effectively, requiring removal of only 19-27% of features to erase a concept. Feature steering reduces Whisper's false speech detections by 70% with negligible WER increase, demonstrating real-world applicability. Finally, we find SAE features correlated with human EEG activity during speech perception, indicating alignment with human neural processing. The code and checkpoints are available at https://github.com/audiosae/audiosae_demo.",
+    "primary": "cs.SD",
+    "date": "2026-02-06",
+    "abs": "https://arxiv.org/abs/2602.05027",
+    "pdf": "https://arxiv.org/pdf/2602.05027.pdf"
+  },
+  {
+    "id": "2601.18535",
+    "title": "Audio Inpainting in Time-Frequency Domain with Phase-Aware Prior",
+    "authors": [
+      "Peter Balušík",
+      "Pavel Rajmic"
+    ],
+    "abstract": "We address the problem of time-frequency audio inpainting, where the goal is to fill missing spectrogram portions with reliable information. Despite recent advances, existing approaches still face limitations in both reconstruction quality and computational efficiency. To bridge this gap, we propose a method that utilizes a phase-aware signal prior which exploits estimates of the instantaneous frequency. An optimization problem is formulated and solved using the generalized Chambolle-Pock algorithm. The proposed method is evaluated against other time-frequency inpainting methods, specifically a deep-prior audio inpainting neural network and the autoregression-based approach known as Janssen-TF. Our proposed approach surpassed these methods by a large margin in the objective evaluation as well as in the conducted subjective listening test, improving the state of the art. In addition, the reconstructions are obtained with a substantially reduced computational cost compared to alternative methods.",
+    "primary": "eess.AS",
+    "date": "2026-02-06",
+    "abs": "https://arxiv.org/abs/2601.18535",
+    "pdf": "https://arxiv.org/pdf/2601.18535.pdf"
+  },
+  {
+    "id": "2602.05207",
+    "title": "ARCHI-TTS: A flow-matching-based Text-to-Speech Model with Self-supervised Semantic Aligner and Accelerated Inference",
+    "authors": [
+      "Chunyat Wu",
+      "Jiajun Deng",
+      "Zhengxi Liu",
+      "Zheqi Dai",
+      "Haolin He",
+      "Qiuqiang Kong"
+    ],
+    "abstract": "Although diffusion-based, non-autoregressive text-to-speech (TTS) systems have demonstrated impressive zero-shot synthesis capabilities, their efficacy is still hindered by two key challenges: the difficulty of text-speech alignment modeling and the high computational overhead of the iterative denoising process. To address these limitations, we propose ARCHI-TTS that features a dedicated semantic aligner to ensure robust temporal and semantic consistency between text and audio. To overcome high computational inference costs, ARCHI-TTS employs an efficient inference strategy that reuses encoder features across denoising steps, drastically accelerating synthesis without performance degradation. An auxiliary CTC loss applied to the condition encoder further enhances the semantic understanding. Experimental results demonstrate that ARCHI-TTS achieves a WER of 1.98% on LibriSpeech-PC test-clean, and 1.47%/1.42% on SeedTTS test-en/test-zh with a high inference efficiency, consistently outperforming recent state-of-the-art TTS systems.",
+    "primary": "eess.AS",
+    "date": "2026-02-06",
+    "abs": "https://arxiv.org/abs/2602.05207",
+    "pdf": "https://arxiv.org/pdf/2602.05207.pdf"
+  },
+  {
+    "id": "2510.26641",
+    "title": "All You Need for Object Detection: From Pixels, Points, and Prompts to Next-Gen Fusion and Multimodal LLMs/VLMs in Autonomous Vehicles",
+    "authors": [
+      "Sayed Pedram Haeri Boroujeni",
+      "Niloufar Mehrabi",
+      "Hazim Alzorgan",
+      "Mahlagha Fazeli",
+      "Abolfazl Razi"
+    ],
+    "abstract": "Autonomous Vehicles (AVs) are transforming the future of transportation through advances in intelligent perception, decision-making, and control systems. However, their success is tied to one core capability, reliable object detection in complex and multimodal environments. While recent breakthroughs in Computer Vision (CV) and Artificial Intelligence (AI) have driven remarkable progress, the field still faces a critical challenge as knowledge remains fragmented across multimodal perception, contextual reasoning, and cooperative intelligence. This survey bridges that gap by delivering a forward-looking analysis of object detection in AVs, emphasizing emerging paradigms such as Vision-Language Models (VLMs), Large Language Models (LLMs), and Generative AI rather than re-examining outdated techniques. We begin by systematically reviewing the fundamental spectrum of AV sensors (camera, ultrasonic, LiDAR, and Radar) and their fusion strategies, highlighting not only their capabilities and limitations in dynamic driving environments but also their potential to integrate with recent advances in LLM/VLM-driven perception frameworks. Next, we introduce a structured categorization of AV datasets that moves beyond simple collections, positioning ego-vehicle, infrastructure-based, and cooperative datasets (e.g., V2V, V2I, V2X, I2I), followed by a cross-analysis of data structures and characteristics. Ultimately, we analyze cutting-edge detection methodologies, ranging from 2D and 3D pipelines to hybrid sensor fusion, with particular attention to emerging transformer-driven approaches powered by Vision Transformers (ViTs), Large and Small Language Models (SLMs), and VLMs. By synthesizing these perspectives, our survey delivers a clear roadmap of current capabilities, open challenges, and future opportunities.",
+    "primary": "cs.CV",
+    "date": "2026-02-06",
+    "abs": "https://arxiv.org/abs/2510.26641",
+    "pdf": "https://arxiv.org/pdf/2510.26641.pdf"
+  },
+  {
+    "id": "2408.10463",
+    "title": "Adversarial training of Keyword Spotting to Minimize TTS Data Overfitting",
+    "authors": [
+      "Hyun Jin Park",
+      "Dhruuv Agarwal",
+      "Neng Chen",
+      "Rentao Sun",
+      "Kurt Partridge",
+      "Justin Chen",
+      "Harry Zhang",
+      "Pai Zhu",
+      "Jacob Bartel",
+      "Kyle Kastner",
+      "Gary Wang",
+      "Andrew Rosenberg",
+      "Quan Wang"
+    ],
+    "abstract": "The keyword spotting (KWS) problem requires large amounts of real speech training data to achieve high accuracy across diverse populations. Utilizing large amounts of text-to-speech (TTS) synthesized data can reduce the cost and time associated with KWS development. However, TTS data may contain artifacts not present in real speech, which the KWS model can exploit (overfit), leading to degraded accuracy on real speech. To address this issue, we propose applying an adversarial training method to prevent the KWS model from learning TTS-specific features when trained on large amounts of TTS data. Experimental results demonstrate that KWS model accuracy on real speech data can be improved by up to 12% when adversarial loss is used in addition to the original KWS loss. Surprisingly, we also observed that the adversarial setup improves accuracy by up to 8%, even when trained solely on TTS and real negative speech data, without any real positive examples.",
+    "primary": "cs.SD",
+    "date": "2026-02-06",
+    "abs": "https://arxiv.org/abs/2408.10463",
+    "pdf": "https://arxiv.org/pdf/2408.10463.pdf"
+  },
+  {
+    "id": "2602.05729",
+    "title": "Adaptive Global and Fine-Grained Perceptual Fusion for MLLM Embeddings Compatible with Hard Negative Amplification",
+    "authors": [
+      "Lexiang Hu",
+      "Youze Xue",
+      "Dian Li",
+      "Gang Liu",
+      "Zhouchen Lin"
+    ],
+    "abstract": "Multimodal embeddings serve as a bridge for aligning vision and language, with the two primary implementations -- CLIP-based and MLLM-based embedding models -- both limited to capturing only global semantic information. Although numerous studies have focused on fine-grained understanding, we observe that complex scenarios currently targeted by MLLM embeddings often involve a hybrid perceptual pattern of both global and fine-grained elements, thus necessitating a compatible fusion mechanism. In this paper, we propose Adaptive Global and Fine-grained perceptual Fusion for MLLM Embeddings (AGFF-Embed), a method that prompts the MLLM to generate multiple embeddings focusing on different dimensions of semantic information, which are then adaptively and smoothly aggregated. Furthermore, we adapt AGFF-Embed with the Explicit Gradient Amplification (EGA) technique to achieve in-batch hard negatives enhancement without requiring fine-grained editing of the dataset. Evaluation on the MMEB and MMVP-VLM benchmarks shows that AGFF-Embed comprehensively achieves state-of-the-art performance in both general and fine-grained understanding compared to other multimodal embedding models.",
+    "primary": "cs.CV",
+    "date": "2026-02-06",
+    "abs": "https://arxiv.org/abs/2602.05729",
+    "pdf": "https://arxiv.org/pdf/2602.05729.pdf"
+  },
+  {
+    "id": "2512.23646",
+    "title": "Active Perception Agent for Omnimodal Audio-Video Understanding",
+    "authors": [
+      "Keda Tao",
+      "Wenjie Du",
+      "Bohan Yu",
+      "Weiqiang Wang",
+      "Jian Liu",
+      "Huan Wang"
+    ],
+    "abstract": "Omnimodal large language models have made significant strides in unifying audio and visual modalities; however, they often face challenges in fine-grained cross-modal understanding and have difficulty with multimodal alignment. To address these limitations, we introduce OmniAgent, to our best knowledge, the first fully active perception agent that dynamically orchestrates specialized unimodal tools to achieve more fine-grained omnimodal reasoning. Unlike previous works that rely on rigid, static workflows and dense frame-captioning, we demonstrate a paradigm shift from passive response generation to active multimodal inquiry. OmniAgent employs dynamic planning to autonomously orchestrate tool invocation on demand, strategically concentrating perceptual attention on task-relevant cues. Central to our approach is a novel coarse-to-fine audio-guided perception paradigm, which leverages audio cues to localize temporal events and guide subsequent reasoning. Extensive empirical evaluations on three audio-video understanding benchmarks demonstrate that OmniAgent achieves state-of-the-art performance, surpassing leading open-source and closed-source models by substantial margins of 10% - 20% accuracy without training.",
+    "primary": "cs.CV",
+    "date": "2026-02-06",
+    "abs": "https://arxiv.org/abs/2512.23646",
+    "pdf": "https://arxiv.org/pdf/2512.23646.pdf"
+  },
+  {
+    "id": "2602.00744",
+    "title": "ACE-Step 1.5: Pushing the Boundaries of Open-Source Music Generation",
+    "authors": [
+      "Junmin Gong",
+      "Yulin Song",
+      "Wenxiao Zhao",
+      "Sen Wang",
+      "Shengyuan Xu",
+      "Jing Guo"
+    ],
+    "abstract": "We present ACE-Step v1.5, a highly efficient open-source music foundation model that brings commercial-grade generation to consumer hardware. On commonly used evaluation metrics, ACE-Step v1.5 achieves quality beyond most commercial music models while remaining extremely fast -- under 2 seconds per full song on an A100 and under 10 seconds on an RTX 3090. The model runs locally with less than 4GB of VRAM, and supports lightweight personalization: users can train a LoRA from just a few songs to capture their own style. At its core lies a novel hybrid architecture where the Language Model (LM) functions as an omni-capable planner: it transforms simple user queries into comprehensive song blueprints -- scaling from short loops to 10-minute compositions -- while synthesizing metadata, lyrics, and captions via Chain-of-Thought to guide the Diffusion Transformer (DiT). Uniquely, this alignment is achieved through intrinsic reinforcement learning relying solely on the model's internal mechanisms, thereby eliminating the biases inherent in external reward models or human preferences. Beyond standard synthesis, ACE-Step v1.5 unifies precise stylistic control with versatile editing capabilities -- such as cover generation, repainting, and vocal-to-BGM conversion -- while maintaining strict adherence to prompts across 50+ languages. This paves the way for powerful tools that seamlessly integrate into the creative workflows of music artists, producers, and content creators. The code, the model weights and the demo are available at: https://ace-step.github.io/ace-step-v1.5.github.io/",
+    "primary": "cs.SD",
+    "date": "2026-02-06",
+    "abs": "https://arxiv.org/abs/2602.00744",
+    "pdf": "https://arxiv.org/pdf/2602.00744.pdf"
+  },
+  {
+    "id": "2409.09098",
+    "title": "AccentBox: Towards High-Fidelity Zero-Shot Accent Generation",
+    "authors": [
+      "Jinzuomu Zhong",
+      "Korin Richmond",
+      "Zhiba Su",
+      "Siqi Sun"
+    ],
+    "abstract": "While recent Zero-Shot Text-to-Speech (ZS-TTS) models have achieved high naturalness and speaker similarity, they fall short in accent fidelity and control. To address this issue, we propose zero-shot accent generation that unifies Foreign Accent Conversion (FAC), accented TTS, and ZS-TTS, with a novel two-stage pipeline. In the first stage, we achieve state-of-the-art (SOTA) on Accent Identification (AID) with 0.56 f1 score on unseen speakers. In the second stage, we condition a ZS-TTS system on the pretrained speaker-agnostic accent embeddings extracted by the AID model. The proposed system achieves higher accent fidelity on inherent/cross accent generation, and enables unseen accent generation.",
+    "primary": "cs.SD",
+    "date": "2026-02-06",
+    "abs": "https://arxiv.org/abs/2409.09098",
+    "pdf": "https://arxiv.org/pdf/2409.09098.pdf"
+  },
+  {
+    "id": "2602.04913",
+    "title": "A$^2$-LLM: An End-to-end Conversational Audio Avatar Large Language Model",
+    "authors": [
+      "Xiaolin Hu",
+      "Hang Yuan",
+      "Xinzhu Sang",
+      "Binbin Yan",
+      "Zhou Yu",
+      "Cong Huang",
+      "Kai Chen"
+    ],
+    "abstract": "Developing expressive and responsive conversational digital humans is a cornerstone of next-generation human-computer interaction. While large language models (LLMs) have significantly enhanced dialogue capabilities, most current systems still rely on cascaded architectures that connect independent modules. These pipelines are often plagued by accumulated errors, high latency, and poor real-time performance. Lacking access to the underlying conversational context, these pipelines inherently prioritize rigid lip-sync over emotional depth. To address these challenges, we propose A$^2$-LLM, an end-to-end conversational audio avatar large language model that jointly reasons about language, audio prosody, and 3D facial motion within a unified framework. To facilitate training, we introduce FLAME-QA, a high-quality multimodal dataset designed to align semantic intent with expressive facial dynamics within a QA format. By leveraging deep semantic understanding, A$^2$-LLM generates emotionally rich facial movements beyond simple lip-synchronization. Experimental results demonstrate that our system achieves superior emotional expressiveness while maintaining real-time efficiency (500 ms latency, 0.7 RTF).",
+    "primary": "cs.LG",
+    "date": "2026-02-06",
+    "abs": "https://arxiv.org/abs/2602.04913",
+    "pdf": "https://arxiv.org/pdf/2602.04913.pdf"
+  },
+  {
+    "id": "2602.05515",
+    "title": "A Unified Multimodal Framework for Dataset Construction and Model-Based Diagnosis of Ameloblastoma",
+    "authors": [
+      "Ajo Babu George",
+      "Anna Mariam John",
+      "Athul Anoop",
+      "Balu Bhasuran"
+    ],
+    "abstract": "Artificial intelligence (AI)-enabled diagnostics in maxillofacial pathology require structured, high-quality multimodal datasets. However, existing resources provide limited ameloblastoma coverage and lack the format consistency needed for direct model training. We present a newly curated multimodal dataset specifically focused on ameloblastoma, integrating annotated radiological, histopathological, and intraoral clinical images with structured data derived from case reports. Natural language processing techniques were employed to extract clinically relevant features from textual reports, while image data underwent domain specific preprocessing and augmentation. Using this dataset, a multimodal deep learning model was developed to classify ameloblastoma variants, assess behavioral patterns such as recurrence risk, and support surgical planning. The model is designed to accept clinical inputs such as presenting complaint, age, and gender during deployment to enhance personalized inference. Quantitative evaluation demonstrated substantial improvements; variant classification accuracy increased from 46.2 percent to 65.9 percent, and abnormal tissue detection F1-score improved from 43.0 percent to 90.3 percent. Benchmarked against resources like MultiCaRe, this work advances patient-specific decision support by providing both a robust dataset and an adaptable multimodal AI framework.",
+    "primary": "cs.AI",
+    "date": "2026-02-06",
+    "abs": "https://arxiv.org/abs/2602.05515",
+    "pdf": "https://arxiv.org/pdf/2602.05515.pdf"
+  }
+]
