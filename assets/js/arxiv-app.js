@@ -89,6 +89,7 @@ const btnList = $('#ax-view-list');
 const moreBtn = $('#ax-more');
 const favBtn = $('#ax-fav-only');
 const dateSel = $('#ax-date');
+const refreshDatesBtn = $('#ax-refresh-dates');
 const dl = $('#ax-download');
 
 /* ---------------- Utils ---------------- */
@@ -554,6 +555,23 @@ async function boot(){
   favBtn.onclick  = () => { favOnly=!favOnly; favBtn.textContent = favOnly ? '⭐ Favorites: On' : '⭐ Favorites: Off'; reset(); };
   moreBtn.onclick = () => { page++; loadServer({ keepExisting: true }); };
   dateSel.onchange= e => { day = e.target.value; resetAndLoad(); };
+  
+  // Refresh date list button
+  if (refreshDatesBtn) {
+    refreshDatesBtn.onclick = async () => {
+      refreshDatesBtn.disabled = true;
+      refreshDatesBtn.textContent = '⏳';
+      await loadHistoryList();
+      refreshDatesBtn.disabled = false;
+      refreshDatesBtn.textContent = '🔄';
+      toast('Date list refreshed');
+    };
+  }
+  
+  // Auto-refresh date list every 60 seconds
+  setInterval(() => {
+    loadHistoryList().catch(e => console.warn('Auto-refresh date list failed:', e));
+  }, 60000);
 
   renderChips();
   await ensureMathJax();
