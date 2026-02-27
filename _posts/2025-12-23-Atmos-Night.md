@@ -25,7 +25,7 @@ The song reflects many late nights similar to those described in the lyrics, tho
 #### lyrics:
 ```
 [Verse 1]
-A can of Monster, cold and still  
+A can of Monster, ice cold  
 On a desk in Midtown Atlanta  
 Windows glowing soft against the sky  
 Spherical harmonics spin on the screen  
@@ -37,7 +37,7 @@ Line by line
 He’s mixing dreams in Atmos  
 Rhythm drifts, the melody dances  
 Reverb echoes reaching in from afar  
-Every note takes its own track to open up the space
+Scattered notes drifted out, painting the soundscape
 
 [Chorus]
 Starlight overhead, lakalaka, slow and bright  
@@ -56,7 +56,6 @@ Still flickers inside the sound he made
 
 Whisper a secret only he knows  
 …only he knows
-
 ```
 
 ---
