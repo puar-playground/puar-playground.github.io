@@ -30,6 +30,7 @@ My research focus on multimodal AI research aimed at enabling immersive digital 
 
 ## Research [<i class="fas fa-user-graduate"></i>](https://scholar.google.com/citations?user=uBGjz-EAAAAJ)
 ### Selected Publications 
+- Ruoling Qi, Yirui Liu, Xuaner Wu, Xiangyu Wang, Ming Li, Chen Chen, **Jian Chen**, Yin Chen, Qizhen Weng, "[Swift-SVD: Theoretical Optimality Meets Practical Efficiency in Low-Rank LLM Compression](https://arxiv.org/abs/2604.01609v1)", ICML 2026
 
 - **Jian Chen**, Ruiyi Zhang, Yufan Zhou, Tong Yu, Franck Dernoncourt, Jiuxiang Gu, Ryan A. Rossi, Changyou Chen, Tong Sun, "[SV-RAG: LoRA-Contextualizing Adaptation of MLLMs for Long Document Understanding](https://openreview.net/forum?id=FDaHjwInXO)", ICLR 2025
 
