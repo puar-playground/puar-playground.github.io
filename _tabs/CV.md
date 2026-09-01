@@ -12,7 +12,7 @@ order: 1
 
 ## Jian Chen
 
-I am a Senior AI Researcher at Dolby Laboratories (Sound Experience Lab). My work sits at the intersection of audio, language, and vision — audio foundation models, multimodal large language models, and agentic systems — spanning multimodal generation and reasoning, post-training, and model efficiency. I also collaborate actively with academic partners on multimodal-LLM applications.
+I am a Senior AI Researcher at Dolby Laboratories working on audio foundation models, multimodal large language models, and agentic systems. My research spans language, audio, and vision, covering multimodal generation and reasoning, post-training, compression, and distillation.
 
 >[<i class="fas fa-address-card"></i>]({{ site.url }}/download/Jian_Chen_CV_en.pdf) CV in PDF · [<i class="fas fa-envelope"></i>](mailto:jian.chen@dolby.com) jian.chen@dolby.com · [<i class="fas fa-user-graduate"></i>](https://scholar.google.com/citations?user=uBGjz-EAAAAJ) Google Scholar · [<i class="fab fa-github"></i>](https://github.com/puar-playground) GitHub
 
