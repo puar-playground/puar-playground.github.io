@@ -1,6 +1,5 @@
 import numpy as np
 import matplotlib
-# matplotlib.use('TKAgg')
 from matplotlib import pyplot as plt
 
 def Cartesian_scatter(x, y, n_batch=10):
